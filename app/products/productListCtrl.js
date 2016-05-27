@@ -13,20 +13,20 @@
             {
                 "productName": "iMac",
                 "productCode": "APP-MAC-011",
-                "releaseData": "2016/12/11",
+                "releaseDate": "2016/12/11",
                 "imageUrl":"https://www.apple.com/pr/products/images/iMac27_iMac21_Photos_PRINT_131020_HERO.jpg",
                 "price":1980
             },
             {
                 "productName": "Surface",
                 "productCode": "MSC-SFC-042",
-                "releaseDate": "2015/12/122",
+                "releaseDate": "2016/12/11",
                 "imageUrl": "http://cdn2.pcadvisor.co.uk/cmsdata/reviews/3364791/Microsoft_Surface_RT.jpg",
                 "price":2150
             }
         ];
 
-        vm.showImage = true;
+        vm.showImage = false;
 
         vm.toggleImage = function() {
             vm.showImage = !vm.showImage;
