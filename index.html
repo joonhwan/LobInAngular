@@ -4,17 +4,22 @@
     <meta charset="UTF-8">
     <title>Acme Product Management</title>
 
-    <!--<link href="css/bootstrap.css" rel="stylesheet" />-->
-    <!--<link href="css/app.css" rel="stylesheet" />-->
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
     <script src="js/angular.js"></script>
     <script src="app/app.js"></script>
     <script src="app/products/productListCtrl.js"></script>
 </head>
 <body ng-app="productManagement">
-<table ng-controller="productListCtrl as vm">
+<div class="panel panel-primary">
+<div class="panel-heading" style="font-size:large">
+    Product Page
+</div>
+<div class="panel-body">
+    <table class="table" ng-controller="productListCtrl as vm">
     <thead>
     <tr>
-        <td><button type="button" ng-click="vm.toggleImage()">
+        <td><button class="btn btn-primary" type="button" ng-click="vm.toggleImage()">
             {{vm.showImage ? "Hide" : "Show"}} Image</button></td>
         <td>Product</td>
         <td>Code</td>
@@ -32,6 +37,7 @@
     </tr>
     </tbody>
 </table>
-
+</div>
+</div>
 </body>
 </html>
