@@ -26,23 +26,23 @@
                         templateUrl: 'app/products/productListView.html',
                         controller: 'productListCtrl as vm'
                     })
-                    // .state('productEdit', {
-                    //     url: '/products/edit/:productId',
-                    //     templateUrl: 'app/products/productEditView.html',
-                    //     controller: 'productEditCtrl as vm',
-                    //
-                    // })
+                    .state('productEdit', {
+                        url: '/products/edit/:productId',
+                        templateUrl: 'app/products/productEditView.html',
+                        controller: 'productEditCtrl as vm',
+
+                    })
                     .state('productDetail', {
                         url: '/products/:productId',
                         templateUrl: 'app/products/productDetailView.html',
-                        controller: 'productDetailCtrl as vm'
-                        // resolve: {
-                        //     productService: "productService",
-                        //     product: function(productService, $stateParams) {
-                        //         var productId = $stateParams.productId;
-                        //         return productService.get({productId:productId}).$promise;
-                        //     }
-                        // }
+                        controller: 'productDetailCtrl as vm',
+                        resolve: {
+                            productService: "productResource",
+                            product: function(productResource, $stateParams) {
+                                var productId = $stateParams.productId;
+                                return productResource.get({productId:productId}).$promise;
+                            }
+                        }
                     })
                 ;
             }])
