@@ -1,0 +1,48 @@
+<div class="panel panel-primary">
+
+    <div class="panel-heading">
+        {{vm.title}}
+    </div>
+
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-2">Name:</div>
+                    <div class="col-md-6">{{vm.product.productName}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">Code:</div>
+                    <div class="col-md-6">{{vm.product.productCode}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">Released:</div>
+                    <div class="col-md-6">{{vm.product.releaseDate | date}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">price:</div>
+                    <div class="col-md-6">{{vm.product.price | currency}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">Description:</div>
+                    <div class="col-md-6">{{vm.product.productName}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">Tags:</div>
+                    <div class="col-md-6">{{vm.product.tagList}}</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <img ng-src="{{vm.product.imageUrl}}"
+                     style="width:200px;margin:2px"
+                     alt="{{vm.product.productName}}"
+                     class="center-block"
+                >
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <a ui-sref="productList" class="btn btn-default">Back</a>
+        <a ui-sref="productEdit({productId: vm.product.productId})" class="btn btn-primary">Edit</a>
+    </div>
+</div>

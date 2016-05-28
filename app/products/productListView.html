@@ -1,0 +1,50 @@
+<div class="panel panel-primary">
+    <div class="panel-heading" style="font-size:large">
+        Product Page
+    </div>
+    <div class="panel-body">
+        <!-- view template 으로 사용되는 한, 더이상 ng-controller는 필요없음. 다만 컨트롤러 이름이 "vm" 이 되도록만함 -->
+        <!--<table class="table" ng-controller="productListCtrl as vm">-->
+        <table class="table" ng-controller="productListCtrl as vm">
+            <thead>
+            <tr>
+                <td><button class="btn btn-primary" type="button" ng-click="vm.toggleImage()">
+                    {{vm.showImage ? "Hide" : "Show"}} Image</button></td>
+                <td>Product</td>
+                <td>Code</td>
+                <td>Available</td>
+                <td>Price</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="product in vm.products">
+                <td>
+                    <img style="width:50px;margin:10px"
+                         ng-if="vm.showImage"
+                         ng-src="{{product.imageUrl}}"
+                         title="{{product.productName}}"/>
+                </td>
+                <td>
+                    <a ui-sref="productDetail({productId:product.productId})">
+                        {{product.productName}}
+                    </a>
+                </td>
+                <td>
+                    {{product.productCode}}
+                </td >
+                <td>
+                    {{product.releaseDate}}
+                </td>
+                <td>
+                    {{product.price | currency}}
+                </td>
+                <td>
+                    <a ui-sref="productEdit({productId:product.productId})" class="btn btn-primary">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

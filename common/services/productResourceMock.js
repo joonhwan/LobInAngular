@@ -5,6 +5,11 @@
      "use strict";
      var app = angular.module("productResourceMock", ["ngMockE2E"]);
      app.run(function($httpBackend) {
+
+         // httpBackend가 'app/products/productListView.html'따위를 건드리지 않게.
+         // see : http://stackoverflow.com/questions/29851146/angularjs-ui-router-is-throwing-error-unexpected-request-get
+         $httpBackend.whenGET(/app\//).passThrough();
+
          var products = [
              {
                  "productId": 1,
