@@ -37,7 +37,7 @@
                         templateUrl: 'app/products/productDetailView.html',
                         controller: 'productDetailCtrl as vm',
                         resolve: {
-                            productService: "productResource",
+                            productResource: "productResource",
                             product: function(productResource, $stateParams) {
                                 var productId = $stateParams.productId;
                                 return productResource.get({productId:productId}).$promise;
