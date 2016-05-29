@@ -1,0 +1,29 @@
+<form name="productForm" class="form-horizontal">
+    <fieldset>
+        <legend>
+            Product Search Tags
+        </legend>
+        <div class="form-group">
+            <label for="inputSearchTags" class="control-label col-md-2">
+                Product Name
+            </label>
+            <div class="col-md-8">
+                <input id="inputSearchTags" class="form-control" ng-model="vm.newTags" type="text"
+                       placeholder="Product Search Keywords separated by comma(,)">
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-default" ng-click="vm.addTags()">
+                    Add
+                </button>
+            </div>
+        </div>
+        <div class="col-md-offset-2 col-md-10">
+            <span ng-repeat="tag in vm.product.tags | orderBy">
+                <button class="btn btn-default" ng-click="vm.removeTag($index)">
+                    {{tag}}
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </span>
+        </div>
+    </fieldset>
+</form>

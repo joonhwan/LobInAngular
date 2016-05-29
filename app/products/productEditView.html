@@ -1,0 +1,23 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        {{vm.title}}
+    </div>
+    <div class="panel-body">
+        <div class="wizard">
+            <a ui-sref=".info" ui-sref-active="active">
+                Basic Information
+            </a>
+            <a ui-sref=".price" ui-sref-active="active">
+                Price
+            </a>
+            <a ui-sref=".tags" ui-sref-active="active">
+                Search Tags
+            </a>
+        </div>
+        <div ui-view></div>
+    </div>
+    <div class="panel-footer">
+        <a ng-click="vm.save()" class="btn btn-default">Save</a>
+        <a ng-click="vm.cancel()" class="btn btn-primary">Cancel</a>
+    </div>
+</div>

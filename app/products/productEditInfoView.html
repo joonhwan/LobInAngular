@@ -1,0 +1,82 @@
+<form name="productForm" class="form-horizontal" novalidate>
+    <fieldset>
+        <legend>
+            Basic Product Information
+        </legend>
+        <div class="form-group"
+             ng-class="{'has-error':productForm.inputProductName.$invalid && productForm.inputProductName.$dirty}">
+            <label for="inputProductName" class="control-label col-md-2">
+                Product Name
+            </label>
+            <div class="col-md-4">
+                <input id="inputProductName"
+                       name="inputProductName"
+                       class="form-control"
+                       type="text"
+                       ng-model="vm.product.productName"
+                       placeholder="Product Name (required)"
+                       required
+                       ng-minlength="3"
+                       ng-maxlength="20"
+                >
+            </div>
+            <span class="help-block has-error">
+                {{productForm.inputProductName.$error}}
+            <!--
+                <span ng-messages="productForm.inputProductName.$error">
+                    <span ng-message="required">Product name is required.</span>
+                    <span ng-message="minlength">Product name length should be > 3</span>
+                    <span ng-message="maxlength">Product name length shodld be < 20</span>
+                </span>
+            -->
+            </span>
+        </div>
+        <div class="form-group"
+             ng-class="{'has-error':productForm.inputProductCode.$invalid && productForm.inputProductCode.$dirty}">
+            <label for="inputProductCode" class="control-label col-md-2">
+                Product Code
+            </label>
+            <div class="col-md-4">
+                <input id="inputProductCode"
+                       name="inputProductCode"
+                       class="form-control"
+                       type="text"
+                       ng-model="vm.product.productCode"
+                       ui-mask="A**-***-999 (required)"
+                       required
+                >
+            </div>
+            <span class="help-block has-error"
+                  ng-show="productForm.inputProductCode.$invalid">
+                Product Code is required.
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="inputReleaseDate"
+                   class="control-label col-md-2">
+                Release Date
+            </label>
+            <div class="col-md-4">
+                <p class="input-group">
+                    <input type="text"
+                           id="inputReleaseDate"
+                           class="form-control" uib-datepicker-popup="{{vm.format}}" ng-model="vm.releaseDate"
+                           is-open="vm.popup1.opened" ng-required="true"
+                           close-text="Close" alt-input-formats="vm.altInputFormats"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.open1()">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputDescription" class="control-label col-md-2">Description</label>
+            <div class="col-md-10">
+                <textarea id="inputDescription" class="form-control" ng-model="vm.product.description"
+                          placeholder="Description" rows="3"></textarea>
+            </div>
+        </div>
+    </fieldset>
+</form>
