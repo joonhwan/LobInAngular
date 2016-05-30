@@ -19,7 +19,7 @@
         //     "productCode": "APP-MAC-011",
         //     "releaseDate": "2016/12/11",
         //     "imageUrl":"https://www.apple.com/pr/products/images/iMac27_iMac21_Photos_PRINT_131020_HERO.jpg",
-        //     "price":1980,
+        //     "prices":1980,
         //     "category": "computer",
         //     "tags": ["apple", "mac", "osx"],
         //     "description": "beautiful computer ever exist"

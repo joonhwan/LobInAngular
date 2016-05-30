@@ -18,3 +18,8 @@ body {
     background: #007ADC;
     color:#FFFFFF;
 }
+
+.chart {
+    width:100%;
+    height:300px;
+}

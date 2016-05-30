@@ -9,8 +9,9 @@
             [
                 'common.services',
                 'ui.router',
-                'ui.bootstrap',
+                'ui.bootstrap', // datetime picker 쓰려고..
                 'ui.mask',
+                'angularCharts',
                 'productResourceMock'
             ])
         .config(['$stateProvider', '$urlRouterProvider',
@@ -29,7 +30,7 @@
                         controller: 'productListCtrl as vm'
                     })
                     .state('productEdit', {
-                        abstract: true, // productEdit 는 이걸로 직접 route할 수 없다(info/price/tags sub state가 활성화되면 그 때 간접 활성화?)
+                        abstract: true, // productEdit 는 이걸로 직접 route할 수 없다(info/prices/tags sub state가 활성화되면 그 때 간접 활성화?)
                         url: '/products/edit/:productId',
                         templateUrl: 'app/products/productEditView.html',
                         controller: 'productEditCtrl as vm',
@@ -65,6 +66,18 @@
                                 return productResource.get({productId:productId}).$promise;
                             }
                         }
+                    })
+                    .state('priceAnalytics', {
+                        url: '/priceAnalytics',
+                        templateUrl: 'app/prices/priceAnalyticsView.html',
+                        controller: 'priceAnalyticsCtrl',
+                        resolve: {
+                            productResource: 'productResource',
+                            products: function(productResource) {
+                                return productResource.query().$promise;
+                            }
+                        }
+
                     })
                 ;
             }])
