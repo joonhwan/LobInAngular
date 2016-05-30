@@ -41,6 +41,7 @@
                             }
                         }
                     })
+                    // stateName.substateName 표현식으로 nested state 를 구성
                     .state('productEdit.info', {
                         url: '/info',
                         templateUrl: 'app/products/productEditInfoView.html'

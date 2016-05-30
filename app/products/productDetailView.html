@@ -29,7 +29,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-2">Description:</div>
-                    <div class="col-md-6">{{vm.product.productName}}</div>
+                    <div class="col-md-6">{{vm.product.description}}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">Tags:</div>
@@ -47,6 +47,6 @@
     </div>
     <div class="panel-footer">
         <a ui-sref="productList" class="btn btn-default">Back</a>
-        <a ui-sref="productEdit({productId: vm.product.productId})" class="btn btn-primary">Edit</a>
+        <a ui-sref="productEdit.info({productId: vm.product.productId})" class="btn btn-primary">Edit</a>
     </div>
 </div>
