@@ -18,6 +18,7 @@
                  "releaseDate": "2016/12/11",
                  "imageUrl":"https://www.apple.com/pr/products/images/iMac27_iMac21_Photos_PRINT_131020_HERO.jpg",
                  "price":1980,
+                 "cost":1400,
                  "category": "computer",
                  "tags": ["apple", "mac", "osx"],
                  "description": "beautiful computer ever exist"
@@ -29,6 +30,7 @@
                  "releaseDate": "2016/12/11",
                  "imageUrl": "http://cdn2.pcadvisor.co.uk/cmsdata/reviews/3364791/Microsoft_Surface_RT.jpg",
                  "price":2150,
+                 "cost":1800,
                  "category": "computer",
                  "tags": ["microsoft", "surface", "laptop", "windows10"],
                  "description": "improved laptop over iPad"
@@ -40,6 +42,7 @@
                  "releaseDate": "1995/09/08",
                  "imageUrl": "http://www.ormondbeachcomputerrepair.com/wp-content/uploads/2016/01/computer-repair.png",
                  "price":210,
+                 "cost":205,
                  "category": "computer",
                  "tags": ["old", "pc", "windows95"],
                  "description": "very old computer worse than iphone"
@@ -51,6 +54,7 @@
                  "releaseDate": "1989/06/21",
                  "imageUrl": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQBL7yM0GJecNmjZdn-fSwg13Xt_9fmNGaAVRJ16yBMoUV-q0MA",
                  "price":1150,
+                 "cost":1000,
                  "category": "computer",
                  "tags": ["apple", "mac", "apple-dos"],
                  "description": "miss you jobs"

@@ -26,6 +26,9 @@
         // };
 
         vm.product = product;
+        
+        vm.marginPercent = 0;//productService.calculateMarginPercent(vm.product.price, vm.product.cost);
+        
         vm.title = "Product Detail : " + vm.product.productName;
 
         if(vm.product.tags) {
