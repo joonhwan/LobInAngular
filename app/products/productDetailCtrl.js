@@ -7,10 +7,10 @@
 
     var app = angular
         .module('productManagement')
-        .controller('productDetailCtrl', ['product', ProductDetailCtrl])
+        .controller('productDetailCtrl', ['product', 'productService', ProductDetailCtrl])
     ;
 
-    function ProductDetailCtrl(product) {
+    function ProductDetailCtrl(product, productService) {
         var vm = this;
 
         // var product = {
@@ -27,7 +27,7 @@
 
         vm.product = product;
         
-        vm.marginPercent = 0;//productService.calculateMarginPercent(vm.product.price, vm.product.cost);
+        vm.marginPercent = productService.calculateMarginPercent(vm.product.price, vm.product.cost);
         
         vm.title = "Product Detail : " + vm.product.productName;
 

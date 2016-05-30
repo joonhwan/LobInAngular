@@ -1,0 +1,103 @@
+{
+  "$error": {
+    "required": [
+      {
+        "$validators": {},
+        "$asyncValidators": {},
+        "$parsers": [
+          null
+        ],
+        "$formatters": [
+          null,
+          null
+        ],
+        "$viewChangeListeners": [],
+        "$untouched": true,
+        "$touched": false,
+        "$pristine": true,
+        "$dirty": false,
+        "$valid": false,
+        "$invalid": true,
+        "$error": {
+          "required": true
+        },
+        "$name": "inputProductCode",
+        "$options": null
+      },
+      {
+        "$validators": {},
+        "$asyncValidators": {},
+        "$parsers": [
+          null
+        ],
+        "$formatters": [
+          null,
+          null
+        ],
+        "$viewChangeListeners": [
+          null
+        ],
+        "$untouched": true,
+        "$touched": false,
+        "$pristine": true,
+        "$dirty": false,
+        "$valid": false,
+        "$invalid": true,
+        "$error": {
+          "required": true
+        },
+        "$name": "",
+        "$options": null
+      }
+    ]
+  },
+  "$name": "productForm",
+  "$dirty": true,
+  "$pristine": false,
+  "$valid": false,
+  "$invalid": true,
+  "$submitted": false,
+  "inputProductName": {
+    "$viewValue": "abcd",
+    "$modelValue": "abcd",
+    "$validators": {},
+    "$asyncValidators": {},
+    "$parsers": [],
+    "$formatters": [
+      null
+    ],
+    "$viewChangeListeners": [],
+    "$untouched": false,
+    "$touched": true,
+    "$pristine": false,
+    "$dirty": true,
+    "$valid": true,
+    "$invalid": false,
+    "$error": {},
+    "$name": "inputProductName",
+    "$options": null
+  },
+  "inputProductCode": {
+    "$validators": {},
+    "$asyncValidators": {},
+    "$parsers": [
+      null
+    ],
+    "$formatters": [
+      null,
+      null
+    ],
+    "$viewChangeListeners": [],
+    "$untouched": true,
+    "$touched": false,
+    "$pristine": true,
+    "$dirty": false,
+    "$valid": false,
+    "$invalid": true,
+    "$error": {
+      "required": true
+    },
+    "$name": "inputProductCode",
+    "$options": null
+  }
+}

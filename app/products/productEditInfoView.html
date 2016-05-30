@@ -21,7 +21,7 @@
                 >
             </div>
             <span class="help-block has-error">
-                {{productForm.inputProductName.$error}}
+                <!--{{productForm.inputProductName}}-->
             <!--
                 <span ng-messages="productForm.inputProductName.$error">
                     <span ng-message="required">Product name is required.</span>
@@ -29,6 +29,15 @@
                     <span ng-message="maxlength">Product name length shodld be < 20</span>
                 </span>
             -->
+                <span ng-show="productForm.inputProductName.$error.required">
+                    Product Name is required.
+                </span>
+                <span ng-show="productForm.inputProductName.$error.minlength">
+                    Product Name is too short.
+                </span>
+                <span ng-show="productForm.inputProductName.$error.maxlength">
+                    Product Name is too long.
+                </span>
             </span>
         </div>
         <div class="form-group"
@@ -79,4 +88,10 @@
             </div>
         </div>
     </fieldset>
+    <div class="panel-footer">
+        <!--<a ng-click="vm.save()" ng-disabled="productForm.$valid" class="btn btn-default">Save</a>-->
+        <a ng-click="vm.save(productForm.$valid)" class="btn btn-default">Save</a>
+        <a ng-click="vm.cancel()" class="btn btn-primary">Cancel</a>
+        <!--productForm.$invalid = {{productForm | json}}-->
+    </div>
 </form>

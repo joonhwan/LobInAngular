@@ -19,11 +19,16 @@
         };
 
         toastr.options.positionClass = "toast-bottom-center";
-        vm.save = function() {
-            vm.product.$save(function(data) {
-                $state.go('productList');
-                toastr['success']('Successful save : ' + data.productName);
-            })
+        vm.save = function(valid) {
+            if(valid) {
+                vm.product.$save(function (data) {
+                    $state.go('productList');
+                    toastr.success('Successful save : ' + data.productName);
+                })
+            } else {
+                toastr.error('Failed saving : ' + vm.product.productName);
+                //alert('error');
+            }
         }
 
         vm.cancel = function() {
