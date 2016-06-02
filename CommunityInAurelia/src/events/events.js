@@ -5,14 +5,35 @@ import {Router} from 'aurelia-router';
 @inject(DataRepository, Router)
 export class Events {
     constructor(dataRepository, router) {
+        this.dataRepository = dataRepository;
+        this.router = router;
+    }
+    
+    activate(params) {
         // this.events = dataRepository.getEvents();
-        dataRepository.getEvents().then(events => {
-            this.events = events;
+        this.dataRepository.getEvents().then(events => {
+            
+            if(params.speaker || params.topic) {
+                var filteredResult = [];
+                events.forEach(item => {
+                    if(params.speaker
+                        && item.speaker.toLowerCase().indexOf(params.speaker.toLowerCase()) > 0) {
+                        filteredResult.push(item);
+                    }
+                    if(params.topic
+                        && item.title.toLowerCase().indexOf(params.topic.toLowerCase()) > 0) {
+                        filteredResult.push(item)
+                    }
+                });
+                this.events = filteredResult;
+            } else {
+                this.events = events;
+            }
             
             // generate all events [detailUrl] property
             this.events.forEach(event => {
                 event.detailUrl
-                    = router.generate('eventDetail', { eventId: event.id }); 
+                    = this.router.generate('eventDetail', { eventId: event.id }); 
             });
         });
     }
