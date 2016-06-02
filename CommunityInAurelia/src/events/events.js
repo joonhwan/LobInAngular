@@ -9,6 +9,15 @@ export class Events {
         this.router = router;
     }
     
+    goToDiscussion() {
+        this.router.navigate('#/discussion');
+    }
+    
+    // sample
+    goToFirstEvent() {
+        this.router.navigateToRoute('eventDetail', { eventId: this.events[0].id });
+    }
+    
     activate(params) {
         // this.events = dataRepository.getEvents();
         this.dataRepository.getEvents().then(events => {
@@ -37,4 +46,5 @@ export class Events {
             });
         });
     }
+    
 }
