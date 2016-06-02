@@ -2,9 +2,9 @@ import {eventsData} from 'services/eventsData';
 import moment from 'moment'; // moments 라이브러리는 ECMA2016 호환이 아님. 
 
 export class DataRepository {
+    
     constructor() {
-        this.events = eventsData;
-        
+        this.events = eventsData;        
     }
     
     getEvents() {

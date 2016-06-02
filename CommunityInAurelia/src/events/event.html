@@ -1,3 +1,9 @@
 <template>
-    <div class="row bg-success rbox">${item.id} : ${item.title}</div>
+    <!--<div class="row bg-success rbox">${item.id} : ${item.title}</div>-->
+    <div class="bg-sucess rbox">
+        <!--<a href="#/eventDetail/${event.id}">${event.id} : ${event.title}</a>-->
+        <a href.bind="event.detailUrl">
+            ${event.id} : ${event.title}
+        </a>
+    </div>
 </template>
