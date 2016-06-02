@@ -1,8 +1,12 @@
+import {inject} from 'aurelia-framework';
+import {DataRepository} from 'services/dataRepository';
+
+@inject(DataRepository)
 export class Events {
-    constructor() {
-        this.events = [
-            { id: 1, title: 'Aurelai Fundamentals' },
-            { id: 2, title: 'ASP.NET vNext' }
-        ]       
+    constructor(dataRepository) {
+        // this.events = dataRepository.getEvents();
+        dataRepository.getEvents().then(events => {
+            this.events = events
+        });
     }
 }
