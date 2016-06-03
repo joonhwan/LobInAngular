@@ -5,7 +5,7 @@ export var eventsData =
     "speaker": "Melton Cheri",
     "title": "esse sunt amet",
     "dateTime": "Wed Aug 31 1988 22:48:50 GMT+0000 (UTC)",
-    "description": "Dolore enim non culpa in laboris dolore sint.",
+    "description": "<b>Dolore enim</b> non culpa in laboris dolore sint.",
     "id": 100
   },
   {
@@ -13,7 +13,7 @@ export var eventsData =
     "speaker": "Lane Cardenas",
     "title": "reprehenderit sint officia",
     "dateTime": "Tue Jan 16 1990 05:48:37 GMT+0000 (UTC)",
-    "description": "Nostrud cupidatat labore eu esse proident sunt nostrud tempor est elit culpa sit.",
+    "description": "Nostrud <h4>cupidatat</h4> labore eu <em>esse proident</em> sunt nostrud tempor est elit culpa sit.",
     "id": 101
   },
   {
@@ -77,7 +77,7 @@ export var eventsData =
     "speaker": "Greer Margery",
     "title": "dolore aute cillum",
     "dateTime": "Sun Sep 03 1972 07:49:55 GMT+0000 (UTC)",
-    "description": "Ea veniam Lorem consequat Lorem irure anim incididunt in ut.",
+    "description": "<span style='color:yellow; background-color:red'>Ea veniam Lorem</span> consequat Lorem irure anim incididunt in ut.",
     "id": 109
   },
   {

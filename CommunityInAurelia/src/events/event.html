@@ -2,8 +2,33 @@
     <!--<div class="row bg-success rbox">${item.id} : ${item.title}</div>-->
     <div class="bg-sucess rbox">
         <!--<a href="#/eventDetail/${event.id}">${event.id} : ${event.title}</a>-->
-        <a href.bind="event.detailUrl">
+        <!--<a href.bind="event.detailUrl">
             ${event.dateTime} - ${event.id} : ${event.title}
-        </a>
+        </a>-->
+        <table>
+            <tr>
+                <td>
+                    <a href.bind='event.detailUrl'>
+                        <h3 textContent.bind='event.title'></h3>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h5 textContent.bind='event.dateTime'></h5>
+                </td>
+            </tr>
+            <tr>
+                <!-- 
+                    innerHtml.bind  하면 문자열값 내 HTMLTag가 먹힌다. 
+                    그러나, 그렇게 하면 Cross Site Scripting 보안문제가 있다. 
+                    sanitizeHtml 필터? 를 걸면, 조금 더 secure할 수 있다. 
+                    santize-html 패키지를 사용하면 더 완전하게 secure.                
+                -->
+                <td innerHtml.bind='event.description | sanitizeHTML'></td>
+            </tr>
+        </table>
+        <div textContent.two-way='event.description' contenteditable="true"> 
+        </div>
     </div>
 </template>

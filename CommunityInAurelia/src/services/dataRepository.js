@@ -32,7 +32,7 @@ export class DataRepository {
                         a.dateTime >= b.dateTime ? 1 : -1);
                         
                     resolve(filterAndFormat(pastOrFuture, me.events));
-                }, 2000);
+                }, 20);
             }
             else {
                 resolve(filterAndFormat(pastOrFuture, me.events));
