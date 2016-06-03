@@ -1,11 +1,11 @@
 <template>
-    <div repeat.for="event of events">
-        <compose model.bind="event" view-model="events/event"></compose>
-    </div>
-    <div>
-        <button type="button" click.trigger='goToDiscussion()'>
-            Go To Discussion
-        </button>
-    </div>
-    
+    <style type="text/css">
+        .nav-tabs li a { font-size:20px;}
+    </style>
+    <ui class="nav nav-tabs">
+        <li repeat.for="route of router.navigation" class=${route.isActive ? 'active':''}">
+            <a href.bind="route.href">${route.title}</a>
+        </li>
+    </ui>
+    <router-view></router-view>
 </template>
