@@ -1,7 +1,5 @@
 // Place your settings in this file to overwrite the default settings
 {
-	"editor.fontFamily": "Consolas",
-	
 	// 검색에서 파일 및 폴더를 제외하도록 GLOB 패턴을 구성합니다. files.exclude 설정에서 모든 GLOB 패턴을 상속합니다.
     "search.exclude": {
 		"**/jspm_packages": true,
