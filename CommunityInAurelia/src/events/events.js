@@ -20,7 +20,7 @@ export class Events {
     
     activate(params) {
         // this.events = dataRepository.getEvents();
-        this.dataRepository.getEvents().then(events => {
+        return this.dataRepository.getEvents().then(events => {
             
             if(params.speaker || params.topic) {
                 var filteredResult = [];

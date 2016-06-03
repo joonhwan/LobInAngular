@@ -24,6 +24,14 @@
                         <a href.bind="route.href">${route.title}</a>
                     </li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <!--if.bind : 조건이 참이 아니면, dom 에서 이 element를 제거. -->
+                        <!--<i class="fa fa-cog fa-spin fa-3x" style="margin:0 auto"
+                        if.bind="router.isNavigating"></i>-->
+                        <i class="fa fa-spinner fa-spin fa-3x fa-fw" if.bind="router.isNavigating"></i>
+                    </li>
+                </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
