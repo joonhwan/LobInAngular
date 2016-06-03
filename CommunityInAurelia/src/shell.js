@@ -6,7 +6,7 @@ export class Shell {
     configureRouter(config, router) {
         this.router = router;
         config.title = "Joonhwan .NET User Group";
-        config.options.pushState = true;
+        //config.options.pushState = true;
         config.map([
             { 
                 route: ['', 'events'], 
