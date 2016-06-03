@@ -1,3 +1,5 @@
+import toastr from 'toastr';
+
 export class Shell {
     constructor() {
         
@@ -7,6 +9,7 @@ export class Shell {
         this.router = router;
         config.title = "Joonhwan .NET User Group";
         //config.options.pushState = true;
+        config.addPipelineStep('modelbind', ToastNavResult);
         config.map([
             { 
                 route: ['', 'events'], 
@@ -42,5 +45,15 @@ export class Shell {
                 name: 'eventDetail'
             }
         ]);
+    }
+}
+
+class ToastNavResult {
+    run(navigationInstruction, next) {
+        
+        return next().then(a => {
+            toastr.info(a.status);
+            return a;
+        })
     }
 }
