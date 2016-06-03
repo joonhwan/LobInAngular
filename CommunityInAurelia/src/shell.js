@@ -8,19 +8,36 @@ export class Shell {
         config.title = "Joonhwan .NET User Group";
         config.map([
             { 
-                route: ['', 'events'], moduleId:'events/events', 
-                name:'events', title:'EventsTitle', nav:true 
+                route: ['', 'events'], 
+                viewPorts : 
+                {
+                    mainContent:  { moduleId:'events/events' },
+                    sideBar: { moduleId:'sideBar/sponsors' }
+                },
+                name:'events', title:'이벤트', nav:true 
             },
             {
-                route: 'jobs', moduleId:'jobs/jobs',
-                name:'jobs', title:'JobsTitle', nav:true
+                route: 'jobs', 
+                viewPorts: {
+                    mainContent: { moduleId:'jobs/jobs' },
+                    sideBar: { moduleId:'sideBar/sponsors'}
+                },
+                name:'jobs', title:'구직', nav:true
             },
             {
-                route: 'discussion', moduleId:'discussion/discussion',
-                name:'discussion', title:'DiscussionTitle', nav:true
+                route: 'discussion', 
+                viewPorts: {
+                    mainContent: { moduleId:'discussion/discussion' },
+                    sideBar: { moduleId:'sideBar/ads'}
+                },
+                name:'discussion', title:'토론', nav:true
             },
             {
-                route: 'eventDetail/:eventId', moduleId: 'eventDetail/eventDetail',
+                route: 'eventDetail/:eventId', 
+                viewPorts: {
+                    mainContent: { moduleId: 'eventDetail/eventDetail' },
+                    sideBar: { moduleId:'sideBar/ads' }
+                },
                 name: 'eventDetail'
             }
         ]);
