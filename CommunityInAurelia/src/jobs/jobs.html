@@ -1,3 +1,24 @@
 <template>
-    Jobs...
+    
+    <button click.trigger='addJob()' type="button" class="btn btn-default">Add New Job</button>
+    
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Need Date</th>
+                <th>Location</th>
+                <th>Technologies</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr repeat.for='job of jobs'>
+                <td>${job.title}</td>
+                <td>${job.needDate}</td>
+                <td>${job.location.city}, ${job.location.state}</td>
+                <td>${job.jobSkills.join(', ')}</td>
+            </tr>
+        </tbody>
+    </table>
+    
 </template>

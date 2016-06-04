@@ -1,0 +1,36 @@
+<template>
+    
+    <form submit.delegate='save()'>
+        <legend>Add Job</legend>
+        
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" value.bind='job.title'>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" id="description" value.bind='job.description'>
+        </div>
+        <div class="form-group">
+            <label for="needDate">Need Date</label>
+            <input type="text" class="form-control" id="needDate" value.bind='job.needDate'>
+        </div>
+        <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" class="form-control" id="city" value.bind='job.location.city'>
+        </div>
+        <div class="form-group">
+            <label for="state">State</label>
+            
+            <select id="state" value.bind='job.location.state' class="form-control">
+                <option>Select State</option>
+                <option repeat.for="state of states" model.bind='state.abbreviation'>
+                    ${state.name}(${state.abbreviation})
+                </option>
+            </select>
+            
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+    
+</template>

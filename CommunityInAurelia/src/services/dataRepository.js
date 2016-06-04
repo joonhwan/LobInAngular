@@ -1,4 +1,5 @@
 import {eventsData} from 'services/eventsData';
+import {jobsData, jobTypes, jobSkills, states} from 'services/jobsData';
 import moment from 'moment'; // moments 라이브러리는 ECMA2016 호환이 아님. 
 
 function filterAndFormat(pastOrFuture, events_) {
@@ -17,6 +18,7 @@ function filterAndFormat(pastOrFuture, events_) {
 export class DataRepository {
 
     constructor() {
+        
     }
 
     getEvents(pastOrFuture) {
@@ -43,5 +45,49 @@ export class DataRepository {
 
     getEvent(eventId) {
         return this.events.find(item => item.id == eventId);
+    }
+    
+    addJob(job) {
+        return new Promise((resolve, reject) => {
+            this.getJobs().then(jobs => {
+                this.jobs.push(job);
+                resolve(job);
+            });
+        });
+    }
+    getJobs() {
+        return new Promise((resolve, reject) => {
+            if(!this.jobs) {
+                this.jobs = jobsData;
+                this.jobs.forEach(job => {
+                    job.needDate = moment(job.needDate);
+                })
+            };
+            resolve(this.jobs);
+        });
+    }
+    getStates() {
+        return new Promise((resolve, reject) => {
+            if(!this.states) {
+                this.states = states;
+            };
+            resolve(this.states);
+        });
+    }
+    getJobTypes() {
+        return new Promise((resolve, reject) => {
+            if(!this.jobTypes) {
+                this.jobTypes = jobTypes;
+            };
+            resolve(this.jobTypes);
+        });
+    }
+    getJobSkills() {
+        return new Promise((resolve, reject) => {
+           if(!this.jobSkills) {
+               this.jobSkills = jobSkills;
+           }; 
+           resolve(this.jobSkills);
+        });
     }
 }

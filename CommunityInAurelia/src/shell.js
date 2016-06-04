@@ -43,6 +43,14 @@ export class Shell {
                     sideBar: { moduleId:'sideBar/ads' }
                 },
                 name: 'eventDetail'
+            },
+            {
+                route: 'addJob',
+                viewPorts: {
+                    mainContent: { moduleId: 'jobs/addJob' },
+                    sideBar: { moduleId:'sideBar/ads' }
+                },
+                name: 'addJob'
             }
         ]);
     }
