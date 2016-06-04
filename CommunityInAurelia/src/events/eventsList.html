@@ -1,5 +1,23 @@
 <template>
     <div repeat.for="event of events">
+        <div>
+            Index:${$index} 
+            ${$first ? 'first' : ''}
+            ${$last ? 'last' : ''}
+            (
+            ${$even ? 'even' : ''}
+            ${$odd ? 'odd' : ''}
+            )
+            :
+            First:${$first}, 
+            Last:${$last}, 
+            Even:${$even}, 
+            Odd:${odd}
+        </div>
+        <div>
+            parent.WhoAmI = ${$parent.whoAmI},
+            just WhoAmI = ${whoAmI} 
+        </div>
         <compose model.bind="event" view-model="events/event"></compose>
     </div>
     <div>

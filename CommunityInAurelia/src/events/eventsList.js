@@ -8,6 +8,7 @@ export class EventsList {
         console.log("EventsList: ctor");
         this.dataRepository = dataRepository;
         this.router = router;
+        this.whoAmI = '루크, 내가 네 아비다(다스베이더)';
     }
     
     goToDiscussion() {

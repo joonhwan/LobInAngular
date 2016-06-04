@@ -12,7 +12,35 @@
     </button>
     
     
-    <input type="text" ref='input1' class="form-control" value="initial input1">
+    <input type="text" ref='input1' class="form-control" value="initial input1e">
     <div>Input1 = ${input1.value}</div>
+    
+    <div repeat.for = '[key, value] of mapCollection'>
+        ${key} : ${value}
+    </div>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            Key/Values
+        </div>
+        <div class="panel-body">
+            <!-- Table -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Value<th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for = '[key, value] of mapCollection'>
+                        <td>${key}</td>  
+                        <td>${value}</td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+    </div>
+        
     
 </template>
