@@ -28,8 +28,25 @@
                     ${state.name}(${state.abbreviation})
                 </option>
             </select>
-            
         </div>
+        
+        
+        <div class="checkbox">
+            <label repeat.for="jobType of jobTypes">
+                <input type="radio" value.bind='jobType' checked.bind='$parent.job.jobType'>
+                ${jobType}
+            </label>
+        </div>
+        
+        
+        <div class="checkbox">
+            <label repeat.for="jobSkill of jobSkills">
+                <input type="checkbox" value.bind="jobSkill" checked.bind='$parent.job.jobSkills'>
+                ${jobSkill}
+            </label>
+        </div>
+        
+        
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
     
