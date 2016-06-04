@@ -12,10 +12,11 @@
     </button>
     
     
-    <input type="text" ref='input1' class="form-control" value="initial input1e">
-    <div>Input1 = ${input1.value}</div>
+    <input type="text" ref='input1' class="form-control" value="initial input1e"
+           css="background: ${input1BackgroundColor};">
+    <div style.bind='styleString'>Input1 = ${input1.value}</div>
     
-    <div repeat.for = '[key, value] of mapCollection'>
+    <div style.bind='styleObject' repeat.for = '[key, value] of mapCollection'>
         ${key} : ${value}
     </div>
     <div class="panel panel-default">

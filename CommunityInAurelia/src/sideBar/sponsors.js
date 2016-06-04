@@ -13,6 +13,10 @@ export class Sponsors {
         m.set('d', 'Delta');
         this.mapCollection = m;
         
+        this.input1BackgroundColor = 'yellow';
+        this.styleString = 'background: red;';
+        this.styleObject = { background: 'green' };
+        
     }
     
     activate() {
