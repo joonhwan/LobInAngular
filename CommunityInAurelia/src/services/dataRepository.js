@@ -1,3 +1,7 @@
+import {inject} from 'aurelia-framework';
+// 아래와 같이 aurelia-templating-resources를 쓰려면 
+// jspm install aurelia-templating-resources를 실행해야 한다.
+import {BindingSignaler} from 'aurelia-templating-resources';
 import {eventsData} from 'services/eventsData';
 import {jobsData, jobTypes, jobSkills, states} from 'services/jobsData';
 import moment from 'moment'; // moments 라이브러리는 ECMA2016 호환이 아님. 
@@ -15,10 +19,14 @@ function filterAndFormat(pastOrFuture, events_) {
     return events;
 }
 
+@inject(BindingSignaler)
 export class DataRepository {
 
-    constructor() {
-        
+    constructor(bindingSignaler) {
+        this.bindingSignaler = bindingSignaler;
+        setInterval(() => {
+            this.bindingSignaler.signal('check-freshness');
+        }, 1000);
     }
 
     getEvents(pastOrFuture) {

@@ -19,13 +19,16 @@
     <div style.bind='styleObject' repeat.for = '[key, value] of mapCollection'>
         ${key} : ${value}
     </div>
-    <div class="panel panel-default">
-        <!-- Default panel contents -->
+    
+    <div repeat.for="trade of trades" 
+    css="background-color:${trade.date | freshness & signal:'check-freshness'}">
+        ${trade.amount} (${trade.date | freshness & signal:'check-freshness'})
+    </div>
+    <!--<div class="panel panel-default">
         <div class="panel-heading">
             Key/Values
         </div>
         <div class="panel-body">
-            <!-- Table -->
             <table class="table">
                 <thead>
                     <tr>
@@ -40,8 +43,8 @@
                     </tr>
                 </tbody>
             </table>
-    </div>
-    </div>
+        </div>
+    </div>-->
         
     
 </template>

@@ -1,10 +1,12 @@
 export class FreshnessValueConverter {
     toView(value) {
         var elapsed = (new Date() - value)/1000;
-        if(elapsed > 5000) {
+        //console.log("freshness valueconverter called : " + value + ", elasped=" + elapsed);
+        
+        if(elapsed > 5) {
             return 'red';
-        } else if(elapsed > 1000) {
-            return 'yello';
+        } else if(elapsed > 1) {
+            return 'yellow';
         }
         return 'white';
     }

@@ -16,6 +16,10 @@ export class Sponsors {
         this.input1BackgroundColor = 'yellow';
         this.styleString = 'background: red;';
         this.styleObject = { background: 'green' };
+
+        this.trades = [
+            { amount:90.1, date:new Date() }
+        ];
         
     }
     
@@ -26,6 +30,12 @@ export class Sponsors {
             // console.log('this.message : ' + this.message);
             this.message = 'Sponsor' + this.counter++;
         }, 1000); 
+        setTimeout(() => {
+            this.trades.push({
+                amount:95.2, 
+                date:new Date()
+            });
+        }, 1000);
     }
     
     deactivate() {
