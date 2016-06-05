@@ -1,0 +1,25 @@
+<template>
+    <ai-dialog>
+        <ai-dialog-header>
+            <h3>Edit Event</h3>
+        </ai-dialog-header>
+        
+        <ai-dialog-body>
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" value.bind='event.title' class="form-control" id="title">
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea value.bind='event.description' id="description" cols="50" rows="4"></textarea>
+            </div>
+        </ai-dialog-body>
+        
+        <ai-dialog-footer>
+            
+            <button click.delegate='save()' type="button" class="btn btn-primary">Save</button>
+            <button click.delegate='cancel()' type="button" class="btn btn-primary">Cancel</button>
+            
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>

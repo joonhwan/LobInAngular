@@ -7,6 +7,7 @@ export function configure(aurelia) {
         .globalResources('common/dateFormat', 'common/freshness')
         .standardConfiguration()
         .developmentLogging()
+        .plugin('aurelia-dialog')
         ;
      
     aurelia

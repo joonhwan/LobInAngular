@@ -6,7 +6,13 @@
         </div>
         <div class="col-md-10">
             <h3>${event.title}</h3>
-            <h5>${event.dateTime}</h5>  
+            <h5>${event.dateTime}</h5>
+            
+            <button click.delegate='editEvent(event)' 
+                    type="button" class="btn btn-default">
+                Edit
+            </button>
+              
         </div>
     </div>
     <div class="row">
