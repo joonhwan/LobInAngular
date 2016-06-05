@@ -19,6 +19,7 @@ System.config({
   map: {
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.2.1",
     "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.2.5",
+    "aurelia-templating-resources": "npm:aurelia-templating-resources@1.0.0-beta.1.2.6",
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "bootstrap": "github:twbs/bootstrap@3.3.6",
