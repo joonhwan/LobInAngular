@@ -21,6 +21,7 @@ System.config({
     "aurelia-dialog": "npm:aurelia-dialog@0.6.2",
     "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.2.5",
     "aurelia-templating-resources": "npm:aurelia-templating-resources@1.0.0-beta.1.2.6",
+    "aurelia-validation": "npm:aurelia-validation@0.8.1",
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "bootstrap": "github:twbs/bootstrap@3.3.6",
@@ -176,6 +177,9 @@ System.config({
       "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.2.2",
       "aurelia-path": "npm:aurelia-path@1.0.0-beta.1.2.2",
       "aurelia-task-queue": "npm:aurelia-task-queue@1.0.0-beta.1.2.1"
+    },
+    "npm:aurelia-validation@0.8.1": {
+      "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.0.0-beta.1.2.3"
     },
     "npm:babel-runtime@5.8.38": {
       "process": "github:jspm/nodelibs-process@0.1.2"

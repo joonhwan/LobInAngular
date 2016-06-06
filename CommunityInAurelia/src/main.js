@@ -8,6 +8,7 @@ export function configure(aurelia) {
         .standardConfiguration()
         .developmentLogging()
         .plugin('aurelia-dialog')
+        .plugin('aurelia-validation')
         ;
      
     aurelia
