@@ -1,0 +1,6 @@
+C:\prj\oss\mine\LobInAngular\TypeScriptFundamentals\TypeScriptTypes-Before\bin\TypeScriptTypes-Before.dll.config
+C:\prj\oss\mine\LobInAngular\TypeScriptFundamentals\TypeScriptTypes-Before\bin\TypeScriptTypes-Before.dll
+C:\prj\oss\mine\LobInAngular\TypeScriptFundamentals\TypeScriptTypes-Before\bin\TypeScriptTypes-Before.pdb
+C:\prj\oss\mine\LobInAngular\TypeScriptFundamentals\TypeScriptTypes-Before\obj\Debug\TypeScriptTypes-Before.csprojResolveAssemblyReference.cache
+C:\prj\oss\mine\LobInAngular\TypeScriptFundamentals\TypeScriptTypes-Before\obj\Debug\TypeScriptTypes-Before.dll
+C:\prj\oss\mine\LobInAngular\TypeScriptFundamentals\TypeScriptTypes-Before\obj\Debug\TypeScriptTypes-Before.pdb
