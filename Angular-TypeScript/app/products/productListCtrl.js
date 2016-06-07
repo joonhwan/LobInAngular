@@ -21,6 +21,7 @@ var app;
             ProductListCtrl.$inject = ['dataAccessService'];
             return ProductListCtrl;
         }());
+        productList.ProductListCtrl = ProductListCtrl;
         angular.module("productManagement")
             .controller("ProductListCtrl", ProductListCtrl);
     })(productList = app.productList || (app.productList = {}));

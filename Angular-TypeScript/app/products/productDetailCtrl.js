@@ -17,6 +17,7 @@ var app;
             ProductDetailCtrl.$inject = ['$routeParams', 'dataAccessService'];
             return ProductDetailCtrl;
         }());
+        productDetail.ProductDetailCtrl = ProductDetailCtrl;
         angular
             .module("productManagement")
             .controller("ProductDetailCtrl", ProductDetailCtrl);

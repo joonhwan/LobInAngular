@@ -7,7 +7,7 @@ interface IProductListModel {
     toggleImage() : void;
 }
 
-class ProductListCtrl implements IProductListModel {
+export class ProductListCtrl implements IProductListModel {
     title: string;
     showImage: boolean;
     products: app.domain.IProduct[];

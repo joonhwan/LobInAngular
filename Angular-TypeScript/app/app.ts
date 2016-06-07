@@ -11,7 +11,8 @@ module app {
         $routeProvider
             .when('/productList', { 
                 templateUrl: '/app/products/productListView.html',
-                controller: 'ProductListCtrl as vm',
+                controller: app.productList.ProductListCtrl,
+                controllerAs: 'vm'
             })
             .when('/productDetail/:productId', {
                 templateUrl: '/app/products/productDetailView.html',

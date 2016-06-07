@@ -4,7 +4,7 @@ module app.productDetail {
         productId: string;
     }
     
-    class ProductDetailCtrl {
+    export class ProductDetailCtrl {
         
         title: string;
         product: app.domain.IProduct;
