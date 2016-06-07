@@ -20,9 +20,13 @@ var app;
             product = new app.domain.Product(5, "Video Game Controller", "GMG-0042", new Date(2012, 9, 25), 35.95, "Standard five-button video game controller", "http://openclipart.org/image/300px/svg_to_png/120337/xbox-controller_01.png");
             products.push(product);
             var productUrl = "/api/products";
-            $httpBackend.whenGET(productUrl).respond(products);
-            var editingRegex = new RegExp(productUrl + "/[0-9][0-9]*", '');
+            $httpBackend.whenGET(productUrl).respond(function (method, url, data) {
+                //console.log("when get products...");
+                return [200, products, {}];
+            });
+            var editingRegex = new RegExp(productUrl + "/[0-9]+", '');
             $httpBackend.whenGET(editingRegex).respond(function (method, url, data) {
+                //console.log("httpbackend when get...");
                 var product = { "productId": 0 };
                 var parameters = url.split('/');
                 var length = parameters.length;

@@ -1,5 +1,11 @@
 {
 	"compilerOptions": {
-		"target": "ES5"
-	}
+		"target": "ES5",
+		"watch": false
+	},
+	"exclude": [
+		"node_modules",
+		"styles",
+		"scripts"	
+	]
 }

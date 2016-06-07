@@ -15,6 +15,7 @@ class ProductListCtrl implements IProductListModel {
     static $inject = ['dataAccessService'];
     
     constructor(private dataAccessService: app.common.DataAcessService) {
+        console.log("creating productListCtrl...")
         this.title = "Product List";
         this.showImage = false;
         this.products = [];

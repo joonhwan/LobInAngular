@@ -38,10 +38,15 @@ module app.common {
 
         var productUrl = "/api/products";
 
-        $httpBackend.whenGET(productUrl).respond(products);
+        $httpBackend.whenGET(productUrl).respond((method, url, data) => {
+            //console.log("when get products...");
+            return [200, products, {}];
+        });
 
-        var editingRegex = new RegExp(productUrl + "/[0-9][0-9]*", '');
+        var editingRegex = new RegExp(productUrl + "/[0-9]+", '');
         $httpBackend.whenGET(editingRegex).respond(function(method, url, data) {
+            
+            //console.log("httpbackend when get...");
             var product = { "productId": 0 };
             var parameters = url.split('/');
             var length = parameters.length;

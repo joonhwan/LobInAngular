@@ -7,14 +7,19 @@ module app {
     
     routeConfig.$inject = ['$routeProvider'];
     function routeConfig($routeProvider:ng.route.IRouteProvider) : void {
+        
         $routeProvider
             .when('/productList', { 
                 templateUrl: '/app/products/productListView.html',
-                controller: 'ProductList as vm',
+                controller: 'ProductListCtrl as vm',
             })
-            .when('/product/:producdtId', {
-                templateUrl: '/app/products/'
-            }
+            .when('/productDetail/:productId', {
+                templateUrl: '/app/products/productDetailView.html',
+                controller: 'ProductDetailCtrl as vm'
+            })
+            .otherwise('/productList')
             ;
     }
+    
+    console.log('end of app module definition')
 }
