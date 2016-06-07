@@ -1,6 +1,10 @@
 # Logs
 logs
 *.log
+*.suo
+*.user
+*.sln.docstates
+
 npm-debug.log*
 
 # Runtime data
