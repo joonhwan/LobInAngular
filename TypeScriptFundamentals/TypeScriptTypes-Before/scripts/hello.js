@@ -16,3 +16,4 @@ window.onload = function () {
     car.start();
     car.stop();
 };
+//# sourceMappingURL=hello.js.map
