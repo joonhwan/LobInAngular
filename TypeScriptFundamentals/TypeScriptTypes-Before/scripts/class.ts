@@ -41,7 +41,7 @@
         }
     }
 
-    window.onload = _ => {
+    // window.onload = _ => {
         var auto = new Auto(4000, new Engine(4000, 'V8'), 'Chevy', 'Sliverado');
         console.log('engine type : ' + auto.engine.toString());
 
@@ -49,5 +49,5 @@
         console.log('truck bedlength = ' + truck.bedLength + ', 4x4 = ' + truck.fourByFour);
 
         truck.addAccessory(10, 'mirror', 'cd player', 'amp');
-    };
+    // };
 }

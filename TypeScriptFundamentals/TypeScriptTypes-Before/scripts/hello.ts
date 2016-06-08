@@ -11,8 +11,8 @@
     }
 }
 
-window.onload = () => {
+// window.onload = () => {
     var car = new Car('v8');
     car.start();
     car.stop();
-}
+// }

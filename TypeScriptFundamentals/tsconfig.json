@@ -1,0 +1,11 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "target": "es5"
+    },
+    "exclude": [
+        "TypeScriptTypes-Before/bin",
+        "TypeScriptTypes-Before/obj",
+        "TypeScriptTypes-Before/Properties"
+    ]
+}
