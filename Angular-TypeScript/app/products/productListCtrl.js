@@ -6,7 +6,7 @@ var app;
             function ProductListCtrl(dataAccessService) {
                 var _this = this;
                 this.dataAccessService = dataAccessService;
-                console.log("creating productListCtrl...");
+                console.log("creating IProductListModel...");
                 this.title = "Product List";
                 this.showImage = false;
                 this.products = [];

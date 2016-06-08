@@ -7,7 +7,7 @@ module app.productDetail {
     export class ProductDetailCtrl {
         
         title: string;
-        product: app.domain.IProduct;
+        product: app.domain.IProductModel;
         
         static $inject = ['$routeParams', 'dataAccessService'];
         constructor(private $routeParams: IHaveProductId,
@@ -16,7 +16,7 @@ module app.productDetail {
             var resource = dataAccessService.getProductResource();
             
             this.title = "Product Detail";
-            resource.get({productId: productId}, (data: app.domain.IProduct) => {
+            resource.get({productId: productId}, (data: app.domain.IProductModel) => {
                this.product = data; 
             });
         }
