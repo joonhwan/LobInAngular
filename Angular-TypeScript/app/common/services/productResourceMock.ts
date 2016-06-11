@@ -8,8 +8,8 @@ module app.common {
     
     mockRun.$inject = ["$httpBackend"];
     function mockRun($httpBackend: ng.IHttpBackendService) : void {
-        var products: app.domain.IProduct[] = [];
-        var product: app.domain.IProduct;
+        var products: app.domain.IProductModel[] = [];
+        var product: app.domain.IProductModel;
 
         product = new app.domain.Product(1, "Leaf Rake", "GDN-0011", new Date(2009, 2, 19), 19.95,
             "Leaf rake with 48-inch wooden handle.",

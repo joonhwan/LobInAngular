@@ -1,4 +1,4 @@
-﻿var Car = (function () {
+var Car = (function () {
     function Car(engine) {
         this.engine = engine;
     }
@@ -9,6 +9,7 @@
         console.log('Engine Stopped : ' + this.engine);
     };
     return Car;
+<<<<<<< HEAD
 })();
 
 window.onload = function () {
@@ -18,3 +19,11 @@ window.onload = function () {
     car.stop();
 };
 //# sourceMappingURL=hello.js.map
+=======
+}());
+// window.onload = () => {
+var car = new Car('v8');
+car.start();
+car.stop();
+// } 
+>>>>>>> 3f3ed8cd7c00e4b15a1fb70a47b597a8ec1b91b7
