@@ -3,15 +3,16 @@
         this.engine = engine;
     }
     Car.prototype.start = function () {
-        alert('Engine Started : ' + this.engine);
+        console.log('Engine Started : ' + this.engine);
     };
     Car.prototype.stop = function () {
-        alert('Engine Stopped : ' + this.engine);
+        console.log('Engine Stopped : ' + this.engine);
     };
     return Car;
 })();
 
 window.onload = function () {
+    console.log('hello.ts -----------');
     var car = new Car('v8');
     car.start();
     car.stop();

@@ -1,4 +1,4 @@
-﻿module Classtest {
+﻿module ClassTest {
     "use strict";
 
     class Engine {
@@ -42,6 +42,8 @@
     }
 
     window.onload = _ => {
+        console.log('classTest.ts -----------');
+
         var auto = new Auto(4000, new Engine(4000, 'V8'), 'Chevy', 'Sliverado');
         console.log('engine type : ' + auto.engine.toString());
 

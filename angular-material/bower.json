@@ -1,0 +1,17 @@
+{
+  "name": "angular-material",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "joonhwan <joonhwan.lee@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/joonhwan/LobInAngular",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

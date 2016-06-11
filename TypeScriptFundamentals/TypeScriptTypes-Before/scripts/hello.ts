@@ -4,14 +4,15 @@
     }
 
     start() {
-        alert('Engine Started : ' + this.engine);
+        console.log('Engine Started : ' + this.engine);
     }
     stop() {
-        alert('Engine Stopped : ' + this.engine);
+        console.log('Engine Stopped : ' + this.engine);
     }
 }
 
 window.onload = () => {
+    console.log('hello.ts -----------');
     var car = new Car('v8');
     car.start();
     car.stop();
