@@ -34,17 +34,13 @@ System.register([], function(exports_1, context_1) {
                             bio: "Seoyeon ! Contrary to popular belief, Lorem Ipsum is not simply random text.\n      It has roots in a piece of classical Latin literature from 45 BC, making\n      it over 2000 years old. Richard McClintock, a Latin professor at Hampden-\n      Sydney College in Virginia, looked up one of the more obscure Latin words\n      , consectetur, from a Lorem Ipsum passage, and going through the cites of\n       the word in classical literature, discovered the undoubtable source.",
                             notes: [
                                 { title: "Pay back dinner", date: new Date("2016-01-22") },
-                                { title: "Buy flower to my wife", date: new Date("2016-09-08") }
                             ]
                         },
                         {
                             name: "Eunseo",
                             avatar: "svg-4",
                             bio: "Eunseo! Contrary to popular belief, Lorem Ipsum is not simply random text.\n      It has roots in a piece of classical Latin literature from 45 BC, making\n      it over 2000 years old. Richard McClintock, a Latin professor at Hampden-\n      Sydney College in Virginia, looked up one of the more obscure Latin words\n      , consectetur, from a Lorem Ipsum passage, and going through the cites of\n       the word in classical literature, discovered the undoubtable source.",
-                            notes: [
-                                { title: "Pay back dinner", date: new Date("2016-01-22") },
-                                { title: "Buy flower to my wife", date: new Date("2016-09-08") }
-                            ]
+                            notes: []
                         }
                     ];
                 }
