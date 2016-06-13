@@ -13,7 +13,7 @@ System.register([], function(exports_1, context_1) {
                         {
                             name: "Joonhwan",
                             avatar: "svg-1",
-                            bio: "Contrary to popular belief, Lorem Ipsum is not simply random text.\n      It has roots in a piece of classical Latin literature from 45 BC, making\n      it over 2000 years old. Richard McClintock, a Latin professor at Hampden-\n      Sydney College in Virginia, looked up one of the more obscure Latin words\n      , consectetur, from a Lorem Ipsum passage, and going through the cites of\n       the word in classical literature, discovered the undoubtable source.",
+                            bio: "Joonwhan ! Contrary to popular belief, Lorem Ipsum is not simply random text.\n      It has roots in a piece of classical Latin literature from 45 BC, making\n      it over 2000 years old. Richard McClintock, a Latin professor at Hampden-\n      Sydney College in Virginia, looked up one of the more obscure Latin words\n      , consectetur, from a Lorem Ipsum passage, and going through the cites of\n       the word in classical literature, discovered the undoubtable source.",
                             notes: [
                                 { title: "Pay back dinner", date: new Date("2016-01-22") },
                                 { title: "Buy flower to my wife", date: new Date("2016-09-08") }
@@ -22,7 +22,7 @@ System.register([], function(exports_1, context_1) {
                         {
                             name: "Sinyoung",
                             avatar: "svg-2",
-                            bio: "Contrary to popular belief, Lorem Ipsum is not simply random text.\n      It has roots in a piece of classical Latin literature from 45 BC, making\n      it over 2000 years old. Richard McClintock, a Latin professor at Hampden-\n      Sydney College in Virginia, looked up one of the more obscure Latin words\n      , consectetur, from a Lorem Ipsum passage, and going through the cites of\n       the word in classical literature, discovered the undoubtable source.",
+                            bio: "Sinyoung !Contrary to popular belief, Lorem Ipsum is not simply random text.\n      It has roots in a piece of classical Latin literature from 45 BC, making\n      it over 2000 years old. Richard McClintock, a Latin professor at Hampden-\n      Sydney College in Virginia, looked up one of the more obscure Latin words\n      , consectetur, from a Lorem Ipsum passage, and going through the cites of\n       the word in classical literature, discovered the undoubtable source.",
                             notes: [
                                 { title: "Pay back dinner", date: new Date("2016-01-22") },
                                 { title: "Buy flower to my wife", date: new Date("2016-09-08") }
@@ -31,7 +31,7 @@ System.register([], function(exports_1, context_1) {
                         {
                             name: "Seoyeon",
                             avatar: "svg-3",
-                            bio: "Contrary to popular belief, Lorem Ipsum is not simply random text.\n      It has roots in a piece of classical Latin literature from 45 BC, making\n      it over 2000 years old. Richard McClintock, a Latin professor at Hampden-\n      Sydney College in Virginia, looked up one of the more obscure Latin words\n      , consectetur, from a Lorem Ipsum passage, and going through the cites of\n       the word in classical literature, discovered the undoubtable source.",
+                            bio: "Seoyeon ! Contrary to popular belief, Lorem Ipsum is not simply random text.\n      It has roots in a piece of classical Latin literature from 45 BC, making\n      it over 2000 years old. Richard McClintock, a Latin professor at Hampden-\n      Sydney College in Virginia, looked up one of the more obscure Latin words\n      , consectetur, from a Lorem Ipsum passage, and going through the cites of\n       the word in classical literature, discovered the undoubtable source.",
                             notes: [
                                 { title: "Pay back dinner", date: new Date("2016-01-22") },
                                 { title: "Buy flower to my wife", date: new Date("2016-09-08") }
@@ -40,7 +40,7 @@ System.register([], function(exports_1, context_1) {
                         {
                             name: "Eunseo",
                             avatar: "svg-4",
-                            bio: "Contrary to popular belief, Lorem Ipsum is not simply random text.\n      It has roots in a piece of classical Latin literature from 45 BC, making\n      it over 2000 years old. Richard McClintock, a Latin professor at Hampden-\n      Sydney College in Virginia, looked up one of the more obscure Latin words\n      , consectetur, from a Lorem Ipsum passage, and going through the cites of\n       the word in classical literature, discovered the undoubtable source.",
+                            bio: "Eunseo! Contrary to popular belief, Lorem Ipsum is not simply random text.\n      It has roots in a piece of classical Latin literature from 45 BC, making\n      it over 2000 years old. Richard McClintock, a Latin professor at Hampden-\n      Sydney College in Virginia, looked up one of the more obscure Latin words\n      , consectetur, from a Lorem Ipsum passage, and going through the cites of\n       the word in classical literature, discovered the undoubtable source.",
                             notes: [
                                 { title: "Pay back dinner", date: new Date("2016-01-22") },
                                 { title: "Buy flower to my wife", date: new Date("2016-09-08") }

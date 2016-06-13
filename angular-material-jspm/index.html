@@ -20,6 +20,23 @@
       <div ng-include="'app/view/toolbar-header.html'"></div>
       <md-content flex id="content">
         <div ng-include="'app/view/main-content.html'"></div>
+        <md-tabs md-selected="vm.tabIndex" 
+                 md-align-tabs="top" 
+                 md-dynamic-height="true"
+                 md-stretch-tabs="always">
+          <md-tab>
+            <md-tab-label>Bio</md-tab-label>
+            <md-tab-body>
+              <div ng-include="'app/view/tab-bio.html'"></div>
+            </md-tab-body>
+          </md-tab>
+          <md-tab>
+            <md-tab-label>Notes</md-tab-label>
+            <md-tab-body>
+              <div ng-include="'app/view/tab-notes.html'"></div>
+            </md-tab-body>
+          </md-tab>
+        </md-tabs>
       </md-content>
     </div>
 

@@ -12,6 +12,7 @@ System.register([], function(exports_1, context_1) {
                     this.$mdSidenav = $mdSidenav;
                     this.selectedUser = null;
                     this.searchText = '';
+                    this.tabIndex = 0;
                     this.userService.loadAllUsers()
                         .then(function (users) {
                         _this.users = users;
@@ -28,6 +29,7 @@ System.register([], function(exports_1, context_1) {
                     if (sidenav.isOpen()) {
                         sidenav.close();
                     }
+                    this.tabIndex = 0;
                 };
                 MainController.$inject = ["userService", "$mdSidenav"];
                 return MainController;

@@ -17,7 +17,7 @@ export class MainController {
   users:User[];
   selectedUser: User = null;
   searchText: string = '';
-
+  tabIndex: number = 0;
   toggleSidenav() : void {
     this.$mdSidenav("left").toggle();
   }
@@ -27,6 +27,7 @@ export class MainController {
     if(sidenav.isOpen()) {
       sidenav.close();
     }
+    this.tabIndex = 0;
   }
 }
 console.log("Main Controller Evaluated..");
