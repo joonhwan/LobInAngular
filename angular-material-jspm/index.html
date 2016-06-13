@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="contactManagerApp">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css' />
+    <style media="screen">
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+      display: none !important;
+    }
+    </style>
+    <title>Document</title>
+</head>
+<body ng-cloak ng-controller="mainController as vm">
+    <h3 class="my-blue-box">Hello Joonhwan!!!</h3>
+    {{vm.message}}
+
+    <script src="jspm_packages/system.js" charset="utf-8"></script>
+    <script src="config.js" charset="utf-8"></script>
+    <script>
+      System.import('app/dist/main.js');
+    </script>
+</body>
+</html>
