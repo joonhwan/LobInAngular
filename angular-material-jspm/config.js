@@ -10,6 +10,7 @@ System.config({
   map: {
     "angular": "github:angular/bower-angular@1.5.6",
     "angular-material": "github:angular/bower-material@1.0.9",
+    "angular-material-icons": "npm:angular-material-icons@0.7.0",
     "css": "github:systemjs/plugin-css@0.1.23",
     "jquery": "npm:jquery@3.0.0",
     "github:angular/bower-angular-animate@1.5.6": {
@@ -35,6 +36,9 @@ System.config({
     },
     "github:jspm/nodelibs-util@0.1.0": {
       "util": "npm:util@0.10.3"
+    },
+    "npm:angular-material-icons@0.7.0": {
+      "angular": "npm:angular@1.5.6"
     },
     "npm:assert@1.4.1": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",

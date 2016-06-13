@@ -1,0 +1,18 @@
+// 설정을 이 파일에 넣어서 기본 설정과 사용자 설정을 덮어씁니다.
+{
+  // 검색에서 파일 및 폴더를 제외하도록 GLOB 패턴을 구성합니다. files.exclude 설정에서 모든 GLOB 패턴을 상속합니다.
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/jspm_packages": true,
+    "**/bower_components": true,
+    "**/typings": true
+  },
+    // 편집기에서 몇 개의 문자 이후에 줄을 바꿀지를 제어합니다. 이 값을 0으로 설정하면 뷰포트 너비 줄 바꿈이 설정됩니다(자동 줄바꿈). -1로 설정하면 편집기에서 줄바꿈을 하지 않습니다.
+  "editor.wrappingColumn": 0,
+   // 파일 감시에서 제외할 파일 경로의 GLOB 패턴을 구성하세요. 이 설정을 변경하려면 다시 시작해야 합니다. 시작 시 Code에서 CPU 시간을 많이 차지하면 대용량 폴더를 제외하여 초기 로드를 줄일 수 있습니다.
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/node_modules/**": true,
+    "**/jspm_packages/**": true
+  }
+}

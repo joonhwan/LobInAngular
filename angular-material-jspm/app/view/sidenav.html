@@ -1,0 +1,47 @@
+<md-sidenav
+        class="md-sidenav-left"
+        md-component-id="left"
+        md-is-locked-open="$mdMedia('gt-sm')"
+        md-disable-backdrop
+        md-whiteframe="4">
+  <md-toolbar>
+    <h1>Contact</h1>
+  </md-toolbar>
+  <div layout-padding>
+    <!--<md-autocomplete
+          md-search-text="vm.searchText"
+          md-items="item in vm.users | filter:vm.searchText"
+          md-item-text="item.name"
+          md-min-length="3"
+          placeholder="Filter by name">
+        <md-item-template>
+          <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.display}}</span>
+        </md-item-template>
+        <md-not-found>
+          No name matching "{{vm.searchText}}" were found.
+          <a ng-click="vm.addUser(ctrl.searchText)">Create a new one!</a>
+        </md-not-found>
+      </md-autocomplete>-->
+    <md-autocomplete
+      md-search-text="vm.searchText"
+      md-items="item in vm.users | filter:vm.searchText"
+      md-item-text="item.name"
+      md-min-length="3"
+      placeholder="filter">
+      <md-item-template>
+        <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.name}}</span>
+      </md-item-template>
+    </md-autocomplete>
+  </div>
+  <md-content>
+    <md-list>
+      <md-list-item ng-repeat="user in vm.users | filter:vm.searchText | orderBy:'name'">
+        <md-button ng-click="vm.selectUser(user)"
+                   ng-class="{'selected' : user===vm.selectedUser }">
+          <md-icon md-svg-src="{{user.avatar}}" class="avatar"></md-icon>
+          {{user.name}}
+        </md-button>
+      </md-list-item>
+    </md-list>
+  </md-content>
+</md-sidenav>
