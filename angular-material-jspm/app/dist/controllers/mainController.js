@@ -43,33 +43,37 @@ System.register([], function(exports_1, context_1) {
                     }
                 };
                 MainController.prototype.removeAllNotes = function ($event) {
-                    this.showConfirm("Are you sure you want to delete all notes?", "Anoo notes will be deleted.");
-                    var confirm = this.$mdDialog.confirm()
-                        .title("Are sure you want to delete all notes?")
-                        .textContent("All notes will be deleted. You won't undo this action.")
-                        .targetEvent($event)
-                        .ok("Yes")
-                        .cancel("No");
-                    var self = this;
-                    this.$mdDialog.show(confirm).then(function () {
-                        self.selectedUser.notes = [];
-                        self.openToast("Deleted all notes.");
+                    var _this = this;
+                    this.showConfirm("Are you sure you want to delete all notes?", "Anoo notes will be deleted.", $event)
+                        .then(function () {
+                        _this.selectedUser.notes = [];
+                        _this.openToast("Deleted all notes.");
                     });
+                    // var confirm = this.$mdDialog.confirm()
+                    //   .title("Are sure you want to delete all notes?")
+                    //   .textContent("All notes will be deleted. You won't undo this action.")
+                    //   .ariaLabel('Lucky day')
+                    //   .targetEvent($event)
+                    //   .ok("Yes")
+                    //   .cancel("No")
+                    //   ;
+                    //   var self = thi s;
+                    //   this.$mdDialog.show(confirm).then(() => {
+                    //     self.selectedUser.notes = [];
+                    //     self.openToast("Deleted all notes.")
+                    //     ;
+                    //   })  
                 };
-                MainController.prototype.showConfirm = function (title, text) {
+                MainController.prototype.showConfirm = function (title, text, ev) {
                     // Appending dialog to document.body to cover sidenav in docs app
                     var confirm = this.$mdDialog.confirm()
-                        .title('Would you like to delete your debt?')
-                        .textContent('All of the banks have agreed to forgive you your debts.')
-                        .ariaLabel('Lucky day')
+                        .title(title)
+                        .textContent(text)
+                        .ariaLabel("question dialog")
                         .targetEvent(ev)
-                        .ok('Please do it!')
-                        .cancel('Sounds like a scam');
-                    this.$mdDialog.show(confirm).then(function () {
-                        status = 'You decided to get rid of your debt.';
-                    }, function () {
-                        status = 'You decided to keep your debt.';
-                    });
+                        .ok('Yes')
+                        .cancel('No');
+                    return this.$mdDialog.show(confirm);
                 };
                 MainController.prototype.openToast = function (toastMessage) {
                     this.$mdToast.show(this.$mdToast.simple()
