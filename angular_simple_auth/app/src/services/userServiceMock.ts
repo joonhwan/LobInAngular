@@ -9,6 +9,9 @@ class UserServiceMock {
   users:IUser[];
 
   constructor(private $httpBackend:ng.IHttpBackendService) {
+
+    console.log("configuring user service mock e2e ....");
+
     this.users = populateData();
 
     $httpBackend.whenGET(userServiceUri).respond((method, url, data, header, params) => {
@@ -19,6 +22,10 @@ class UserServiceMock {
         "OK", // status text
         ];
     });
+
+    $httpBackend.whenGET(/app/).passThrough();
+
+    console.log("configured user service mock e2e ....");
   }
 }
 
@@ -52,7 +59,6 @@ function populateData() : IUser[] {
   ];
 }
 
-console.log("running user service mock e2e ....");
 angular
   .module("userServiceMock", ["ngMockE2E"])
   .run(UserServiceMock)

@@ -18,6 +18,7 @@ console.log("loading main module...");
 angular
     .module("AngularSimpleAuthApp", [
         'serviceModule',
+        'userServiceMock',
         'login',
         'home',
         'ngRoute',

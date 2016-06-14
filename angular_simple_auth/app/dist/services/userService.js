@@ -13,8 +13,9 @@ System.register(['./serviceModule'], function(exports_1, context_1) {
             baseUri = "/api/users";
             exports_1("userServiceUri", baseUri);
             class UserService {
-                constructor($http) {
+                constructor($http, $q) {
                     this.$http = $http;
+                    this.$q = $q;
                 }
                 create(user) {
                     return this.$http.post(baseUri, user);
@@ -31,7 +32,16 @@ System.register(['./serviceModule'], function(exports_1, context_1) {
                     return this.$http.get(baseUri + '/' + id);
                 }
                 getAll() {
-                    return this.$http.get(baseUri);
+                    // NOTE: 이 메소드의 구현은 결국, 임의의 Promise형을 다른 형태로 변경하는 방법...
+                    var deferred = this.$q.defer();
+                    this.$http.get(baseUri)
+                        .success((data, status) => {
+                        deferred.resolve(data);
+                    })
+                        .error((data, status) => {
+                        deferred.reject(null);
+                    });
+                    return deferred.promise;
                 }
                 update(user) {
                     return this.$http.put(baseUri + '/' + user.id, user);
@@ -40,9 +50,9 @@ System.register(['./serviceModule'], function(exports_1, context_1) {
                     return this.$http.delete(baseUri + '/' + id);
                 }
             }
-            UserService.$inject = ['$http'];
+            UserService.$inject = ['$http', '$q'];
             console.log('registering user serivce..');
-            serviceModule_1.getServiceModule().controller('userService', UserService);
+            serviceModule_1.getServiceModule().factory('userService', UserService);
         }
     }
 });

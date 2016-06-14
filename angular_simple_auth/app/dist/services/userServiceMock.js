@@ -43,6 +43,7 @@ System.register(['angular-mocks', './userService'], function(exports_1, context_
             class UserServiceMock {
                 constructor($httpBackend) {
                     this.$httpBackend = $httpBackend;
+                    console.log("configuring user service mock e2e ....");
                     this.users = populateData();
                     $httpBackend.whenGET(userService_1.userServiceUri).respond((method, url, data, header, params) => {
                         return [
@@ -52,10 +53,11 @@ System.register(['angular-mocks', './userService'], function(exports_1, context_
                             "OK",
                         ];
                     });
+                    $httpBackend.whenGET(/app/).passThrough();
+                    console.log("configured user service mock e2e ....");
                 }
             }
             UserServiceMock.$inject = ['$httpBackend'];
-            console.log("running user service mock e2e ....");
             angular
                 .module("userServiceMock", ["ngMockE2E"])
                 .run(UserServiceMock);

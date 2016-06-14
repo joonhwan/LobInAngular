@@ -27,10 +27,11 @@ export interface IUserService {
 }
 
 class UserService implements IUserService {
-  static $inject = ['$http']
+  static $inject = ['$http', '$q']
 
   constructor(
-    private $http:angular.IHttpService
+    private $http:angular.IHttpService,
+    private $q:angular.IQService
     ) {
 
   }
@@ -49,7 +50,27 @@ class UserService implements IUserService {
     return this.$http.get<IUser>(baseUri + '/' + id);
   }
   getAll():ng.IPromise<IUser[]> {
-    return this.$http.get<IUser[]>(baseUri);
+
+    // NOTE: 이 메소드의 구현은 결국, 임의의 Promise형을 다른 형태로 변경하는 방법...
+    var deferred = this.$q.defer<IUser[]>();
+    this.$http.get(baseUri)
+      //원본 success 시그너쳐 (data: T, status: number, headers: IHttpHeadersGetter, config: IRequestConfig):
+
+      // 길게 쓰나..
+      // .success((data:IUser[], status:number, headers: angular.IHttpHeadersGetter, config:angular.IRequestConfig) => {
+      //   deferred.resolve(<IUser[]>data);
+      // })
+
+      // 짧게 쓰나. 비슷
+      .success((data, status) => {
+          deferred.resolve(<IUser[]>data);
+      })
+
+      //(data: T, status: number, headers: IHttpHeadersGetter, config: IRequestConfig):
+      .error((data, status) => {
+        deferred.reject(null);
+      });
+      return deferred.promise;
   }
   update(user:IUser):ng.IPromise<IUserServiceResponse>  {
     return this.$http.put<IUserServiceResponse>(baseUri + '/' + user.id, user);
@@ -79,4 +100,4 @@ class UserService implements IUserService {
 }
 
 console.log('registering user serivce..');
-getServiceModule().controller('userService', UserService);
+getServiceModule().factory('userService', UserService);

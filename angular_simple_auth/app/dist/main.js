@@ -20,6 +20,7 @@ System.register(['angular', 'angular-route', 'angular-cookies', 'bootstrap/css/b
             angular
                 .module("AngularSimpleAuthApp", [
                 'serviceModule',
+                'userServiceMock',
                 'login',
                 'home',
                 'ngRoute',
