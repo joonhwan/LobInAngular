@@ -26,12 +26,18 @@ angular
     .config(['$routeProvider', function ($routeProvider: ng.route.IRouteProvider) {
         $routeProvider
             .when('/login', {
-                controller: 'loginController as vm',
-                templateUrl: 'app/views/login.html',
+                controller: 'loginController',
+                controllerAs: 'vm',
+                templateUrl: 'app/views/login.html'
                 //hideMenus: true
             })
+            .when('/register', {
+                controller: 'registerController',
+                controllerAs: 'vm',
+                templateUrl: 'app/views/register.html'
+            })
             .when('/', {
-                controller: 'homeController as vm',
+                controller: 'homeController as vm', // 별도의 controllerAs 말고..한번에.
                 templateUrl: 'app/views/home.html'
             })
             .otherwise({

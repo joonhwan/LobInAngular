@@ -58,14 +58,16 @@
     - `jspm install angular-cookies`
     - `jspm install bootstrap`
     - `jspm install font-awesome`
+    - `jspm install angular-mocks`
 
 - tsd type definitions
 
     `--save` option is needed to generate merged ./typings/tsd.d.ts file.
 
-    - tsd install angular --save
-    - tsd install angular-route --save 
-    - tsd install angular-cookies --save
-    - tsd install bootstrap --save
+    - `tsd install angular --save`
+    - `tsd install angular-route --save` 
+    - `tsd install angular-cookies --save`
+    - `tsd install bootstrap --save`
+    - `tsd install angular-mocks --save`
 
 

@@ -11,13 +11,20 @@ System.register(['angular'], function(exports_1, context_1) {
         execute: function() {
             //console.log("loading login module...");
             class LoginController {
-                constructor($location, loginService) {
+                constructor($location, loginService, userService) {
                     this.$location = $location;
                     this.loginService = loginService;
+                    this.userService = userService;
                     this.dataLoading = false;
                     this.message = "Login message from LoginController";
                     console.log("creating login controller...");
                     //loginService.clearCredentials();
+                    console.log('testing e2e..');
+                    this.userService.getAll().then(response => {
+                        for (var i = 0; i < response.length; ++i) {
+                            console.log("--> user:" + response[i].userName);
+                        }
+                    });
                 }
                 login() {
                     this.dataLoading = true;
@@ -33,7 +40,7 @@ System.register(['angular'], function(exports_1, context_1) {
                     });
                 }
             }
-            LoginController.$inject = ['$location', 'loginService'];
+            LoginController.$inject = ['$location', 'loginService', 'userService'];
             angular_1.default
                 .module("login", [])
                 .controller("loginController", LoginController);

@@ -28,8 +28,14 @@ System.register(['angular', 'angular-route', 'angular-cookies', 'bootstrap/css/b
                 .config(['$routeProvider', function ($routeProvider) {
                     $routeProvider
                         .when('/login', {
-                        controller: 'loginController as vm',
-                        templateUrl: 'app/views/login.html',
+                        controller: 'loginController',
+                        controllerAs: 'vm',
+                        templateUrl: 'app/views/login.html'
+                    })
+                        .when('/register', {
+                        controller: 'registerController',
+                        controllerAs: 'vm',
+                        templateUrl: 'app/views/register.html'
                     })
                         .when('/', {
                         controller: 'homeController as vm',

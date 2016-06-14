@@ -9,7 +9,6 @@ System.register(['./serviceModule'], function(exports_1, context_1) {
                 serviceModule_1 = serviceModule_1_1;
             }],
         execute: function() {
-            console.log("creating loginService...");
             class LoginService {
                 constructor($http, $cookieStore, $rootScope, $timeout) {
                     this.$http = $http;
@@ -51,6 +50,7 @@ System.register(['./serviceModule'], function(exports_1, context_1) {
                 }
             }
             LoginService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout'];
+            console.log("registering loginService...");
             serviceModule_1.getServiceModule().factory("loginService", LoginService);
             class Base64 {
                 constructor() {

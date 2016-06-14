@@ -16,6 +16,7 @@ System.config({
   map: {
     "angular": "github:angular/bower-angular@1.5.6",
     "angular-cookies": "github:angular/bower-angular-cookies@1.5.6",
+    "angular-mocks": "github:angular/bower-angular-mocks@1.5.6",
     "angular-route": "github:angular/bower-angular-route@1.5.6",
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
@@ -24,6 +25,9 @@ System.config({
     "css": "github:systemjs/plugin-css@0.1.23",
     "font-awesome": "npm:font-awesome@4.6.3",
     "github:angular/bower-angular-cookies@1.5.6": {
+      "angular": "github:angular/bower-angular@1.5.6"
+    },
+    "github:angular/bower-angular-mocks@1.5.6": {
       "angular": "github:angular/bower-angular@1.5.6"
     },
     "github:angular/bower-angular-route@1.5.6": {

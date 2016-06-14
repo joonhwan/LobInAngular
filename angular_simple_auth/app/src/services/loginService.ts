@@ -1,8 +1,6 @@
 import angular from 'angular';
 import {getServiceModule} from './serviceModule';
 
-console.log("creating loginService...");
-
 export interface ILoginServiceResponse {
   success:boolean;
   failReason:string;
@@ -64,6 +62,7 @@ class LoginService implements ILoginService {
   }
 }
 
+console.log("registering loginService...");
 getServiceModule().factory("loginService", LoginService);
 
 
