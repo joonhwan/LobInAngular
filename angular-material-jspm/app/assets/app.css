@@ -86,3 +86,12 @@ md-sidenav md-list {
   padding-right: 40px;
   padding-top: 5px;
 }
+
+.scrollable-nav-content {
+  position:absolute;
+  top:136px;
+  bottom: 0px;
+  left:0px;
+  width: 100%;
+  overflow:auto;
+}

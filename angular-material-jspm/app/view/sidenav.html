@@ -31,6 +31,10 @@
       <md-item-template>
         <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.name}}</span>
       </md-item-template>
+      <md-not-found>
+          No name matching "{{vm.searchText}}" were found.
+          <a ng-click="vm.addUser(ctrl.searchText)">Create a new one!</a>
+        </md-not-found>
     </md-autocomplete>
   </div>
   <md-content>
@@ -44,4 +48,7 @@
       </md-list-item>
     </md-list>
   </md-content>
+  <md-button class="md-fab md-fab-bottom-right" ng-click="vm.addUser($event)">
+    <ng-md-icon icon="add"></ng-md-icon>
+  </md-button>
 </md-sidenav>

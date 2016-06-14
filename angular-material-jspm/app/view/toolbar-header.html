@@ -11,4 +11,40 @@
       Contact Manager
     </h1>
   </div>
+  <md-fab-speed-dial md-open="false" md-direction="down" class="md-fling md-fab-top-right">
+    <md-fab-trigger>
+      <md-button class="md-fab">
+        <md-icon md-svg-icon="menu"></md-icon>
+      </md-button>
+    </md-fab-trigger>
+    <md-fab-actions>
+      <md-button class="md-fab md-raised md-mini">
+        <ng-md-icon icon="face" aria-label="face"></md-icon>
+        <md-tooltip md-direction="left">Contact</md-tooltip>
+      </md-button>
+      <md-button
+        class="md-fab md-raised md-mini"
+        ng-click="vm.removeAllNotes($event)">
+        <ng-md-icon icon="clear_all" aria-label="clear all"></md-icon>
+        <md-tooltip md-direction="left">Clear All Notes</md-tooltip>
+      </md-button>
+    </md-fab-actions>
+  </md-fab-speed-dial>
 </md-toolbar>
+
+    <!--<md-fab-speed-dial md-open="true" md-direction="down"
+                       ng-class="md-fling md-fab-top-right">
+        <md-fab-trigger>
+          <md-button class="md-fab">
+            <md-icon md-svg-icon="menu"></md-icon>
+          </md-button>
+        </md-fab-trigger>
+        <md-fab-actions>
+          <md-button class="md-fab md-raised md-mini">
+            <ng-md-icon icon="face" aria-label="face"></md-icon>
+          </md-button>
+          <md-button class="md-fab md-raised md-mini">
+            <ng-md-icon icon="clear-all" aria-label="clear all"></md-icon>
+          </md-button>
+        </md-fab-actions>
+      </md-fab-speed-dial>-->
