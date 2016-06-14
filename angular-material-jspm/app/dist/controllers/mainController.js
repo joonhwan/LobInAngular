@@ -6,10 +6,11 @@ System.register([], function(exports_1, context_1) {
         setters:[],
         execute: function() {
             MainController = (function () {
-                function MainController(userService, $mdSidenav) {
+                function MainController(userService, $mdSidenav, $mdToast) {
                     var _this = this;
                     this.userService = userService;
                     this.$mdSidenav = $mdSidenav;
+                    this.$mdToast = $mdToast;
                     this.selectedUser = null;
                     this.searchText = '';
                     this.tabIndex = 0;
@@ -31,7 +32,22 @@ System.register([], function(exports_1, context_1) {
                     }
                     this.tabIndex = 0;
                 };
-                MainController.$inject = ["userService", "$mdSidenav"];
+                MainController.prototype.removeNote = function (note) {
+                    var noteIndex = this.selectedUser.notes.indexOf(note);
+                    if (noteIndex >= 0) {
+                        this.selectedUser.notes.splice(noteIndex, 0);
+                        var toastMessage = "Note[" + note.title + "] has been removed.";
+                        //this.$mdToast.showSimple(toastMessage);
+                        this.openToast(toastMessage);
+                    }
+                };
+                MainController.prototype.openToast = function (toastMessage) {
+                    this.$mdToast.show(this.$mdToast.simple()
+                        .textContent(toastMessage)
+                        .position("top right")
+                        .hideDelay(3000));
+                };
+                MainController.$inject = ["userService", "$mdSidenav", "$mdToast"];
                 return MainController;
             }());
             exports_1("MainController", MainController);
