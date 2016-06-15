@@ -11,7 +11,9 @@ import 'font-awesome/css/font-awesome.min.css!'
 // declare modules
 import './login';
 import './home';
+import './register';
 import './services/serviceModule';
+import {ILocalAuthStoreService} from './services/localAuthStoreService';
 
 console.log("loading main module...");
 
@@ -21,8 +23,8 @@ angular
         'userServiceMock',
         'login',
         'home',
+        'register',
         'ngRoute',
-        'ngCookies'
     ])
     .config(['$routeProvider', function ($routeProvider: ng.route.IRouteProvider) {
         $routeProvider
@@ -46,20 +48,21 @@ angular
             })
             ;
     }])
-    .run(['$rootScope', '$location', '$cookieStore', '$http',
-        function ($rooteScope: angular.IRootScopeService,
+    .run(['$rootScope', '$location', '$http', 'localAuthStoreService',
+        function (
+            $rootScope: angular.IRootScopeService,
             $location: angular.ILocationService,
-            $cookieStore: ng.cookies.ICookiesService,
-            $http: angular.IHttpService) {
+            $http: angular.IHttpService,
+            localAuthStoreService:ILocalAuthStoreService
+            ) {
 
-            // keep user logged in after page refresh
-            var anyRootScope = <any>$rooteScope;
-            anyRootScope.globals = $cookieStore.get('globals') || {};
-            // $rooteScope.globals = <ILoginGlobalData><any>$cookieStore.get('globals') || new LoginGlobalData();
-
-            $rooteScope.$on('$locationChangeStart', function (event, next, current) {
-                // redirect to login page if not logged in
-                if ($location.path() !== '/login' && !anyRootScope.globals.currentUser) {
+            console.log("configure root scope...");
+    
+            $rootScope.$on('$locationChangeStart', function (event, next, current) {
+                
+                var isLogOutAccessibles = _.find(['/login', '/register'], s => s===$location.path());
+                var loggedIn = localAuthStoreService.get();
+                if (!isLogOutAccessibles && !loggedIn) {
                     $location.path('/login');
                 }
             });

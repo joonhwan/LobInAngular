@@ -5,3 +5,5 @@
 /// <reference path="angularjs/angular-route.d.ts" />
 /// <reference path="angularjs/angular-cookies.d.ts" />
 /// <reference path="angularjs/angular-mocks.d.ts" />
+/// <reference path="lodash/lodash.d.ts" />
+/// <reference path="toastr/toastr.d.ts" />

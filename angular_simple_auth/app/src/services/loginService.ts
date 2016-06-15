@@ -1,5 +1,7 @@
 import angular from 'angular';
 import {getServiceModule} from './serviceModule';
+import {IUserService} from './userService';
+import {ILocalAuthStoreService} from './localAuthStoreService';
 
 export interface ILoginServiceResponse {
   success:boolean;
@@ -13,13 +15,13 @@ export interface ILoginService {
 }
 
 class LoginService implements ILoginService {
-  static $inject = ['$http', '$cookieStore', '$rootScope', '$timeout'];
+  static $inject = ['$http', '$timeout', 'userService', 'localAuthStoreService'];
 
   constructor(
     private $http:angular.IHttpService, 
-    private $cookieStore:ng.cookies.ICookieStoreService,
-    private $rootScope:angular.IRootScopeService,
-    private $timeout:angular.ITimeoutService
+    private $timeout:angular.ITimeoutService,
+    private userService:IUserService,
+    private localAuthStoreService:ILocalAuthStoreService
     ) {
   }
   base64: Base64 = new Base64(); // see below
@@ -27,44 +29,68 @@ class LoginService implements ILoginService {
   login(userName:string, password:string, callback:(response:ILoginServiceResponse) => void) : void {
     // dummy impl
     console.log('loginservice login..');
-    this.$timeout(_ => {
+    // this.$timeout(_ => {
       
-      var response = {
-        success: userName === 'test' && password === 'test',
-        failReason: userName !== 'test' ? 'invalid user name' : (password !== 'test' ? 'invalid password' : null)
-      };
+    //   var response = {
+    //     success: userName === 'test' && password === 'test',
+    //     failReason: userName !== 'test' ? 'invalid user name' : (password !== 'test' ? 'invalid password' : null)
+    //   };
 
-      if(response.success) {
-        this.setCredentials(userName, password);
-      }
+    //   if(response.success) {
+    //     this.setCredentials(userName, password);
+    //   }
 
-      callback(response);
-    }, 1000);
+    //   callback(response);
+    // }, 1000);
+    this.userService.getByUserName(userName)
+      .then(user => {
+        if(user.password === password) {
+          callback({
+            success:true,
+            failReason:"",
+          });
+          this.setCredentials(userName, password);
+        } else {
+          callback({
+            success:false,
+            failReason:"invalid password"
+          });
+        }
+      })
+      .catch(reason => {
+        callback({
+          success:false,
+          failReason:"invalid user name"
+        });
+      })
   }
 
   setCredentials(userName:string, password:string) : void {
-    var authData = this.base64.encode(userName + ":" + password);
-    (<any>this.$rootScope).globals = {
-      currentUser: {
-        userName: userName,
-        authData: authData
-      }
-    };
-    this.$http.defaults.headers.common['Authorization'] = "Basic " + authData;
-    this.$cookieStore.put('globals', (<any>this.$rootScope).globals);
+    // var authData = this.base64.encode(userName + ":" + password);
+    // (<any>this.$rootScope).globals = {
+    //   currentUser: {
+    //     userName: userName,
+    //     authData: authData
+    //   }
+    // };
+    // this.$http.defaults.headers.common['Authorization'] = "Basic " + authData;
+    // this.$cookieStore.put('globals', (<any>this.$rootScope).globals);
+
+    this.localAuthStoreService.set({
+      id:0, // TODO FixIt
+      userName: userName,
+      password: password
+    })
   }
 
   clearCredentials() : void {
-    (<any>this.$rootScope).globals = {};
-    this.$cookieStore.remove('globals');
-    this.$http.defaults.headers.common['Authorization'] = 'Basic ';
-    console.log("cleared cookie.");
+    // (<any>this.$rootScope).globals = {};
+    // this.$cookieStore.remove('globals');
+    // this.$http.defaults.headers.common['Authorization'] = 'Basic ';
+    // console.log("cleared cookie.");
+    this.localAuthStoreService.set(null);
   }
 }
-
-console.log("registering loginService...");
-getServiceModule().factory("loginService", LoginService);
-
 
 class Base64 {
   
@@ -150,3 +176,6 @@ class Base64 {
     return output;
   }
 }
+
+console.log("registering loginService...");
+getServiceModule().service("loginService", LoginService);

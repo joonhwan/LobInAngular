@@ -10,48 +10,74 @@ System.register(['./serviceModule'], function(exports_1, context_1) {
             }],
         execute: function() {
             class LoginService {
-                constructor($http, $cookieStore, $rootScope, $timeout) {
+                constructor($http, $timeout, userService, localAuthStoreService) {
                     this.$http = $http;
-                    this.$cookieStore = $cookieStore;
-                    this.$rootScope = $rootScope;
                     this.$timeout = $timeout;
+                    this.userService = userService;
+                    this.localAuthStoreService = localAuthStoreService;
                     this.base64 = new Base64(); // see below
                 }
                 login(userName, password, callback) {
                     // dummy impl
                     console.log('loginservice login..');
-                    this.$timeout(_ => {
-                        var response = {
-                            success: userName === 'test' && password === 'test',
-                            failReason: userName !== 'test' ? 'invalid user name' : (password !== 'test' ? 'invalid password' : null)
-                        };
-                        if (response.success) {
+                    // this.$timeout(_ => {
+                    //   var response = {
+                    //     success: userName === 'test' && password === 'test',
+                    //     failReason: userName !== 'test' ? 'invalid user name' : (password !== 'test' ? 'invalid password' : null)
+                    //   };
+                    //   if(response.success) {
+                    //     this.setCredentials(userName, password);
+                    //   }
+                    //   callback(response);
+                    // }, 1000);
+                    this.userService.getByUserName(userName)
+                        .then(user => {
+                        if (user.password === password) {
+                            callback({
+                                success: true,
+                                failReason: "",
+                            });
                             this.setCredentials(userName, password);
                         }
-                        callback(response);
-                    }, 1000);
+                        else {
+                            callback({
+                                success: false,
+                                failReason: "invalid password"
+                            });
+                        }
+                    })
+                        .catch(reason => {
+                        callback({
+                            success: false,
+                            failReason: "invalid user name"
+                        });
+                    });
                 }
                 setCredentials(userName, password) {
-                    var authData = this.base64.encode(userName + ":" + password);
-                    this.$rootScope.globals = {
-                        currentUser: {
-                            userName: userName,
-                            authData: authData
-                        }
-                    };
-                    this.$http.defaults.headers.common['Authorization'] = "Basic " + authData;
-                    this.$cookieStore.put('globals', this.$rootScope.globals);
+                    // var authData = this.base64.encode(userName + ":" + password);
+                    // (<any>this.$rootScope).globals = {
+                    //   currentUser: {
+                    //     userName: userName,
+                    //     authData: authData
+                    //   }
+                    // };
+                    // this.$http.defaults.headers.common['Authorization'] = "Basic " + authData;
+                    // this.$cookieStore.put('globals', (<any>this.$rootScope).globals);
+                    this.localAuthStoreService.set({
+                        id: 0,
+                        userName: userName,
+                        password: password
+                    });
                 }
                 clearCredentials() {
-                    this.$rootScope.globals = {};
-                    this.$cookieStore.remove('globals');
-                    this.$http.defaults.headers.common['Authorization'] = 'Basic ';
-                    console.log("cleared cookie.");
+                    // (<any>this.$rootScope).globals = {};
+                    // this.$cookieStore.remove('globals');
+                    // this.$http.defaults.headers.common['Authorization'] = 'Basic ';
+                    // console.log("cleared cookie.");
+                    this.localAuthStoreService.set(null);
                 }
             }
-            LoginService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout'];
-            console.log("registering loginService...");
-            serviceModule_1.getServiceModule().factory("loginService", LoginService);
+            LoginService.$inject = ['$http', '$timeout', 'userService', 'localAuthStoreService'];
             class Base64 {
                 constructor() {
                     this.keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
@@ -124,6 +150,8 @@ System.register(['./serviceModule'], function(exports_1, context_1) {
                     return output;
                 }
             }
+            console.log("registering loginService...");
+            serviceModule_1.getServiceModule().service("loginService", LoginService);
         }
     }
 });

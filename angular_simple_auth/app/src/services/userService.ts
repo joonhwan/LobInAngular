@@ -5,12 +5,6 @@ import {getServiceModule} from './serviceModule';
 const baseUri = "/api/users";
 export {baseUri as userServiceUri}
 
-export interface IUserServiceResponse {
-  user?:IUser;
-  success:boolean;
-  failReason:string;
-}
-
 export interface IUser {
   id:number;
   userName:string;
@@ -18,12 +12,12 @@ export interface IUser {
 }
 
 export interface IUserService {
-  create(user:IUser):ng.IPromise<IUserServiceResponse>;
+  create(user:IUser):ng.IPromise<IUser>;
   getByUserName(userName:string):ng.IPromise<IUser>;
   getById(id:number):ng.IPromise<IUser>;
   getAll():ng.IPromise<IUser[]>;
-  update(user:IUser):ng.IPromise<IUserServiceResponse>;
-  deleteById(id:number):ng.IPromise<IUserServiceResponse>;
+  update(user:IUser):ng.IPromise<IUser>;
+  deleteById(id:number):ng.IPromise<IUser>;
 }
 
 class UserService implements IUserService {
@@ -35,48 +29,66 @@ class UserService implements IUserService {
     ) {
 
   }
-  create(user:IUser):ng.IPromise<IUserServiceResponse> {
-    return this.$http.post<IUserServiceResponse>(baseUri, user);
-      //.then(this.handleSuccess, this.handleError('existing user'));
+  create(user:IUser):ng.IPromise<IUser> {
+    return this.$http.post<IUser>(baseUri, user);
+    // let deferred = this.$q.defer<IUser>();
+    // this.$http.post<IUser>(baseUri, user)
+    //   .success((data) => deferred.resolve(data))
+    //   .error((data, status) => deferred.reject('ERROR:' + status))
+    //   ;
+    // return deferred.promise;
   }
   getByUserName(userName:string):ng.IPromise<IUser> {
-    // return this.$http({
-    //   method: "GET",
-    //   url:"/api/users/" + userName 
-    // });
-    return this.$http.get<IUser>(baseUri + '/' + userName);
+    // return this.$http.get<IUser>(baseUri + '/' + userName);
+    var deferred = this.$q.defer<IUser>();
+    this.$http.get<IUser>(baseUri + '/' + userName)
+      .success(data => {
+        deferred.resolve(data);
+      })
+      .error((data, status) => {
+        deferred.reject(status);
+      });
+    return deferred.promise;
   }
   getById(id:number):ng.IPromise<IUser> {
     return this.$http.get<IUser>(baseUri + '/' + id);
+    // var deferred = this.$q.defer<IUser>();
+    // this.$http.get<IUser>(baseUri + '/' + id)
+    //   //.success((data: IUser, status: number, headers: angular.IHttpHeadersGetter, config: angular.IRequestConfig) => {
+    //   .success((data) => deferred.resolve(data))
+    //   // .error((data:any, status: number, headers: angular.IHttpHeadersGetter, config: angular.IRequestConfig) => {
+    //   .error((data, status) => deferred.reject('ERROR:' + status));
+    // return deferred.promise;
   }
   getAll():ng.IPromise<IUser[]> {
 
-    // NOTE: 이 메소드의 구현은 결국, 임의의 Promise형을 다른 형태로 변경하는 방법...
-    var deferred = this.$q.defer<IUser[]>();
-    this.$http.get(baseUri)
-      //원본 success 시그너쳐 (data: T, status: number, headers: IHttpHeadersGetter, config: IRequestConfig):
+    return this.$http.get<IUser[]>(baseUri);
+    // // NOTE: 이 메소드의 구현은 결국, 임의의 Promise형을 다른 형태로 변경하는 방법...
+    // var deferred = this.$q.defer<IUser[]>();
+    // this.$http.get(baseUri)
+    //   //원본 success 시그너쳐 (data: T, status: number, headers: IHttpHeadersGetter, config: IRequestConfig):
 
-      // 길게 쓰나..
-      // .success((data:IUser[], status:number, headers: angular.IHttpHeadersGetter, config:angular.IRequestConfig) => {
-      //   deferred.resolve(<IUser[]>data);
-      // })
+    //   // 길게 쓰나..
+    //   // .success((data:IUser[], status:number, headers: angular.IHttpHeadersGetter, config:angular.IRequestConfig) => {
+    //   //   deferred.resolve(<IUser[]>data);
+    //   // })
 
-      // 짧게 쓰나. 비슷
-      .success((data, status) => {
-          deferred.resolve(<IUser[]>data);
-      })
+    //   // 짧게 쓰나. 비슷
+    //   .success((data, status) => {
+    //       deferred.resolve(<IUser[]>data);
+    //   })
 
-      //(data: T, status: number, headers: IHttpHeadersGetter, config: IRequestConfig):
-      .error((data, status) => {
-        deferred.reject(null);
-      });
-      return deferred.promise;
+    //   //(data: T, status: number, headers: IHttpHeadersGetter, config: IRequestConfig):
+    //   .error((data, status) => {
+    //     deferred.reject(null);
+    //   });
+    //   return deferred.promise;
   }
-  update(user:IUser):ng.IPromise<IUserServiceResponse>  {
-    return this.$http.put<IUserServiceResponse>(baseUri + '/' + user.id, user);
+  update(user:IUser):ng.IPromise<IUser>  {
+    return this.$http.put<IUser>(baseUri + '/' + user.id, user);
   }
-  deleteById(id:number):ng.IPromise<IUserServiceResponse> {
-    return this.$http.delete<IUserServiceResponse>(baseUri + '/' + id);
+  deleteById(id:number):ng.IPromise<IUser> {
+    return this.$http.delete<IUser>(baseUri + '/' + id);
   }
 
   // handleSuccess(response:ng.IHttpPromiseCallbackArg<IUserServiceResponse>):IUserServiceResponse {
@@ -99,5 +111,5 @@ class UserService implements IUserService {
 
 }
 
-console.log('registering user serivce..');
-getServiceModule().factory('userService', UserService);
+console.log('registering user service..');
+getServiceModule().service('userService', UserService);

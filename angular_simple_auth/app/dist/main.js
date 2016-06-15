@@ -1,5 +1,5 @@
 /// <reference path="../../typings/tsd.d.ts" />
-System.register(['angular', 'angular-route', 'angular-cookies', 'bootstrap/css/bootstrap.min.css!', 'font-awesome/css/font-awesome.min.css!', './login', './home', './services/serviceModule'], function(exports_1, context_1) {
+System.register(['angular', 'angular-route', 'angular-cookies', 'bootstrap/css/bootstrap.min.css!', 'font-awesome/css/font-awesome.min.css!', './login', './home', './register', './services/serviceModule'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var angular;
@@ -14,7 +14,8 @@ System.register(['angular', 'angular-route', 'angular-cookies', 'bootstrap/css/b
             function (_4) {},
             function (_5) {},
             function (_6) {},
-            function (_7) {}],
+            function (_7) {},
+            function (_8) {}],
         execute: function() {
             console.log("loading main module...");
             angular
@@ -23,8 +24,8 @@ System.register(['angular', 'angular-route', 'angular-cookies', 'bootstrap/css/b
                 'userServiceMock',
                 'login',
                 'home',
+                'register',
                 'ngRoute',
-                'ngCookies'
             ])
                 .config(['$routeProvider', function ($routeProvider) {
                     $routeProvider
@@ -46,15 +47,13 @@ System.register(['angular', 'angular-route', 'angular-cookies', 'bootstrap/css/b
                         redirectTo: '/login'
                     });
                 }])
-                .run(['$rootScope', '$location', '$cookieStore', '$http',
-                function ($rooteScope, $location, $cookieStore, $http) {
-                    // keep user logged in after page refresh
-                    var anyRootScope = $rooteScope;
-                    anyRootScope.globals = $cookieStore.get('globals') || {};
-                    // $rooteScope.globals = <ILoginGlobalData><any>$cookieStore.get('globals') || new LoginGlobalData();
-                    $rooteScope.$on('$locationChangeStart', function (event, next, current) {
-                        // redirect to login page if not logged in
-                        if ($location.path() !== '/login' && !anyRootScope.globals.currentUser) {
+                .run(['$rootScope', '$location', '$http', 'localAuthStoreService',
+                function ($rootScope, $location, $http, localAuthStoreService) {
+                    console.log("configure root scope...");
+                    $rootScope.$on('$locationChangeStart', function (event, next, current) {
+                        var isLogOutAccessibles = _.find(['/login', '/register'], s => s === $location.path());
+                        var loggedIn = localAuthStoreService.get();
+                        if (!isLogOutAccessibles && !loggedIn) {
                             $location.path('/login');
                         }
                     });

@@ -1,4 +1,4 @@
-System.register(['angular', './loginService', './userService', './userServiceMock'], function(exports_1, context_1) {
+System.register(['angular', './userService', './loginService', './userServiceMock', './localAuthStoreService'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var angular_1;
@@ -6,7 +6,9 @@ System.register(['angular', './loginService', './userService', './userServiceMoc
     function getServiceModule() {
         if (!serviceModule) {
             console.log("creating service modules...");
-            serviceModule = angular_1.default.module('serviceModule', []);
+            serviceModule = angular_1.default.module('serviceModule', [
+                'ngCookies'
+            ]);
         }
         return serviceModule;
     }
@@ -18,7 +20,8 @@ System.register(['angular', './loginService', './userService', './userServiceMoc
             },
             function (_1) {},
             function (_2) {},
-            function (_3) {}],
+            function (_3) {},
+            function (_4) {}],
         execute: function() {
             serviceModule = null;
         }

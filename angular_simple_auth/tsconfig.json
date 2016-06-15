@@ -4,9 +4,13 @@
         "target": "es6",
         "noImplicitAny": true,
         "sourceMap": true,
-        "outDir": "../dist"
+        "outDir": "app/dist"
     },
+    "compileOnSave": true,
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "jspm_packages",
+        "typings",
+        "app/dist"
     ]
 }

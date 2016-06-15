@@ -10,6 +10,7 @@ class HomeController {
   }
 
   message:string = "Message from Home Controller";
+  
   logOut(): void {
     console.log("logout...");
     this.$location.path("/login");

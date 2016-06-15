@@ -24,9 +24,24 @@ class RegisterController {
   }
   user: IUser;
   registering: boolean;
+  lastError: string;
 
   register(): void {
     this.registering = true;
     this.userService.create(this.user)
+      .then(_ => {
+        this.registering = false;
+        this.$location.path('/login');
+      })
+      .catch((reason:any) => {
+        this.registering = false;
+        this.lastError = reason;
+      })
+      ;
   }
 }
+
+angular
+  .module('register', [])
+  .controller('registerController', RegisterController)
+  ;
