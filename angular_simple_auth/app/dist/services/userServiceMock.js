@@ -111,9 +111,11 @@ System.register(['angular-mocks', 'lodash', './userService'], function(exports_1
                 }
             }
             UserServiceMock.$inject = ['$httpBackend', '$timeout'];
+            console.log("registering userServiceMock...");
             angular
                 .module("userServiceMock", ["ngMockE2E"])
                 .run(UserServiceMock);
+            console.log("registered userServiceMock.");
         }
     }
 });

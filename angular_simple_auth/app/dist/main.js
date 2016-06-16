@@ -3,6 +3,7 @@ System.register(['angular', 'angular-route', 'angular-cookies', 'bootstrap/css/b
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var angular;
+    var app;
     return {
         setters:[
             function (angular_1) {
@@ -17,8 +18,8 @@ System.register(['angular', 'angular-route', 'angular-cookies', 'bootstrap/css/b
             function (_7) {},
             function (_8) {}],
         execute: function() {
-            console.log("loading main module...");
-            angular
+            console.log("registering main module...");
+            app = angular
                 .module("AngularSimpleAuthApp", [
                 'serviceModule',
                 'userServiceMock',
@@ -26,8 +27,10 @@ System.register(['angular', 'angular-route', 'angular-cookies', 'bootstrap/css/b
                 'home',
                 'register',
                 'ngRoute',
-            ])
+            ]);
+            app
                 .config(['$routeProvider', function ($routeProvider) {
+                    console.log('configuring router...');
                     $routeProvider
                         .when('/login', {
                         controller: 'loginController',
@@ -46,10 +49,11 @@ System.register(['angular', 'angular-route', 'angular-cookies', 'bootstrap/css/b
                         .otherwise({
                         redirectTo: '/login'
                     });
+                    console.log('configured rounter.');
                 }])
                 .run(['$rootScope', '$location', '$http', 'localAuthStoreService',
                 function ($rootScope, $location, $http, localAuthStoreService) {
-                    console.log("configure root scope...");
+                    console.log("app module run start..");
                     $rootScope.$on('$locationChangeStart', function (event, next, current) {
                         var isLogOutAccessibles = _.find(['/login', '/register'], s => s === $location.path());
                         var loggedIn = localAuthStoreService.get();
@@ -57,7 +61,9 @@ System.register(['angular', 'angular-route', 'angular-cookies', 'bootstrap/css/b
                             $location.path('/login');
                         }
                     });
+                    console.log("app module run stop..");
                 }]);
+            console.log("registered main module...");
         }
     }
 });

@@ -114,28 +114,10 @@ function populateData(): IUser[] {
   ];
 }
 
+
+console.log("registering userServiceMock...");
 angular
   .module("userServiceMock", ["ngMockE2E"])
-  // .config(['$provide', ($provide: angular.IModule) => {
-      
-  //     console.log("configuring proxy...");
-  //     $provide.decorator('$httpBackend', ['$delegate', function($delegate: any) {
-
-  //       return $delegate;
-  //       // var proxy = (method:any, url:any, data:any, callback:any, headers:any) => {
-  //       //     var interceptor = function() {
-  //       //         var _this = this,
-  //       //             _arguments = arguments;
-  //       //         setTimeout(function() {
-  //       //             callback.apply(_this, _arguments);
-  //       //         }, 700);
-  //       //     };
-  //       //     return $delegate.call(this, method, url, data, interceptor, headers);
-  //       // };
-  //       // for(var key in $delegate) {
-  //       //     (<any>proxy)[key] = $delegate[key];
-  //       // }
-  //       // return proxy;
-  //     }]);
-  // }])
   .run(UserServiceMock)
+  ;
+console.log("registered userServiceMock.");

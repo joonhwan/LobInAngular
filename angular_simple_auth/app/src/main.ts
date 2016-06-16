@@ -15,8 +15,9 @@ import './register';
 import './services/serviceModule';
 import {ILocalAuthStoreService} from './services/localAuthStoreService';
 
-console.log("loading main module...");
+console.log("registering main module...");
 
+var app = 
 angular
     .module("AngularSimpleAuthApp", [
         'serviceModule',
@@ -25,8 +26,12 @@ angular
         'home',
         'register',
         'ngRoute',
-    ])
+    ]);
+   
+app
     .config(['$routeProvider', function ($routeProvider: ng.route.IRouteProvider) {
+
+        console.log('configuring router...');
         $routeProvider
             .when('/login', {
                 controller: 'loginController',
@@ -47,6 +52,7 @@ angular
                 redirectTo: '/login'
             })
             ;
+        console.log('configured rounter.');
     }])
     .run(['$rootScope', '$location', '$http', 'localAuthStoreService',
         function (
@@ -56,7 +62,7 @@ angular
             localAuthStoreService:ILocalAuthStoreService
             ) {
 
-            console.log("configure root scope...");
+            console.log("app module run start..");
     
             $rootScope.$on('$locationChangeStart', function (event, next, current) {
                 
@@ -66,4 +72,9 @@ angular
                     $location.path('/login');
                 }
             });
-        }]);
+
+            console.log("app module run stop..");
+        }])
+        ;
+
+console.log("registered main module...");
