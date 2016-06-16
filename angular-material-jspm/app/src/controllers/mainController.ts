@@ -4,35 +4,80 @@ import {User, Note} from "../model";
 import angular from 'angular';
 
 export class MainController {
-  static $inject = ["userService", "$mdSidenav", "$mdToast", "$mdDialog"];
+  static $inject = ["userService", "$mdSidenav", "$mdToast", "$mdDialog", "$mdMedia", "$mdBottomSheet"];
   constructor(
     private userService:IUserService,
     private $mdSidenav: angular.material.ISidenavService,
     private $mdToast: angular.material.IToastService,
-    private $mdDialog: angular.material.IDialogService
+    private $mdDialog: angular.material.IDialogService,
+    private $mdMedia: angular.material.IMedia,
+    private $mdBottomSheet: ng.material.IBottomSheetService
     ) {
     this.userService.loadAllUsers()
       .then((users) => {
         this.users = users;
         this.selectedUser = users[0];
+        this.userService.selectedUser = users[0];
         ///console.log(this.users);
       });
+
   }
   users:User[];
   selectedUser: User = null;
   searchText: string = '';
   tabIndex: number = 0;
+  avatars:string[];
   toggleSidenav() : void {
     this.$mdSidenav("left").toggle();
   }
   selectUser(user:User) : void {
     this.selectedUser = user;
+    this.userService.selectedUser = user;
+
     var sidenav = this.$mdSidenav("left");
     if(sidenav.isOpen()) {
       sidenav.close();
     }
     this.tabIndex = 0;
   }
+
+  addUser($event): void {
+    let useFullScreen = (this.$mdMedia("sm") || this.$mdMedia("xs"));
+    console.log('showing dialog..');
+    this.$mdDialog.show({
+      templateUrl: "app/view/addUserDialog.html",
+      parent: angular.element(document.body),
+      targetEvent: $event,
+      controller:"addUserDialogController",
+      controllerAs:"vm",
+      clickOutsideToClose: true
+    }).then((user:User) => {
+      this.userService
+        .loadAllUsers()
+        .then((users) => {
+          this.users = users;
+          this.selectedUser = user;
+        });
+    }).catch((reason:any) => {
+      console.log("You cancelled dialog.");
+    });
+  }
+
+  showContactSheet($event): void {
+    this.$mdBottomSheet.show(<any>{
+      templateUrl: "app/view/contactSheet.html",
+      parent: angular.element(document.getElementById("content")),
+      controller: "contactSheetController",
+      controllerAs: "vm",
+      clickOutsideToClose: true,
+      targetEvent: $event
+    }).then(response => {
+      response && console.log("you clicked " + response.name);
+    }).catch(reason => {
+
+    });
+  }
+
   removeNote(note:Note) : void {
     var noteIndex = this.selectedUser.notes.indexOf(note);
     if(noteIndex >= 0) {

@@ -12,6 +12,8 @@ import "angular-material-icons/angular-material-icons.css!";
 import "../assets/app.css!";
 
 import {MainController} from "./controllers/mainController";
+import {AddUserDialogController} from "./controllers/addUserDialogController";
+import {ContactSheetController} from "./controllers/contactSheetController";
 import {UserService} from "./services/userService";
 
 namespace ContactManagerApp {
@@ -23,12 +25,18 @@ namespace ContactManagerApp {
   ]);
 
   appModule.controller("mainController", MainController);
+  appModule.controller("addUserDialogController", AddUserDialogController);
+  appModule.controller("contactSheetController", ContactSheetController);
   appModule.service("userService", UserService);
   appModule.config(($mdIconProvider: angular.material.IIconProvider,
                     $mdThemingProvider: angular.material.IThemingProvider) => {
     $mdIconProvider
       .defaultIconSet("app/assets/svg/avatars.svg", 128)
-      .icon("menu", "app/assets/svg/menu.svg", 24);
+      .icon("google_plus", "app/assets/svg/google_plus.svg", 512)
+      .icon("hangouts", "app/assets/svg/hangouts.svg", 512)
+      .icon("twitter", "app/assets/svg/twitter.svg", 512)
+      .icon("phone", "app/assets/svg/phone.svg", 512)
+      .icon("menu", "app/assets/svg/menu.svg", 24)
     $mdThemingProvider.theme("default")
                         .primaryPalette("blue")
                         .accentPalette("red")
