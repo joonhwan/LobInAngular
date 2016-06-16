@@ -9,23 +9,23 @@ System.register(['./serviceModule'], function(exports_1, context_1) {
                 serviceModule_1 = serviceModule_1_1;
             }],
         execute: function() {
-            class LocalAuthStoreService {
-                constructor($cookieStore) {
+            LocalAuthStoreService = (function () {
+                function LocalAuthStoreService($cookieStore) {
                     this.$cookieStore = $cookieStore;
                     this.user = $cookieStore.get('globals') || null;
                 }
-                get() {
+                LocalAuthStoreService.prototype.get = function () {
                     return this.user;
-                }
-                set(user) {
+                };
+                LocalAuthStoreService.prototype.set = function (user) {
                     this.$cookieStore.put('globals', user);
                     this.user = user;
-                }
-            }
-            LocalAuthStoreService.$inject = ['$cookieStore'];
+                };
+                LocalAuthStoreService.$inject = ['$cookieStore'];
+                return LocalAuthStoreService;
+            }());
             console.log("registering localAuthStoreService...");
             serviceModule_1.getServiceModule().service('localAuthStoreService', LocalAuthStoreService);
         }
     }
 });
-//# sourceMappingURL=localAuthStoreService.js.map

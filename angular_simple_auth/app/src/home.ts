@@ -1,12 +1,14 @@
 import angular from 'angular';
 import {ILoginService} from './services/loginService';
-
+import {ILocalAuthStoreService} from './services/localAuthStoreService';
 //console.log("loading home module...");
 
 class HomeController {
-  static $inject = ['$location', 'loginService'];
+  static $inject = ['$location', 'loginService', 'localAuthStoreService'];
   constructor(private $location:angular.ILocationService,
-  private loginService:ILoginService) {
+  private loginService:ILoginService,
+  private localAuthStoreService:ILocalAuthStoreService) {
+    this.message = "Welcome " + localAuthStoreService.get().userName;
   }
 
   message:string = "Message from Home Controller";

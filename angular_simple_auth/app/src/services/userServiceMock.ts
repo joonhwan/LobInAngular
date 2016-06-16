@@ -18,7 +18,7 @@ class UserServiceMock {
 
     this.users = populateData();
 
-    $httpBackend.whenGET(userServiceUri).respond((method, url, data, header, params) => {
+    this.$httpBackend.whenGET(userServiceUri).respond((method, url, data, header, params) => {
       return [
         200, //status
         this.users, // data
@@ -28,7 +28,7 @@ class UserServiceMock {
     });
 
     const uriWithId = new RegExp(userServiceUri + "/[0-9]+");
-    $httpBackend.whenGET(uriWithId).respond((metehod, url, data, header, params) => {
+    this.$httpBackend.whenGET(uriWithId).respond((metehod, url, data, header, params) => {
       var id = parseInt(url.split("/").slice(-1)[0]);
       var found = _.find(this.users, user => user.id === id);
       if (found) {
@@ -39,12 +39,7 @@ class UserServiceMock {
           "OK", // status text
         ];
       } else {
-        return [
-          404, // status. NOT FOUND
-          null,
-          header,
-          "NOT FOUND"
-        ];
+        return [ 404, null, header, "NOT FOUND" ];
       }
     });
 
@@ -52,7 +47,7 @@ class UserServiceMock {
     // console.log('timeout =' + timeoutService);
 
     const uriWithName = new RegExp(userServiceUri + "/[a-zA-Z].*");
-    $httpBackend.whenGET(uriWithName).respond((method, url, data, header, params) => {
+    this.$httpBackend.whenGET(uriWithName).respond((method, url, data, header, params) => {
 
       var name = (<string>url).split("/").slice(-1)[0];
       var found = _.find(this.users, user => {
@@ -65,7 +60,7 @@ class UserServiceMock {
       }
     });
 
-    $httpBackend.whenPOST(userServiceUri).respond((method, url, data, header) => {
+    this.$httpBackend.whenPOST(userServiceUri).respond((method, url, data, header) => {
       let newUser = <IUser>JSON.parse(<string>data);
       let existingUserWithSameName = _.find(this.users, user => user.userName === newUser.userName);
       if (existingUserWithSameName) {
@@ -78,11 +73,12 @@ class UserServiceMock {
       }
     });
 
-    $httpBackend.whenGET(/app/).passThrough();
+    this.$httpBackend.whenGET(/app/).passThrough();
 
     console.log("configured user service mock e2e ....");
   }
 }
+
 
 function populateData(): IUser[] {
   return [
@@ -118,6 +114,8 @@ function populateData(): IUser[] {
 console.log("registering userServiceMock...");
 angular
   .module("userServiceMock", ["ngMockE2E"])
-  .run(UserServiceMock)
-  ;
-console.log("registered userServiceMock.");
+  .service('userServiceMock', UserServiceMock)
+  .run(['userServiceMock', function(userServiceMock:UserServiceMock) {
+    // no-op. just instantiate userServiceMock...
+  }]);
+

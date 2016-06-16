@@ -43,24 +43,25 @@ System.register(['angular-mocks', 'lodash', './userService'], function(exports_1
             }],
         execute: function() {
             baseUri = userService_1.userServiceUri;
-            class UserServiceMock {
-                constructor($httpBackend, $timeout) {
+            UserServiceMock = (function () {
+                function UserServiceMock($httpBackend, $timeout) {
+                    var _this = this;
                     this.$httpBackend = $httpBackend;
                     this.$timeout = $timeout;
                     console.log("configuring user service mock e2e ....");
                     this.users = populateData();
-                    $httpBackend.whenGET(userService_1.userServiceUri).respond((method, url, data, header, params) => {
+                    this.$httpBackend.whenGET(userService_1.userServiceUri).respond(function (method, url, data, header, params) {
                         return [
                             200,
-                            this.users,
+                            _this.users,
                             header,
                             "OK",
                         ];
                     });
-                    const uriWithId = new RegExp(userService_1.userServiceUri + "/[0-9]+");
-                    $httpBackend.whenGET(uriWithId).respond((metehod, url, data, header, params) => {
+                    var uriWithId = new RegExp(userService_1.userServiceUri + "/[0-9]+");
+                    this.$httpBackend.whenGET(uriWithId).respond(function (metehod, url, data, header, params) {
                         var id = parseInt(url.split("/").slice(-1)[0]);
-                        var found = _.find(this.users, user => user.id === id);
+                        var found = _.find(_this.users, function (user) { return user.id === id; });
                         if (found) {
                             return [
                                 200,
@@ -70,20 +71,15 @@ System.register(['angular-mocks', 'lodash', './userService'], function(exports_1
                             ];
                         }
                         else {
-                            return [
-                                404,
-                                null,
-                                header,
-                                "NOT FOUND"
-                            ];
+                            return [404, null, header, "NOT FOUND"];
                         }
                     });
                     // var timeoutService = $timeout;
                     // console.log('timeout =' + timeoutService);
-                    const uriWithName = new RegExp(userService_1.userServiceUri + "/[a-zA-Z].*");
-                    $httpBackend.whenGET(uriWithName).respond((method, url, data, header, params) => {
+                    var uriWithName = new RegExp(userService_1.userServiceUri + "/[a-zA-Z].*");
+                    this.$httpBackend.whenGET(uriWithName).respond(function (method, url, data, header, params) {
                         var name = url.split("/").slice(-1)[0];
-                        var found = _.find(this.users, user => {
+                        var found = _.find(_this.users, function (user) {
                             return user.userName === name;
                         });
                         if (found) {
@@ -93,30 +89,31 @@ System.register(['angular-mocks', 'lodash', './userService'], function(exports_1
                             return [404, null, header, "NOTFOUND!"];
                         }
                     });
-                    $httpBackend.whenPOST(userService_1.userServiceUri).respond((method, url, data, header) => {
-                        let newUser = JSON.parse(data);
-                        let existingUserWithSameName = _.find(this.users, user => user.userName === newUser.userName);
+                    this.$httpBackend.whenPOST(userService_1.userServiceUri).respond(function (method, url, data, header) {
+                        var newUser = JSON.parse(data);
+                        var existingUserWithSameName = _.find(_this.users, function (user) { return user.userName === newUser.userName; });
                         if (existingUserWithSameName) {
                             return [409, null, header, "Conflicted id"];
                         }
                         else {
-                            var maxId = (_.maxBy(this.users, user => user.id)).id;
+                            var maxId = (_.maxBy(_this.users, function (user) { return user.id; })).id;
                             newUser.id = maxId + 1;
-                            this.users.push(newUser);
+                            _this.users.push(newUser);
                             return [200, newUser, header, "OK"];
                         }
                     });
-                    $httpBackend.whenGET(/app/).passThrough();
+                    this.$httpBackend.whenGET(/app/).passThrough();
                     console.log("configured user service mock e2e ....");
                 }
-            }
-            UserServiceMock.$inject = ['$httpBackend', '$timeout'];
-            console.log("registering userServiceMock...");
+                UserServiceMock.$inject = ['$httpBackend', '$timeout'];
+                return UserServiceMock;
+            }());
             angular
                 .module("userServiceMock", ["ngMockE2E"])
-                .run(UserServiceMock);
-            console.log("registered userServiceMock.");
+                .service('userServiceMock', UserServiceMock)
+                .run(['userServiceMock', function (userServiceMock) {
+                    // no-op. just instantiate userServiceMock...
+                }]);
         }
     }
 });
-//# sourceMappingURL=userServiceMock.js.map

@@ -3,8 +3,8 @@
 import * as angular from 'angular';
 import 'angular-route';
 import 'angular-cookies';
-import 'bootstrap/css/bootstrap.min.css!'
-import 'font-awesome/css/font-awesome.min.css!'
+import 'bootstrap/css/bootstrap.min.css!';
+import 'font-awesome/css/font-awesome.min.css!';
 
 //import {ILoginRootScopeService, ILoginGlobalData, LoginGlobalData} from './services/loginRootScopeService';
 
@@ -66,15 +66,12 @@ app
     
             $rootScope.$on('$locationChangeStart', function (event, next, current) {
                 
-                var isLogOutAccessibles = _.find(['/login', '/register'], s => s===$location.path());
+                var isNonRestrictedPage = _.find(['/login', '/register'], s => s===$location.path());
                 var loggedIn = localAuthStoreService.get();
-                if (!isLogOutAccessibles && !loggedIn) {
+                if (!isNonRestrictedPage && !loggedIn) {
                     $location.path('/login');
                 }
             });
+        }]);
 
-            console.log("app module run stop..");
-        }])
-        ;
-
-console.log("registered main module...");
+console.log("loaded main module");

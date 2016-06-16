@@ -6,7 +6,7 @@ interface IUserServiceResponse {
 }
 
 interface IUserService {
-  create(user:IUser):Promise<IUserServiceResponse>;
+  create(user:IUser):angular.IPromise<IUserServiceResponse>;
 }
 
 interface IUser {
