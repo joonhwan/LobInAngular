@@ -4,7 +4,7 @@
 
 - `npm init`
 
-    genearte package.json
+    generate package.json
 
 - `npm install jspm --save-dev`
 
@@ -12,22 +12,18 @@
 
 - `jspm init`
 
-    generate config.js / jspm_package 
+    generate config.js / jspm_package.
+    as a javascript newbie, **do not transpiler** for a while.
+        - firefox |new| operator issue sometimes...
+        - chrome `this` undefined issue sometimes....
+
+## Typescript init
 
 - `tsd init`
 
     typescript definition file handling...
 
-##  Prepare source dir structure 
-
-- `mkdir app`
-- `mkdir app\src`
-- `mkdir app\dist`
-
-
-## Typescript init
-
-- `tsc --init app\src`
+- `tsc --init`
 
     edit the generated tsconfig.json like ... 
     (though exclude options is meanlingless here. 
@@ -35,8 +31,8 @@
     ```
     {
         "compilerOptions": {
-            "module": "commonjs",
-            "target": "es6",
+            "module": "system",
+            "target": "es5",
             "noImplicitAny": true,
             "sourceMap": true,
             "outDir": "../dist"
@@ -51,23 +47,19 @@
 
 - jspm packages
 
-    no `--save` or `--save-dev` option is needed here. 
+    **no `--save` or `--save-dev` option** is needed here. 
 
-    - `jspm install angular`
-    - `jspm install angular-route`
-    - `jspm install angular-cookies`
-    - `jspm install bootstrap`
-    - `jspm install font-awesome`
-    - `jspm install angular-mocks`
-
+    - `jspm install angular angular-route angular-cookies angular-mocks bootstrap font-awesome lodash`
+    
 - tsd type definitions
 
     `--save` option is needed to generate merged ./typings/tsd.d.ts file.
 
-    - `tsd install angular --save`
-    - `tsd install angular-route --save` 
-    - `tsd install angular-cookies --save`
-    - `tsd install bootstrap --save`
-    - `tsd install angular-mocks --save`
+    - `tsd install angular angular-route angular-cookies bootstrap lodash --save`
 
 
+##  Prepare source dir structure 
+
+- `mkdir app`
+- `mkdir app\src`
+- `mkdir app\dist`

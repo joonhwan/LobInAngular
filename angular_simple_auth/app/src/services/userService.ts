@@ -30,13 +30,15 @@ class UserService implements IUserService {
 
   }
   create(user:IUser):ng.IPromise<IUser> {
-    return this.$http.post<IUser>(baseUri, user);
-    // let deferred = this.$q.defer<IUser>();
-    // this.$http.post<IUser>(baseUri, user)
-    //   .success((data) => deferred.resolve(data))
-    //   .error((data, status) => deferred.reject('ERROR:' + status))
-    //   ;
-    // return deferred.promise;
+    //return this.$http.post<IUser>(baseUri, user);
+    let deferred = this.$q.defer<IUser>();
+    this.$http.post<IUser>(baseUri, user)
+      .success((data) => deferred.resolve(data))
+      .error((data:any, status:any, ...args:any[]) => {
+        deferred.reject(status==409 ? "Already registered user name!" : 'ERROR:' + status);
+      })
+      ;
+    return deferred.promise;
   }
   getByUserName(userName:string):ng.IPromise<IUser> {
     // return this.$http.get<IUser>(baseUri + '/' + userName);
@@ -108,8 +110,60 @@ class UserService implements IUserService {
   //     };
   //   }
   // } 
+}
 
+class UserServiceDelayed implements IUserService {
+  static $inject = ['$q', 'userServiceNoDelayed', 'userServiceDelay'];
+  constructor(
+    private $q:angular.IQService, 
+    private userService:UserService, 
+    private delay:number) {
+  }
+  create(user:IUser):ng.IPromise<IUser>
+  {
+    let d = this.$q.defer();
+    setTimeout(() => this.userService.create(user).then(d.resolve, d.reject), this.delay);
+    return d.promise;
+  }
+  getByUserName(userName:string):ng.IPromise<IUser> {
+    let d = this.$q.defer();
+    setTimeout(() => this.userService.getByUserName(userName).then(d.resolve, d.reject), this.delay);
+    return d.promise;
+  }
+  getById(id:number):ng.IPromise<IUser> {
+    let d = this.$q.defer();
+    setTimeout(()=>this.userService.getById(id).then(d.resolve, d.reject), this.delay);
+    return d.promise;
+  }
+  getAll():ng.IPromise<IUser[]> {
+    let d = this.$q.defer();
+    setTimeout(() => this.userService.getAll().then(d.resolve, d.reject), this.delay);
+    return d.promise;
+  }
+  update(user:IUser):ng.IPromise<IUser> {
+    let d = this.$q.defer();
+    setTimeout(()=>this.userService.update(user).then(d.resolve, d.reject), this.delay);
+    return d.promise;
+  }
+  deleteById(id:number):ng.IPromise<IUser> {
+    return this.deleteById(id);
+  }
 }
 
 console.log('registering user service..');
-getServiceModule().service('userService', UserService);
+getServiceModule()
+  .constant('userServiceDelay', 3000)
+  .service('userServiceNoDelayed', UserService)
+  .service('userServiceDelayed', UserServiceDelayed)
+  .config(['$provide', 'userServiceDelay', ($provide:angular.IModule, userServiceDelay:number) => {
+    if(userServiceDelay>0) {
+      console.log("user service will delay execution!");
+      $provide.service("userService", UserServiceDelayed);
+    } else {
+      console.log("user service in production mode.");
+      $provide.service("userService", UserService);
+    }
+  }])
+  //.service('userService', UserServiceDelayed)
+  ;
+  

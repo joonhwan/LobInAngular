@@ -10,23 +10,25 @@ System.register(['angular'], function(exports_1, context_1) {
             }],
         execute: function() {
             //console.log("loading home module...");
-            class HomeController {
-                constructor($location, loginService) {
+            HomeController = (function () {
+                function HomeController($location, loginService, localAuthStoreService) {
                     this.$location = $location;
                     this.loginService = loginService;
+                    this.localAuthStoreService = localAuthStoreService;
                     this.message = "Message from Home Controller";
+                    this.message = "Welcome " + localAuthStoreService.get().userName;
                 }
-                logOut() {
+                HomeController.prototype.logOut = function () {
                     console.log("logout...");
                     this.$location.path("/login");
                     this.loginService.clearCredentials();
-                }
-            }
-            HomeController.$inject = ['$location', 'loginService'];
+                };
+                HomeController.$inject = ['$location', 'loginService', 'localAuthStoreService'];
+                return HomeController;
+            }());
             angular_1.default
                 .module("home", [])
                 .controller('homeController', HomeController);
         }
     }
 });
-//# sourceMappingURL=home.js.map

@@ -10,8 +10,8 @@ System.register(['angular'], function(exports_1, context_1) {
             }],
         execute: function() {
             //console.log("loading login module...");
-            class LoginController {
-                constructor($location, loginService, userService) {
+            LoginController = (function () {
+                function LoginController($location, loginService, userService) {
                     this.$location = $location;
                     this.loginService = loginService;
                     this.userService = userService;
@@ -21,40 +21,41 @@ System.register(['angular'], function(exports_1, context_1) {
                     //loginService.clearCredentials();
                     //this.testE2e();
                 }
-                login() {
+                LoginController.prototype.login = function () {
+                    var _this = this;
                     this.dataLoading = true;
                     this.loginError = "";
-                    this.loginService.login(this.userName, this.password, response => {
+                    this.loginService.login(this.userName, this.password, function (response) {
                         if (response.success) {
-                            this.loginError = "";
-                            this.$location.path('/');
+                            _this.loginError = "";
+                            _this.$location.path('/');
                         }
                         else {
-                            this.loginError = response.failReason;
-                            this.dataLoading = false;
+                            _this.loginError = response.failReason;
+                            _this.dataLoading = false;
                         }
                     });
-                }
-                testE2e() {
+                };
+                LoginController.prototype.testE2e = function () {
                     console.log('testing e2e!!!');
-                    this.userService.getAll().then(response => {
+                    this.userService.getAll().then(function (response) {
                         for (var i = 0; i < response.length; ++i) {
                             console.log("--> user:" + JSON.stringify(response[i]));
                         }
                     });
-                    this.userService.getById(4).then(response => {
+                    this.userService.getById(4).then(function (response) {
                         console.log("--> id=4 user:" + JSON.stringify(response));
                     });
-                    this.userService.getById(88).then(response => {
+                    this.userService.getById(88).then(function (response) {
                         console.log("response:" + JSON.stringify(response) + "--> id=88 user:" + JSON.stringify(response));
-                    }).catch(reason => {
+                    }).catch(function (reason) {
                         console.log("response:" + JSON.stringify(reason) + "--> id=88 user not found");
                     });
                     this.userService.getByUserName("jhlee")
-                        .then(response => {
+                        .then(function (response) {
                         console.log("get by name response : " + JSON.stringify(response));
                     })
-                        .catch(reason => {
+                        .catch(function (reason) {
                         console.log("get by name failed : reason=" + JSON.stringify(reason));
                     });
                     this.userService.create({
@@ -62,19 +63,19 @@ System.register(['angular'], function(exports_1, context_1) {
                         userName: "seoyoen",
                         password: "okmsy"
                     })
-                        .then(response => {
+                        .then(function (response) {
                         console.log("create response : " + JSON.stringify(response));
                     })
-                        .catch(reason => {
+                        .catch(function (reason) {
                         console.log("create failed : " + JSON.stringify(reason));
                     });
-                }
-            }
-            LoginController.$inject = ['$location', 'loginService', 'userService'];
+                };
+                LoginController.$inject = ['$location', 'loginService', 'userService'];
+                return LoginController;
+            }());
             angular_1.default
                 .module("login", [])
                 .controller("loginController", LoginController);
         }
     }
 });
-//# sourceMappingURL=login.js.map

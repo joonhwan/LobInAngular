@@ -9,30 +9,31 @@ System.register(['angular'], function(exports_1, context_1) {
                 angular_1 = angular_1_1;
             }],
         execute: function() {
-            class RegisterController {
-                constructor($location, $rootScope, userService) {
+            RegisterController = (function () {
+                function RegisterController($location, $rootScope, userService) {
                     this.$location = $location;
                     this.$rootScope = $rootScope;
                     this.userService = userService;
                 }
-                register() {
+                RegisterController.prototype.register = function () {
+                    var _this = this;
                     this.registering = true;
                     this.userService.create(this.user)
-                        .then(_ => {
-                        this.registering = false;
-                        this.$location.path('/login');
+                        .then(function (_) {
+                        _this.registering = false;
+                        _this.$location.path('/login');
                     })
-                        .catch((reason) => {
-                        this.registering = false;
-                        this.lastError = reason;
+                        .catch(function (reason) {
+                        _this.registering = false;
+                        _this.lastError = reason;
                     });
-                }
-            }
-            RegisterController.$inject = ['$location', '$rootScope', 'userService'];
+                };
+                RegisterController.$inject = ['$location', '$rootScope', 'userService'];
+                return RegisterController;
+            }());
             angular_1.default
                 .module('register', [])
                 .controller('registerController', RegisterController);
         }
     }
 });
-//# sourceMappingURL=register.js.map

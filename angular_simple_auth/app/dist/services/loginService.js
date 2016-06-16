@@ -9,15 +9,16 @@ System.register(['./serviceModule'], function(exports_1, context_1) {
                 serviceModule_1 = serviceModule_1_1;
             }],
         execute: function() {
-            class LoginService {
-                constructor($http, $timeout, userService, localAuthStoreService) {
+            LoginService = (function () {
+                function LoginService($http, $timeout, userService, localAuthStoreService) {
                     this.$http = $http;
                     this.$timeout = $timeout;
                     this.userService = userService;
                     this.localAuthStoreService = localAuthStoreService;
                     this.base64 = new Base64(); // see below
                 }
-                login(userName, password, callback) {
+                LoginService.prototype.login = function (userName, password, callback) {
+                    var _this = this;
                     // dummy impl
                     console.log('loginservice login..');
                     // this.$timeout(_ => {
@@ -31,13 +32,13 @@ System.register(['./serviceModule'], function(exports_1, context_1) {
                     //   callback(response);
                     // }, 1000);
                     this.userService.getByUserName(userName)
-                        .then(user => {
+                        .then(function (user) {
                         if (user.password === password) {
                             callback({
                                 success: true,
                                 failReason: "",
                             });
-                            this.setCredentials(userName, password);
+                            _this.setCredentials(userName, password);
                         }
                         else {
                             callback({
@@ -46,14 +47,14 @@ System.register(['./serviceModule'], function(exports_1, context_1) {
                             });
                         }
                     })
-                        .catch(reason => {
+                        .catch(function (reason) {
                         callback({
                             success: false,
                             failReason: "invalid user name"
                         });
                     });
-                }
-                setCredentials(userName, password) {
+                };
+                LoginService.prototype.setCredentials = function (userName, password) {
                     // var authData = this.base64.encode(userName + ":" + password);
                     // (<any>this.$rootScope).globals = {
                     //   currentUser: {
@@ -68,21 +69,22 @@ System.register(['./serviceModule'], function(exports_1, context_1) {
                         userName: userName,
                         password: password
                     });
-                }
-                clearCredentials() {
+                };
+                LoginService.prototype.clearCredentials = function () {
                     // (<any>this.$rootScope).globals = {};
                     // this.$cookieStore.remove('globals');
                     // this.$http.defaults.headers.common['Authorization'] = 'Basic ';
                     // console.log("cleared cookie.");
                     this.localAuthStoreService.set(null);
-                }
-            }
-            LoginService.$inject = ['$http', '$timeout', 'userService', 'localAuthStoreService'];
-            class Base64 {
-                constructor() {
+                };
+                LoginService.$inject = ['$http', '$timeout', 'userService', 'localAuthStoreService'];
+                return LoginService;
+            }());
+            Base64 = (function () {
+                function Base64() {
                     this.keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
                 }
-                encode(input) {
+                Base64.prototype.encode = function (input) {
                     var keyStr = this.keyStr;
                     var output = "";
                     var chr1, chr2, chr3;
@@ -113,9 +115,9 @@ System.register(['./serviceModule'], function(exports_1, context_1) {
                         enc1 = enc2 = enc3 = enc4 = 0;
                     } while (i < input.length);
                     return output;
-                }
+                };
                 ;
-                decode(input) {
+                Base64.prototype.decode = function (input) {
                     var keyStr = this.keyStr;
                     var output = "";
                     var chr1, chr2, chr3;
@@ -148,11 +150,11 @@ System.register(['./serviceModule'], function(exports_1, context_1) {
                         enc1 = enc2 = enc3 = enc4 = 0;
                     } while (i < input.length);
                     return output;
-                }
-            }
+                };
+                return Base64;
+            }());
             console.log("registering loginService...");
             serviceModule_1.getServiceModule().service("loginService", LoginService);
         }
     }
 });
-//# sourceMappingURL=loginService.js.map

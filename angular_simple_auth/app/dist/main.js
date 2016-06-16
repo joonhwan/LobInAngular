@@ -51,14 +51,14 @@ System.register(['angular', 'angular-route', 'angular-cookies', 'bootstrap/css/b
                 function ($rootScope, $location, $http, localAuthStoreService) {
                     console.log("configure root scope...");
                     $rootScope.$on('$locationChangeStart', function (event, next, current) {
-                        var isLogOutAccessibles = _.find(['/login', '/register'], s => s === $location.path());
+                        var isNonRestrictedPage = _.find(['/login', '/register'], function (s) { return s === $location.path(); });
                         var loggedIn = localAuthStoreService.get();
-                        if (!isLogOutAccessibles && !loggedIn) {
+                        if (!isNonRestrictedPage && !loggedIn) {
                             $location.path('/login');
                         }
                     });
                 }]);
+            console.log("loaded main module");
         }
     }
 });
-//# sourceMappingURL=main.js.map
