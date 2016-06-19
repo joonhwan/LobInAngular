@@ -27,6 +27,8 @@ export class MainController {
   searchText: string = '';
   tabIndex: number = 0;
   avatars:string[];
+  newNoteText: string;
+
   toggleSidenav() : void {
     this.$mdSidenav("left").toggle();
   }
@@ -78,6 +80,10 @@ export class MainController {
     });
   }
 
+  addNote() : void {
+    this.selectedUser.notes.push(new Note(this.newNoteText, new Date()));
+    this.newNoteText == "";  
+  }
   removeNote(note:Note) : void {
     var noteIndex = this.selectedUser.notes.indexOf(note);
     if(noteIndex >= 0) {
