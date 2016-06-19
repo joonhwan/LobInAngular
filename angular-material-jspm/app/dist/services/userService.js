@@ -47,6 +47,10 @@ System.register([], function(exports_1, context_1) {
                 UserService.prototype.loadAllUsers = function () {
                     return this.$q.when(this.users);
                 };
+                UserService.prototype.addUser = function (user) {
+                    this.users.push(user);
+                    return this.$q.when(user);
+                };
                 UserService.$inject = ["$q"];
                 return UserService;
             }());

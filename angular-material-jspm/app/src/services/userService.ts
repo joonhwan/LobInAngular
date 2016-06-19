@@ -3,6 +3,7 @@ import {User, Note} from './../model'
 
 export interface IUserService {
   loadAllUsers() : ng.IPromise<User[]>;
+  addUser(user:User): ng.IPromise<User>;
   selectedUser: User;
 }
 
@@ -13,6 +14,11 @@ export class UserService implements IUserService {
   }
   loadAllUsers() : ng.IPromise<User[]> {
     return this.$q.when(this.users);
+  }
+
+  addUser(user:User) : ng.IPromise<User> {
+    this.users.push(user);
+    return this.$q.when(user);
   }
   selectedUser: User = null;
   private users: User[] = [

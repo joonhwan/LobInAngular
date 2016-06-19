@@ -1,17 +1,23 @@
-System.register([], function(exports_1, context_1) {
+System.register(['angular'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
+    var angular_1;
     var MainController;
     return {
-        setters:[],
+        setters:[
+            function (angular_1_1) {
+                angular_1 = angular_1_1;
+            }],
         execute: function() {
             MainController = (function () {
-                function MainController(userService, $mdSidenav, $mdToast, $mdDialog) {
+                function MainController(userService, $mdSidenav, $mdToast, $mdDialog, $mdMedia, $mdBottomSheet) {
                     var _this = this;
                     this.userService = userService;
                     this.$mdSidenav = $mdSidenav;
                     this.$mdToast = $mdToast;
                     this.$mdDialog = $mdDialog;
+                    this.$mdMedia = $mdMedia;
+                    this.$mdBottomSheet = $mdBottomSheet;
                     this.selectedUser = null;
                     this.searchText = '';
                     this.tabIndex = 0;
@@ -19,6 +25,7 @@ System.register([], function(exports_1, context_1) {
                         .then(function (users) {
                         _this.users = users;
                         _this.selectedUser = users[0];
+                        _this.userService.selectedUser = users[0];
                         ///console.log(this.users);
                     });
                 }
@@ -27,11 +34,47 @@ System.register([], function(exports_1, context_1) {
                 };
                 MainController.prototype.selectUser = function (user) {
                     this.selectedUser = user;
+                    this.userService.selectedUser = user;
                     var sidenav = this.$mdSidenav("left");
                     if (sidenav.isOpen()) {
                         sidenav.close();
                     }
                     this.tabIndex = 0;
+                };
+                MainController.prototype.addUser = function ($event) {
+                    var _this = this;
+                    var useFullScreen = (this.$mdMedia("sm") || this.$mdMedia("xs"));
+                    console.log('showing dialog..');
+                    this.$mdDialog.show({
+                        templateUrl: "app/view/addUserDialog.html",
+                        parent: angular_1.default.element(document.body),
+                        targetEvent: $event,
+                        controller: "addUserDialogController",
+                        controllerAs: "vm",
+                        clickOutsideToClose: true
+                    }).then(function (user) {
+                        _this.userService
+                            .loadAllUsers()
+                            .then(function (users) {
+                            _this.users = users;
+                            _this.selectedUser = user;
+                        });
+                    }).catch(function (reason) {
+                        console.log("You cancelled dialog.");
+                    });
+                };
+                MainController.prototype.showContactSheet = function ($event) {
+                    this.$mdBottomSheet.show({
+                        templateUrl: "app/view/contactSheet.html",
+                        parent: angular_1.default.element(document.getElementById("content")),
+                        controller: "contactSheetController",
+                        controllerAs: "vm",
+                        clickOutsideToClose: true,
+                        targetEvent: $event
+                    }).then(function (response) {
+                        response && console.log("you clicked " + response.name);
+                    }).catch(function (reason) {
+                    });
                 };
                 MainController.prototype.removeNote = function (note) {
                     var noteIndex = this.selectedUser.notes.indexOf(note);
@@ -81,7 +124,7 @@ System.register([], function(exports_1, context_1) {
                         .position("top right")
                         .hideDelay(3000));
                 };
-                MainController.$inject = ["userService", "$mdSidenav", "$mdToast", "$mdDialog"];
+                MainController.$inject = ["userService", "$mdSidenav", "$mdToast", "$mdDialog", "$mdMedia", "$mdBottomSheet"];
                 return MainController;
             }());
             exports_1("MainController", MainController);
