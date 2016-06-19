@@ -27,3 +27,4 @@ System.register(['angular', './userService', './loginService', './userServiceMoc
         }
     }
 });
+//# sourceMappingURL=serviceModule.js.map

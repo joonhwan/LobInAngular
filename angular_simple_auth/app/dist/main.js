@@ -61,9 +61,9 @@ System.register(['angular', 'angular-route', 'angular-cookies', 'bootstrap/css/b
                             $location.path('/login');
                         }
                     });
-                    console.log("app module run stop..");
                 }]);
             console.log("loaded main module");
         }
     }
 });
+//# sourceMappingURL=main.js.map

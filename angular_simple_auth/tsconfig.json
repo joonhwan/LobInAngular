@@ -3,7 +3,7 @@
         "module": "system",
         "target": "es5",
         "noImplicitAny": true,
-        "sourceMap": false,
+        "sourceMap": true,
         "outDir": "app/dist"
     },
     "compileOnSave": true,
