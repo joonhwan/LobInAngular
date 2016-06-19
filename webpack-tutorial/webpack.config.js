@@ -3,7 +3,7 @@ var path = require('path');
 module.exports = {
   context: path.resolve('js'),
   entry: {
-    app: ['./app.js', './utils.js']
+    app: ['./app', './utils']
   },
   output: {
     path: path.resolve('build/js'),
@@ -14,13 +14,6 @@ module.exports = {
     contentBase: 'public'
   },
   module: {
-    preLoaders: [
-      {
-        test: /\.js$/,
-        exclude: 'node_modules',
-        loader: 'jshint-loader'
-      }
-    ],
     loaders: [
       {
         test: /\.es6$/,

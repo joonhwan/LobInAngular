@@ -1,9 +1,9 @@
-console.log('login from login.es6');
-
 let login = (username, password) => {
-  if(username !== 'admin') {
-    console.log('incorrect username');
+  if(username !== 'admin' && password !== "radical") {
+    console.log('incorrect login');
   }
 };
 
-login('admin2', 'iduuno');
+// login('admin2', 'iduuno');
+export {login};
+ 

@@ -1,85 +1,105 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-
+/******/
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "/public/assets/js";
-
+/******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/*!*****************!*\
+  !*** multi app ***!
+  \*****************/
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(1);
-	module.exports = __webpack_require__(3);
+	__webpack_require__(/*! ./app */1);
+	module.exports = __webpack_require__(/*! ./utils */3);
 
 
 /***/ },
 /* 1 */
+/*!*****************!*\
+  !*** ./app.es6 ***!
+  \*****************/
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(2);
-
-	document.write("Welcom to webpack fundamentals!");
-
+	"use strict";
+	
+	var _login = __webpack_require__(/*! ./login */ 2);
+	
+	document.write("Welcom to webpack fundamentals!"); //require('./login');
+	
+	
+	(0, _login.login)('admin2', 'radical');
+	
 	console.log("App loaded");
 
 /***/ },
 /* 2 */
+/*!*******************!*\
+  !*** ./login.es6 ***!
+  \*******************/
 /***/ function(module, exports) {
 
 	'use strict';
-
-	console.log('login from login.es6');
-
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	var login = function login(username, password) {
-	  if (username !== 'admin') {
-	    console.log('incorrect username');
+	  if (username !== 'admin' && password !== "radical") {
+	    console.log('incorrect login');
 	  }
 	};
-
-	login('admin2', 'iduuno');
+	
+	// login('admin2', 'iduuno');
+	exports.login = login;
 
 /***/ },
 /* 3 */
+/*!******************!*\
+  !*** ./utils.js ***!
+  \******************/
 /***/ function(module, exports) {
 
 	console.log("loading utils...");
-
+	debugger;
 
 /***/ }
 /******/ ]);
+//# sourceMappingURL=bundle.js.map
