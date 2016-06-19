@@ -1,1 +1,1 @@
-export const msg = "Hello from content.ts";
+export const msg = "Hello Baby!! from content.ts";

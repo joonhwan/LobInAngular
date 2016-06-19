@@ -47,7 +47,7 @@
 	"use strict";
 	var content_1 = __webpack_require__(1);
 	__webpack_require__(2);
-	document.write("It works! and... ");
+	document.write("Webpack Tutorial. It works! and... ");
 	document.write(content_1.msg);
 	//# sourceMappingURL=main.js.map
 

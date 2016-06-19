@@ -7,6 +7,8 @@
         "outDir": "./app/dist"
     },
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "bower_components",
+        "jspm_packages"
     ]
 }

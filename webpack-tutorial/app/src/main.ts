@@ -1,3 +1,4 @@
+import * as $ from 'jquery';
 import {msg} from './content';
 import "../css/style.css";
 
