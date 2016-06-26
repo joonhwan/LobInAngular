@@ -1,13 +1,31 @@
 <div>
-  <h3>Hello from a component template(url!)</h3>
-  <h4>Controller Message : {{vm.message}}</h4>
-  <input type="text" class="form-control" ng-model="vm.message">
-  <button
-    type="button" 
-    class="btn btn-default"
-    ng-click="vm.changeMessage()"
-  >
-  Change Messgae
-  </button>
+  
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Length</th>
+        <th>Rating</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="movie in vm.movies">
+        <td>{{movie.title}}</td>
+        <td>{{movie.length}}</td>
+        <td>{{movie.rating}}</td>
+        <td>
+          <div class="btn-group">
+            <button class="btn btn-default" ng-click="vm.upRating(movie)">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+            <button class="btn btn-default" ng-click="vm.downRating(movie)">
+              <span class="glyphicon glyphicon-minus"></span>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
   
 </div>

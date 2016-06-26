@@ -44447,18 +44447,42 @@
 /* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/// <reference path="../app.d.ts" />
 	"use strict";
 	// webpack의  file-loader를 사용하면 src의 경로가 dist의 경로로 mapping될 수 있도록 실제 파일을 복사하고, 그 복사된 결과파일명을 뱉어낸다.
-	var movieDataUrl = __webpack_require__(29);
-	var View = __webpack_require__(30);
+	var movieDataUrl = __webpack_require__(31);
+	var View = __webpack_require__(32);
 	var Controller = (function () {
 	    function Controller($http) {
 	        this.$http = $http;
+	        console.log("controller instantiated...");
 	        this.message = "Initial Controller message!";
+	        this.movies = [];
 	    }
+	    Controller.prototype.$onInit = function () {
+	        var _this = this;
+	        this.fetchMovies()
+	            .then(function (movies) {
+	            _this.movies = movies;
+	            // _.forEach(movies, movie => {
+	            //   console.log(JSON.stringify(movie));
+	            // });
+	        });
+	    };
+	    Controller.prototype.upRating = function (movie) {
+	        if (movie.rating < 5) {
+	            movie.rating += 1;
+	        }
+	    };
+	    Controller.prototype.downRating = function (movie) {
+	        if (movie.rating > 0) {
+	            movie.rating -= 1;
+	        }
+	    };
 	    Controller.prototype.fetchMovies = function () {
-	        return this.$http.get(movieDataUrl);
+	        return this.$http.get(movieDataUrl)
+	            .then(function (response) {
+	            return response.data;
+	        });
 	    };
 	    Controller.prototype.changeMessage = function () {
 	        this.message = "You Changed the message!";
@@ -44479,16 +44503,18 @@
 
 
 /***/ },
-/* 29 */
+/* 29 */,
+/* 30 */,
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "234bff363ce676044e121950b5318edf.json";
+	module.exports = __webpack_require__.p + "4df220f29b6ccde60ef61e1f9634bedf.json";
 
 /***/ },
-/* 30 */
+/* 32 */
 /***/ function(module, exports) {
 
-	module.exports = "<div>\r\n  <h3>Hello from a component template(url!)</h3>\r\n  <h4>Controller Message : {{vm.message}}</h4>\r\n  <input type=\"text\" class=\"form-control\" ng-model=\"vm.message\">\r\n  <button\r\n    type=\"button\" \r\n    class=\"btn btn-default\"\r\n    ng-click=\"vm.changeMessage()\"\r\n  >\r\n  Change Messgae\r\n  </button>\r\n  \r\n</div>"
+	module.exports = "<div>\r\n  \r\n  <table class=\"table table-hover\">\r\n    <thead>\r\n      <tr>\r\n        <th>Title</th>\r\n        <th>Length</th>\r\n        <th>Rating</th>\r\n        <th></th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr ng-repeat=\"movie in vm.movies\">\r\n        <td>{{movie.title}}</td>\r\n        <td>{{movie.length}}</td>\r\n        <td>{{movie.rating}}</td>\r\n        <td>\r\n          <div class=\"btn-group\">\r\n            <button class=\"btn btn-default\" ng-click=\"vm.upRating(movie)\">\r\n              <span class=\"glyphicon glyphicon-plus\"></span>\r\n            </button>\r\n            <button class=\"btn btn-default\" ng-click=\"vm.downRating(movie)\">\r\n              <span class=\"glyphicon glyphicon-minus\"></span>\r\n            </button>\r\n          </div>\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n  \r\n</div>"
 
 /***/ }
 /******/ ]);
