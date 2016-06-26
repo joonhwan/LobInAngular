@@ -15,7 +15,7 @@ module.exports = {
         loader: 'ts'
       }, {
         test: /\.css$/,
-        loader: 'style!css?sourceMap'
+        loader: 'style!css'
       }, {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
         loader: "url?limit=10000&mimetype=application/font-woff"

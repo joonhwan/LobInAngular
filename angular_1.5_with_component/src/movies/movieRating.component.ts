@@ -27,7 +27,7 @@ export default function registerMovieRatingsComponent(app:ng.IModule) {
     bindings: {
       value: "<"
     },
-
+    transclude: true,
     template: View,
     controller: Controller,
     controllerAs: 'vm'

@@ -1,12 +1,8 @@
 /// <reference path="app.d.ts" />
 
-import 'jquery';
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap';
-import * as angular from 'angular';
-
+import 'angular';
 import './style.css';
-
 
 import registerMovieListComponent from './movies/movieList.component';
 import registerMovieRatingComponent from './movies/movieRating.component';
