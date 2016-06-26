@@ -52,11 +52,13 @@
 	var angular = __webpack_require__(24);
 	__webpack_require__(26);
 	var movieList_component_1 = __webpack_require__(28);
+	var movieRating_component_1 = __webpack_require__(33);
 	var app = angular.module("movieApp", []);
 	app.controller('mainController', function () {
 	    this.message = "hello angular!";
 	});
 	movieList_component_1.default(app);
+	movieRating_component_1.default(app);
 	console.log("movieApp module initialized : " + app);
 
 
@@ -44490,7 +44492,7 @@
 	    Controller.$inject = ['$http'];
 	    return Controller;
 	}());
-	function movieListComponent(app) {
+	function registerMovieListComponent(app) {
 	    app.component("movieList", {
 	        template: View,
 	        controller: Controller,
@@ -44499,7 +44501,7 @@
 	    console.log("initialized movie-list component.");
 	}
 	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.default = movieListComponent;
+	exports.default = registerMovieListComponent;
 
 
 /***/ },
@@ -44514,7 +44516,48 @@
 /* 32 */
 /***/ function(module, exports) {
 
-	module.exports = "<div>\r\n  \r\n  <table class=\"table table-hover\">\r\n    <thead>\r\n      <tr>\r\n        <th>Title</th>\r\n        <th>Length</th>\r\n        <th>Rating</th>\r\n        <th></th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr ng-repeat=\"movie in vm.movies\">\r\n        <td>{{movie.title}}</td>\r\n        <td>{{movie.length}}</td>\r\n        <td>{{movie.rating}}</td>\r\n        <td>\r\n          <div class=\"btn-group\">\r\n            <button class=\"btn btn-default\" ng-click=\"vm.upRating(movie)\">\r\n              <span class=\"glyphicon glyphicon-plus\"></span>\r\n            </button>\r\n            <button class=\"btn btn-default\" ng-click=\"vm.downRating(movie)\">\r\n              <span class=\"glyphicon glyphicon-minus\"></span>\r\n            </button>\r\n          </div>\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n  \r\n</div>"
+	module.exports = "<div>\r\n  \r\n  <table class=\"table table-hover\">\r\n    <thead>\r\n      <tr>\r\n        <th>Title</th>\r\n        <th>Length</th>\r\n        <th>Rating</th>\r\n        <th></th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr ng-repeat=\"movie in vm.movies\">\r\n        <td>{{movie.title}}</td>\r\n        <td>{{movie.length}}</td>\r\n        <td>\r\n          <!--{{movie.rating}}-->\r\n          <movie-rating value=\"movie.rating\"></movie-rating>\r\n        </td>\r\n        <td>\r\n          <div class=\"btn-group\">\r\n            <button class=\"btn btn-default\" ng-click=\"vm.upRating(movie)\">\r\n              <span class=\"glyphicon glyphicon-plus\"></span>\r\n            </button>\r\n            <button class=\"btn btn-default\" ng-click=\"vm.downRating(movie)\">\r\n              <span class=\"glyphicon glyphicon-minus\"></span>\r\n            </button>\r\n          </div>\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n  \r\n</div>"
+
+/***/ },
+/* 33 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/// <reference path="../app.d.ts" />
+	"use strict";
+	var View = __webpack_require__(34);
+	var Controller = (function () {
+	    function Controller() {
+	        this.entries = [];
+	    }
+	    // 처음 활성화 될때.
+	    Controller.prototype.$onInit = function () {
+	        this.entries = new Array(this.value);
+	    };
+	    // 먼가 값이 바뀔때
+	    Controller.prototype.$onChanges = function () {
+	        this.entries = new Array(this.value);
+	    };
+	    return Controller;
+	}());
+	function registerMovieRatingsComponent(app) {
+	    app.component("movieRating", {
+	        bindings: {
+	            value: "<"
+	        },
+	        template: View,
+	        controller: Controller,
+	        controllerAs: 'vm'
+	    });
+	}
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = registerMovieRatingsComponent;
+
+
+/***/ },
+/* 34 */
+/***/ function(module, exports) {
+
+	module.exports = "<span ng-repeat=\"entry in vm.entries track by $index\">\r\n  *\r\n</span>\r\n\r\n<!--{{vm.value}}-->"
 
 /***/ }
 /******/ ]);

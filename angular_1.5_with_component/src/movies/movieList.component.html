@@ -13,7 +13,10 @@
       <tr ng-repeat="movie in vm.movies">
         <td>{{movie.title}}</td>
         <td>{{movie.length}}</td>
-        <td>{{movie.rating}}</td>
+        <td>
+          <!--{{movie.rating}}-->
+          <movie-rating value="movie.rating"></movie-rating>
+        </td>
         <td>
           <div class="btn-group">
             <button class="btn btn-default" ng-click="vm.upRating(movie)">

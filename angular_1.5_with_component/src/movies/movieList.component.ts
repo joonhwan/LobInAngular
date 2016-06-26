@@ -57,7 +57,7 @@ class Controller {
   }
 }
 
-export default function movieListComponent(app: angular.IModule) {
+export default function registerMovieListComponent(app: angular.IModule) {
   app.component("movieList", {
     template: View,
     controller: Controller,
