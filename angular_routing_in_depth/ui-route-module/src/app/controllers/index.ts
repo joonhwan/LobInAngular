@@ -5,7 +5,7 @@ import {HomeController} from './homeController';
 let moduleName = 'controllers';
 
 angular.module(moduleName, [])
-  .controller(HomeController.name, HomeController)
+  .controller(HomeController.className, HomeController)
   ;
 
-export { moduleName, HomeController as home };
+export { moduleName, HomeController };

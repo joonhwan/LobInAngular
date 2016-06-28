@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'angular';
 import 'angular-ui-router';
 
-import * as controller from './controllers';
+import * as controllers from './controllers';
 import * as models from './models';
 import * as services from './services';
 import * as serviceMocks from './serviceMocks';
@@ -14,7 +14,7 @@ import * as serviceMocks from './serviceMocks';
 
 let appModules:string[] = [
   'ui.router',
-  controller.moduleName,
+  controllers.moduleName,
   models.moduleName,
   services.moduleName,
 ];
@@ -40,7 +40,7 @@ app.config(['$logProvider', '$stateProvider', '$urlRouterProvider', function(
     .state('home', {
       url: '/',
       template: require('./templates/home.html'),
-      controller: controller.home.name,
+      controller: controllers.HomeController,
       controllerAs: 'vm'
     });
 

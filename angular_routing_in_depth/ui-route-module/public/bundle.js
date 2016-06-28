@@ -51,13 +51,13 @@
 	__webpack_require__(17);
 	__webpack_require__(26);
 	__webpack_require__(28);
-	var controller = __webpack_require__(29);
+	var controllers = __webpack_require__(29);
 	var models = __webpack_require__(36);
 	var services = __webpack_require__(31);
 	var serviceMocks = __webpack_require__(37);
 	var appModules = [
 	    'ui.router',
-	    controller.moduleName,
+	    controllers.moduleName,
 	    models.moduleName,
 	    services.moduleName,
 	];
@@ -74,7 +74,7 @@
 	            .state('home', {
 	            url: '/',
 	            template: __webpack_require__(40),
-	            controller: controller.home.name,
+	            controller: controllers.HomeController,
 	            controllerAs: 'vm'
 	        });
 	    }]);
@@ -65439,11 +65439,11 @@
 	/// <reference path="../app.d.ts" />
 	var angular = __webpack_require__(26);
 	var homeController_1 = __webpack_require__(30);
-	exports.home = homeController_1.HomeController;
+	exports.HomeController = homeController_1.HomeController;
 	var moduleName = 'controllers';
 	exports.moduleName = moduleName;
 	angular.module(moduleName, [])
-	    .controller(homeController_1.HomeController.name, homeController_1.HomeController);
+	    .controller(homeController_1.HomeController.className, homeController_1.HomeController);
 
 
 /***/ },
@@ -65477,7 +65477,7 @@
 	        this.notifier.error(reason);
 	    };
 	    // meta
-	    HomeController.$inject = [services_1.DataService.iid, services_1.Notifier.className];
+	    HomeController.$inject = [services_1.DataService.className, services_1.Notifier.className];
 	    HomeController.className = 'homeController';
 	    return HomeController;
 	}());
@@ -65499,9 +65499,9 @@
 	var moduleName = 'services';
 	exports.moduleName = moduleName;
 	angular
-	    .module(moduleName)
-	    .factory(dataService_1.DataService.className, dataService_1.DataService)
-	    .factory(notifier_1.Notifier.className, notifier_1.Notifier);
+	    .module(moduleName, [])
+	    .service(notifier_1.Notifier.className, notifier_1.Notifier)
+	    .service(dataService_1.DataService.className, dataService_1.DataService);
 
 
 /***/ },
@@ -65518,7 +65518,7 @@
 	    }
 	    DataService.prototype.getAllSchools = function () {
 	        var _this = this;
-	        return this.$http.get('api/schools')
+	        return this.$http.get('/api/schools')
 	            .then(function (response) {
 	            return response.data;
 	        })
@@ -66037,11 +66037,29 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	/// <reference path="../app.d.ts" />
+	var _ = __webpack_require__(1);
 	__webpack_require__(39);
+	var regexp = /^(?!\/api\/)/;
+	var testStrings = [
+	    "/home",
+	    "/schools",
+	    "/api/schools",
+	    "/api/classrooms"
+	];
+	_.forEach(testStrings, function (testString) {
+	    var result = regexp.test(testString);
+	    console.log('"' + testString + '" ==> ' + result);
+	});
+	regexp.test('');
 	function register(mod) {
 	    mod.run(['$httpBackend', function ($httpBackend) {
-	            $httpBackend.whenGET(/^(?!api\/)/).passThrough();
-	            $httpBackend.whenGET('/api/schools').respond(schools);
+	            $httpBackend.whenGET(function (url) {
+	                return !_.startsWith(url, '/api/');
+	            }).passThrough();
+	            $httpBackend.whenGET('/api/schools').respond(function (method, url, data) {
+	                return schools;
+	            });
 	            $httpBackend.whenGET('/api/classrooms').respond(classrooms);
 	            $httpBackend.whenGET('/api/activities').respond(activities);
 	        }]);
@@ -69341,7 +69359,7 @@
 /* 40 */
 /***/ function(module, exports) {
 
-	module.exports = "<div>\r\n  <h1>{{vm.message}}</h1>\r\n  <h3># of schools : {{vm.allSchools.length}} </h3>\r\n  <h3># of classrooms : </h3>\r\n  <h3># of acitivities :</h3>\r\n</div>"
+	module.exports = "<div>\n  <h1>{{vm.message}}</h1>\n  <h3># of schools : {{vm.allSchools.length}} </h3>\n  <h3># of classrooms : </h3>\n  <h3># of acitivities :</h3>\n</div>"
 
 /***/ }
 /******/ ]);

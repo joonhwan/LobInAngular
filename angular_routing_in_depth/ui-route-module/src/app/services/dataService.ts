@@ -13,11 +13,10 @@ export class DataService {
     private $q:angular.IQService,
     private $log:angular.ILogService,
     private $timeout:angular.ITimeoutService) {
-
     }
 
   getAllSchools() : angular.IPromise<ISchool[]> {
-    return this.$http.get('api/schools')
+    return this.$http.get('/api/schools')
         .then(response => 
         {
           return response.data;

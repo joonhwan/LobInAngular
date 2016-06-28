@@ -9,9 +9,9 @@ console.log('initializing services...');
 let moduleName = 'services';
 
 angular
-  .module(moduleName)
-  .factory(DataService.className, DataService)
-  .factory(Notifier.className, Notifier)
+  .module(moduleName, [])
+  .service(Notifier.className, Notifier)
+  .service(DataService.className, DataService)
   ;
 
 export { moduleName, DataService, Notifier };

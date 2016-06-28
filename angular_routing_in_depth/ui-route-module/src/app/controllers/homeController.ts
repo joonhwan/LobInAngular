@@ -4,7 +4,7 @@ import {ISchool, IClassroom, IActivity} from '../models';
 export class HomeController {
 
   // meta
-  static $inject = [DataService.iid, Notifier.className];
+  static $inject = [DataService.className, Notifier.className];
   static className = 'homeController';
 
   // property
@@ -31,7 +31,7 @@ export class HomeController {
       ;
   }
 
-  showError(reason) {
+  showError(reason):void {
     this.notifier.error(reason);
   }
 }

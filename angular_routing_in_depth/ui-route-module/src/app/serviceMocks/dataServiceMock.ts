@@ -1,16 +1,34 @@
 /// <reference path="../app.d.ts" />
+import * as _ from 'lodash';
 import * as angular from 'angular';
 import 'angular-mocks';
 import {ISchool} from '../models/school';
 import {IClassroom} from '../models/classroom';
 import {IActivity} from '../models/activity';
 
+let regexp = /^(?!\/api\/)/;
+let testStrings = [
+  "/home",
+  "/schools",
+  "/api/schools",
+  "/api/classrooms"
+];
+_.forEach(testStrings, testString => {
+  let result = regexp.test(testString);
+  console.log('"' + testString + '" ==> ' + result);
+});
+regexp.test('')
+
 export default function register(mod:angular.IModule) {
   mod.run(['$httpBackend', ($httpBackend:ng.IHttpBackendService) => {
 
-      $httpBackend.whenGET(/^(?!api\/)/).passThrough();
+      $httpBackend.whenGET((url:string) => {
+        return !_.startsWith(url, '/api/');
+      }).passThrough();
 
-      $httpBackend.whenGET('/api/schools').respond(schools)
+      $httpBackend.whenGET('/api/schools').respond((method, url, data) => {
+        return schools;
+      });
 
       $httpBackend.whenGET('/api/classrooms').respond(classrooms);
 
