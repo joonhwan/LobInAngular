@@ -7,14 +7,14 @@ import 'angular-route';
 
 let app = angular.module('ngroute-test', ['ngRoute']);
 
-app.config(['$logProvider', '$routeProvider', 
+app.config(['$logProvider', '$routeProvider',
   ($logProvider:ng.ILogProvider, $routeProvider:ng.route.IRouteProvider) => {
     $logProvider.debugEnabled(true);
 
     $routeProvider
       .when('/', {
         controller: function() {
-          this.message = "Hello Root Page";
+            this.message = "Hello Root Page";
         },
         controllerAs: 'vm',
         template: '<h2>Root Page({{vm.message}})</h2>'
