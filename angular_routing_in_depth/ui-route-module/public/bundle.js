@@ -44,11 +44,11 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/// <reference path="./app.d.ts" />
 	"use strict";
-	__webpack_require__(1);
-	__webpack_require__(3);
+	/// <reference path="./app.d.ts" />
+	__webpack_require__(41);
 	__webpack_require__(17);
+	__webpack_require__(3);
 	__webpack_require__(26);
 	__webpack_require__(28);
 	var controllers = __webpack_require__(29);
@@ -76,6 +76,23 @@
 	            template: __webpack_require__(40),
 	            controller: controllers.HomeController,
 	            controllerAs: 'vm'
+	        })
+	            .state('schools', {
+	            url: '/schools',
+	            template: __webpack_require__(43),
+	            controller: controllers.SchoolsController,
+	            controllerAs: 'vm'
+	        })
+	            .state('classrooms', {
+	            url: '/classrooms',
+	            template: __webpack_require__(46),
+	            controller: controllers.ClassroomsController,
+	            controllerAs: 'vm'
+	        })
+	            .state('activities', {
+	            url: '/activities',
+	            template: __webpack_require__(48),
+	            controller: controllers.ActivitiesController,
 	        });
 	    }]);
 
@@ -65440,10 +65457,18 @@
 	var angular = __webpack_require__(26);
 	var homeController_1 = __webpack_require__(30);
 	exports.HomeController = homeController_1.HomeController;
+	var schoolsController_1 = __webpack_require__(44);
+	exports.SchoolsController = schoolsController_1.SchoolsController;
+	var classroomsController_1 = __webpack_require__(45);
+	exports.ClassroomsController = classroomsController_1.ClassroomsController;
+	var activitiesController_1 = __webpack_require__(47);
+	exports.ActivitiesController = activitiesController_1.ActivitiesController;
 	var moduleName = 'controllers';
 	exports.moduleName = moduleName;
 	angular.module(moduleName, [])
-	    .controller(homeController_1.HomeController.className, homeController_1.HomeController);
+	    .controller(homeController_1.HomeController.className, homeController_1.HomeController)
+	    .controller(schoolsController_1.SchoolsController.className, schoolsController_1.SchoolsController)
+	    .controller(activitiesController_1.ActivitiesController.className, activitiesController_1.ActivitiesController);
 
 
 /***/ },
@@ -65471,7 +65496,23 @@
 	            .then(function (schools) {
 	            _this.allSchools = schools;
 	        })
-	            .catch(this.showError);
+	            .catch(function (reason) {
+	            _this.showError(reason);
+	        });
+	        ds.getAllClassrooms()
+	            .then(function (classrooms) {
+	            _this.allClassrooms = classrooms;
+	        })
+	            .catch(function (reason) {
+	            _this.showError(reason);
+	        });
+	        ds.getAllActivities()
+	            .then(function (activities) {
+	            _this.allActivities = activities;
+	        })
+	            .catch(function (reason) {
+	            _this.showError(reason);
+	        });
 	    };
 	    HomeController.prototype.showError = function (reason) {
 	        this.notifier.error(reason);
@@ -65519,14 +65560,25 @@
 	    DataService.prototype.getAllSchools = function () {
 	        var _this = this;
 	        return this.$http.get('/api/schools')
-	            .then(function (response) {
-	            return response.data;
-	        })
-	            .catch(function (reason) {
-	            var errorMessage = 'Error retrieving schools : ' + reason.statusText;
-	            _this.$log.error(errorMessage);
-	            return _this.$q.reject(errorMessage);
-	        });
+	            .then(function (response) { return response.data; })
+	            .catch(function (reason) { return _this.handleError('schools', reason); });
+	    };
+	    DataService.prototype.getAllClassrooms = function () {
+	        var _this = this;
+	        return this.$http.get('/api/classrooms')
+	            .then(function (response) { return response.data; })
+	            .catch(function (reason) { return _this.handleError('classroom', reason); });
+	    };
+	    DataService.prototype.getAllActivities = function () {
+	        var _this = this;
+	        return this.$http.get('/api/activities')
+	            .then(function (response) { return response.data; })
+	            .catch(function (reason) { return _this.handleError('activity', reason); });
+	    };
+	    DataService.prototype.handleError = function (hint, reason) {
+	        var errorMessage = 'Error retrieving [' + hint + '] : ' + reason.statusText;
+	        this.$log.error(errorMessage);
+	        return this.$q.reject(errorMessage);
 	    };
 	    DataService.$inject = ['$http', '$q', '$log', '$timeout'];
 	    DataService.className = 'dataService';
@@ -65541,12 +65593,25 @@
 
 	"use strict";
 	/// <reference path="../app.d.ts" />
-	__webpack_require__(34);
+	var toastr = __webpack_require__(34);
 	var Notifier = (function () {
 	    function Notifier() {
 	        this.options = {
-	            showDuration: 300,
-	            timeOut: 2000
+	            "closeButton": false,
+	            "debug": false,
+	            "newestOnTop": false,
+	            "progressBar": false,
+	            "positionClass": "toast-top-right",
+	            "preventDuplicates": false,
+	            "onclick": null,
+	            "showDuration": 300,
+	            "hideDuration": 1000,
+	            "timeOut": 5000,
+	            "extendedTimeOut": 1000,
+	            "showEasing": "swing",
+	            "hideEasing": "linear",
+	            "showMethod": "fadeIn",
+	            "hideMethod": "fadeOut"
 	        };
 	    }
 	    Notifier.prototype.success = function (message) {
@@ -66040,26 +66105,29 @@
 	/// <reference path="../app.d.ts" />
 	var _ = __webpack_require__(1);
 	__webpack_require__(39);
-	var regexp = /^(?!\/api\/)/;
-	var testStrings = [
-	    "/home",
-	    "/schools",
-	    "/api/schools",
-	    "/api/classrooms"
-	];
-	_.forEach(testStrings, function (testString) {
-	    var result = regexp.test(testString);
-	    console.log('"' + testString + '" ==> ' + result);
-	});
-	regexp.test('');
 	function register(mod) {
 	    mod.run(['$httpBackend', function ($httpBackend) {
+	            _.forEach(classrooms, function (classroom) {
+	                var school = _.find(schools, function (school) {
+	                    return (school.id == classroom.school_id);
+	                });
+	                classroom.school = school;
+	            });
+	            _.forEach(activities, function (activity) {
+	                var classroom = _.find(classrooms, function (classroom) {
+	                    return (classroom.id == activity.classroom_id);
+	                });
+	                activity.classroom = classroom;
+	            });
 	            $httpBackend.whenGET(function (url) {
 	                return !_.startsWith(url, '/api/');
 	            }).passThrough();
-	            $httpBackend.whenGET('/api/schools').respond(function (method, url, data) {
-	                return schools;
+	            //Full Version 으로 GET 모사. 
+	            $httpBackend.whenGET('/api/schools').respond(function (method, url, data, header) {
+	                //response status (number), data, headers, and status text.
+	                return [200, schools, header, "OK"];
 	            });
+	            // Short Version 으로 GET 모사.
 	            $httpBackend.whenGET('/api/classrooms').respond(classrooms);
 	            $httpBackend.whenGET('/api/activities').respond(activities);
 	        }]);
@@ -69359,7 +69427,154 @@
 /* 40 */
 /***/ function(module, exports) {
 
-	module.exports = "<div>\n  <h1>{{vm.message}}</h1>\n  <h3># of schools : {{vm.allSchools.length}} </h3>\n  <h3># of classrooms : </h3>\n  <h3># of acitivities :</h3>\n</div>"
+	module.exports = "<div>\r\n  <h1>{{vm.message}}</h1>\r\n  <h3># of schools : {{vm.allSchools.length}} </h3>\r\n  <h3># of classrooms : {{vm.allClassrooms.length}} </h3>\r\n  <h3># of acitivities : {{vm.allActivities.length}} </h3>\r\n</div>"
+
+/***/ },
+/* 41 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(42);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(25)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../css-loader/index.js!./toastr.min.css", function() {
+				var newContent = require("!!./../../css-loader/index.js!./toastr.min.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 42 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(19)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".toast-title{font-weight:700}.toast-message{-ms-word-wrap:break-word;word-wrap:break-word}.toast-message a,.toast-message label{color:#fff}.toast-message a:hover{color:#ccc;text-decoration:none}.toast-close-button{position:relative;right:-.3em;top:-.3em;float:right;font-size:20px;font-weight:700;color:#fff;-webkit-text-shadow:0 1px 0 #fff;text-shadow:0 1px 0 #fff;opacity:.8;-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=80);filter:alpha(opacity=80)}.toast-close-button:focus,.toast-close-button:hover{color:#000;text-decoration:none;cursor:pointer;opacity:.4;-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=40);filter:alpha(opacity=40)}button.toast-close-button{padding:0;cursor:pointer;background:0 0;border:0;-webkit-appearance:none}.toast-top-center{top:0;right:0;width:100%}.toast-bottom-center{bottom:0;right:0;width:100%}.toast-top-full-width{top:0;right:0;width:100%}.toast-bottom-full-width{bottom:0;right:0;width:100%}.toast-top-left{top:12px;left:12px}.toast-top-right{top:12px;right:12px}.toast-bottom-right{right:12px;bottom:12px}.toast-bottom-left{bottom:12px;left:12px}#toast-container{position:fixed;z-index:999999;pointer-events:none}#toast-container *{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}#toast-container>div{position:relative;pointer-events:auto;overflow:hidden;margin:0 0 6px;padding:15px 15px 15px 50px;width:300px;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;background-position:15px center;background-repeat:no-repeat;-moz-box-shadow:0 0 12px #999;-webkit-box-shadow:0 0 12px #999;box-shadow:0 0 12px #999;color:#fff;opacity:.8;-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=80);filter:alpha(opacity=80)}#toast-container>:hover{-moz-box-shadow:0 0 12px #000;-webkit-box-shadow:0 0 12px #000;box-shadow:0 0 12px #000;opacity:1;-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);filter:alpha(opacity=100);cursor:pointer}#toast-container>.toast-info{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGwSURBVEhLtZa9SgNBEMc9sUxxRcoUKSzSWIhXpFMhhYWFhaBg4yPYiWCXZxBLERsLRS3EQkEfwCKdjWJAwSKCgoKCcudv4O5YLrt7EzgXhiU3/4+b2ckmwVjJSpKkQ6wAi4gwhT+z3wRBcEz0yjSseUTrcRyfsHsXmD0AmbHOC9Ii8VImnuXBPglHpQ5wwSVM7sNnTG7Za4JwDdCjxyAiH3nyA2mtaTJufiDZ5dCaqlItILh1NHatfN5skvjx9Z38m69CgzuXmZgVrPIGE763Jx9qKsRozWYw6xOHdER+nn2KkO+Bb+UV5CBN6WC6QtBgbRVozrahAbmm6HtUsgtPC19tFdxXZYBOfkbmFJ1VaHA1VAHjd0pp70oTZzvR+EVrx2Ygfdsq6eu55BHYR8hlcki+n+kERUFG8BrA0BwjeAv2M8WLQBtcy+SD6fNsmnB3AlBLrgTtVW1c2QN4bVWLATaIS60J2Du5y1TiJgjSBvFVZgTmwCU+dAZFoPxGEEs8nyHC9Bwe2GvEJv2WXZb0vjdyFT4Cxk3e/kIqlOGoVLwwPevpYHT+00T+hWwXDf4AJAOUqWcDhbwAAAAASUVORK5CYII=)!important}#toast-container>.toast-error{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHOSURBVEhLrZa/SgNBEMZzh0WKCClSCKaIYOED+AAKeQQLG8HWztLCImBrYadgIdY+gIKNYkBFSwu7CAoqCgkkoGBI/E28PdbLZmeDLgzZzcx83/zZ2SSXC1j9fr+I1Hq93g2yxH4iwM1vkoBWAdxCmpzTxfkN2RcyZNaHFIkSo10+8kgxkXIURV5HGxTmFuc75B2RfQkpxHG8aAgaAFa0tAHqYFfQ7Iwe2yhODk8+J4C7yAoRTWI3w/4klGRgR4lO7Rpn9+gvMyWp+uxFh8+H+ARlgN1nJuJuQAYvNkEnwGFck18Er4q3egEc/oO+mhLdKgRyhdNFiacC0rlOCbhNVz4H9FnAYgDBvU3QIioZlJFLJtsoHYRDfiZoUyIxqCtRpVlANq0EU4dApjrtgezPFad5S19Wgjkc0hNVnuF4HjVA6C7QrSIbylB+oZe3aHgBsqlNqKYH48jXyJKMuAbiyVJ8KzaB3eRc0pg9VwQ4niFryI68qiOi3AbjwdsfnAtk0bCjTLJKr6mrD9g8iq/S/B81hguOMlQTnVyG40wAcjnmgsCNESDrjme7wfftP4P7SP4N3CJZdvzoNyGq2c/HWOXJGsvVg+RA/k2MC/wN6I2YA2Pt8GkAAAAASUVORK5CYII=)!important}#toast-container>.toast-success{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADsSURBVEhLY2AYBfQMgf///3P8+/evAIgvA/FsIF+BavYDDWMBGroaSMMBiE8VC7AZDrIFaMFnii3AZTjUgsUUWUDA8OdAH6iQbQEhw4HyGsPEcKBXBIC4ARhex4G4BsjmweU1soIFaGg/WtoFZRIZdEvIMhxkCCjXIVsATV6gFGACs4Rsw0EGgIIH3QJYJgHSARQZDrWAB+jawzgs+Q2UO49D7jnRSRGoEFRILcdmEMWGI0cm0JJ2QpYA1RDvcmzJEWhABhD/pqrL0S0CWuABKgnRki9lLseS7g2AlqwHWQSKH4oKLrILpRGhEQCw2LiRUIa4lwAAAABJRU5ErkJggg==)!important}#toast-container>.toast-warning{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGYSURBVEhL5ZSvTsNQFMbXZGICMYGYmJhAQIJAICYQPAACiSDB8AiICQQJT4CqQEwgJvYASAQCiZiYmJhAIBATCARJy+9rTsldd8sKu1M0+dLb057v6/lbq/2rK0mS/TRNj9cWNAKPYIJII7gIxCcQ51cvqID+GIEX8ASG4B1bK5gIZFeQfoJdEXOfgX4QAQg7kH2A65yQ87lyxb27sggkAzAuFhbbg1K2kgCkB1bVwyIR9m2L7PRPIhDUIXgGtyKw575yz3lTNs6X4JXnjV+LKM/m3MydnTbtOKIjtz6VhCBq4vSm3ncdrD2lk0VgUXSVKjVDJXJzijW1RQdsU7F77He8u68koNZTz8Oz5yGa6J3H3lZ0xYgXBK2QymlWWA+RWnYhskLBv2vmE+hBMCtbA7KX5drWyRT/2JsqZ2IvfB9Y4bWDNMFbJRFmC9E74SoS0CqulwjkC0+5bpcV1CZ8NMej4pjy0U+doDQsGyo1hzVJttIjhQ7GnBtRFN1UarUlH8F3xict+HY07rEzoUGPlWcjRFRr4/gChZgc3ZL2d8oAAAAASUVORK5CYII=)!important}#toast-container.toast-bottom-center>div,#toast-container.toast-top-center>div{width:300px;margin-left:auto;margin-right:auto}#toast-container.toast-bottom-full-width>div,#toast-container.toast-top-full-width>div{width:96%;margin-left:auto;margin-right:auto}.toast{background-color:#030303}.toast-success{background-color:#51a351}.toast-error{background-color:#bd362f}.toast-info{background-color:#2f96b4}.toast-warning{background-color:#f89406}.toast-progress{position:absolute;left:0;bottom:0;height:4px;background-color:#000;opacity:.4;-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=40);filter:alpha(opacity=40)}@media all and (max-width:240px){#toast-container>div{padding:8px 8px 8px 50px;width:11em}#toast-container .toast-close-button{right:-.2em;top:-.2em}}@media all and (min-width:241px) and (max-width:480px){#toast-container>div{padding:8px 8px 8px 50px;width:18em}#toast-container .toast-close-button{right:-.2em;top:-.2em}}@media all and (min-width:481px) and (max-width:768px){#toast-container>div{padding:15px 15px 15px 50px;width:25em}}", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 43 */
+/***/ function(module, exports) {
+
+	module.exports = "<div>\r\n\r\n  <div class=\"panel panel-default\">\r\n      <div class=\"panel-heading\">\r\n        <h3 class=\"panel-title\">Registered Schools</h3>\r\n      </div>\r\n      <div class=\"panel-body\">\r\n         <table class=\"table table-hover\">\r\n          <thead>\r\n            <tr>\r\n              <th>School Name</th>\r\n              <th>Principal</th>\r\n            </tr>\r\n          </thead>\r\n          <tbody>\r\n            <tr ng-repeat=\"school in vm.schools\">\r\n              <td>{{school.name}}</td>\r\n              <td>{{school.principal}}</td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n  </div>\r\n    \r\n \r\n</div>"
+
+/***/ },
+/* 44 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var services_1 = __webpack_require__(31);
+	var SchoolsController = (function () {
+	    function SchoolsController(dataService, notifier) {
+	        this.dataService = dataService;
+	        this.notifier = notifier;
+	        this.init();
+	    }
+	    SchoolsController.prototype.init = function () {
+	        var _this = this;
+	        this.dataService.getAllSchools()
+	            .then(function (schools) {
+	            _this.schools = schools;
+	        })
+	            .catch(function (reason) {
+	            _this.notifier.error(reason);
+	        });
+	    };
+	    SchoolsController.$inject = [services_1.DataService.className, services_1.Notifier.className];
+	    SchoolsController.className = 'schoolsController';
+	    return SchoolsController;
+	}());
+	exports.SchoolsController = SchoolsController;
+
+
+/***/ },
+/* 45 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var services_1 = __webpack_require__(31);
+	var ClassroomsController = (function () {
+	    function ClassroomsController(dataService, notifier) {
+	        this.dataService = dataService;
+	        this.notifier = notifier;
+	        this.initData();
+	    }
+	    ClassroomsController.prototype.initData = function () {
+	        var _this = this;
+	        this.classrooms = [];
+	        this.dataService.getAllClassrooms()
+	            .then(function (classrooms) {
+	            _this.classrooms = classrooms;
+	        })
+	            .catch(function (reason) {
+	            _this.notifier.error(reason);
+	        });
+	    };
+	    ClassroomsController.$inject = [services_1.DataService.className, services_1.Notifier.className];
+	    ClassroomsController.className = 'classroomsController';
+	    return ClassroomsController;
+	}());
+	exports.ClassroomsController = ClassroomsController;
+
+
+/***/ },
+/* 46 */
+/***/ function(module, exports) {
+
+	module.exports = "<div>\r\n  <div class=\"panel panel-default\">\r\n      <div class=\"panel-heading\">\r\n        <h3 class=\"panel-title\">Registered Classrooms</h3>\r\n      </div>\r\n      <div class=\"panel-body\">\r\n         <table class=\"table table-hover\">\r\n          <thead>\r\n            <tr>\r\n              <th>Classroom Name</th>\r\n              <th>School</th>\r\n              <th>Teacher</th>\r\n            </tr>\r\n          </thead>\r\n          <tbody>\r\n            <tr ng-repeat=\"classroom in vm.classrooms\">\r\n              <td>{{classroom.name}}</td>\r\n              <td>{{classroom.school.name}}</td>\r\n              <td>{{classroom.teacher}}</td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n  </div>\r\n</div>"
+
+/***/ },
+/* 47 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var services_1 = __webpack_require__(31);
+	var ActivitiesController = (function () {
+	    function ActivitiesController(dataService, notifier) {
+	        this.dataService = dataService;
+	        this.notifier = notifier;
+	        this.initData();
+	    }
+	    ActivitiesController.prototype.initData = function () {
+	        var _this = this;
+	        this.activities = [];
+	        this.dataService.getAllActivities()
+	            .then(function (activities) {
+	            _this.activities = activities;
+	        })
+	            .catch(function (reason) {
+	            _this.notifier.error(reason);
+	        });
+	    };
+	    ActivitiesController.$inject = [services_1.DataService.className, services_1.Notifier.className];
+	    ActivitiesController.className = 'activitiesController';
+	    return ActivitiesController;
+	}());
+	exports.ActivitiesController = ActivitiesController;
+
+
+/***/ },
+/* 48 */
+/***/ function(module, exports) {
+
+	module.exports = "<div>\r\n  <div class=\"panel panel-default\">\r\n    <div class=\"panel-body\">\r\n       Registered Activities\r\n    </div>\r\n    <div class=\"panel-body\">\r\n      \r\n      <table class=\"table table-bordered table-hover\">\r\n        <thead>\r\n          <tr>\r\n            <th>Activity Name</th>\r\n            <th>Classroom</th>\r\n            <th>Date</th>\r\n          </tr>\r\n        </thead>\r\n        <tbody>\r\n          <tr ng-repeat=\"activity in vm.activities\">\r\n            <td>{{activity.name}}</td>\r\n            <td>{{activity.classroom.name}}</td>\r\n            <td>date</td>\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n      \r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }
 /******/ ]);

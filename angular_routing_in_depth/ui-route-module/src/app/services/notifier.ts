@@ -1,5 +1,5 @@
 /// <reference path="../app.d.ts" />
-import 'toastr';
+import * as toastr from 'toastr';
 
 export class Notifier {
   static className = 'notifier';
@@ -7,9 +7,22 @@ export class Notifier {
 
   constructor() {
     this.options = {
-      showDuration: 300,
-      timeOut: 2000
-    };
+      "closeButton": false,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": false,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": 300,
+      "hideDuration": 1000,
+      "timeOut": 5000,
+      "extendedTimeOut": 1000,
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
   }
   success(message: string): void {
     toastr.options = this.options;

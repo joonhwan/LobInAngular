@@ -17,15 +17,23 @@ export class DataService {
 
   getAllSchools() : angular.IPromise<ISchool[]> {
     return this.$http.get('/api/schools')
-        .then(response => 
-        {
-          return response.data;
-        })
-        .catch(reason => {
-          let errorMessage = 'Error retrieving schools : ' + reason.statusText;
-          this.$log.error(errorMessage);
-          return this.$q.reject(errorMessage);
-        })
-        ;
+        .then(response => response.data)
+        .catch(reason => this.handleError('schools', reason));
+  }
+  getAllClassrooms(): angular.IPromise<IClassroom[]> {
+    return this.$http.get('/api/classrooms')
+      .then(response => response.data)
+      .catch(reason => this.handleError('classroom', reason));
+  }
+  getAllActivities(): angular.IPromise<IActivity[]> {
+    return this.$http.get('/api/activities')
+      .then(response => response.data)
+      .catch(reason => this.handleError('activity', reason));
+  }
+
+  handleError(hint:string, reason:any):angular.IPromise<any> {
+    let errorMessage = 'Error retrieving [' + hint +'] : ' + reason.statusText;
+    this.$log.error(errorMessage);
+    return this.$q.reject(errorMessage);
   }
 }

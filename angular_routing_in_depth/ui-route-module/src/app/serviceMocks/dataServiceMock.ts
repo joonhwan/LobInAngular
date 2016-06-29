@@ -6,30 +6,34 @@ import {ISchool} from '../models/school';
 import {IClassroom} from '../models/classroom';
 import {IActivity} from '../models/activity';
 
-let regexp = /^(?!\/api\/)/;
-let testStrings = [
-  "/home",
-  "/schools",
-  "/api/schools",
-  "/api/classrooms"
-];
-_.forEach(testStrings, testString => {
-  let result = regexp.test(testString);
-  console.log('"' + testString + '" ==> ' + result);
-});
-regexp.test('')
-
 export default function register(mod:angular.IModule) {
   mod.run(['$httpBackend', ($httpBackend:ng.IHttpBackendService) => {
+
+      _.forEach(classrooms, classroom => {
+        let school = _.find(schools, (school:ISchool) => {
+          return (school.id == classroom.school_id);
+        });
+        classroom.school = school;
+      })     
+
+      _.forEach(activities, activity => {
+        let classroom = _.find(classrooms, (classroom:IClassroom) => {
+          return (classroom.id == activity.classroom_id);
+        });
+        activity.classroom = classroom;
+      })
 
       $httpBackend.whenGET((url:string) => {
         return !_.startsWith(url, '/api/');
       }).passThrough();
 
-      $httpBackend.whenGET('/api/schools').respond((method, url, data) => {
-        return schools;
+      //Full Version 으로 GET 모사. 
+      $httpBackend.whenGET('/api/schools').respond((method, url, data, header) => {
+        //response status (number), data, headers, and status text.
+        return [200, schools, header, "OK"];
       });
-
+      
+      // Short Version 으로 GET 모사.
       $httpBackend.whenGET('/api/classrooms').respond(classrooms);
 
       $httpBackend.whenGET('/api/activities').respond(activities);

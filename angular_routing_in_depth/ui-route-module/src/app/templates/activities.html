@@ -1,0 +1,27 @@
+<div>
+  <div class="panel panel-default">
+    <div class="panel-body">
+       Registered Activities
+    </div>
+    <div class="panel-body">
+      
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Activity Name</th>
+            <th>Classroom</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="activity in vm.activities">
+            <td>{{activity.name}}</td>
+            <td>{{activity.classroom.name}}</td>
+            <td>date</td>
+          </tr>
+        </tbody>
+      </table>
+      
+    </div>
+  </div>
+</div>

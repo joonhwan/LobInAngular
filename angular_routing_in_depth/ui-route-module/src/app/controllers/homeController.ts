@@ -27,8 +27,23 @@ export class HomeController {
       .then((schools:ISchool[]) => {
         this.allSchools = schools;
       })
-      .catch(this.showError)
-      ;
+      .catch(reason => {
+        this.showError(reason);
+      });
+    ds.getAllClassrooms()
+      .then((classrooms:IClassroom[]) => {
+        this.allClassrooms = classrooms;
+      })
+      .catch(reason => {
+        this.showError(reason);
+      });
+    ds.getAllActivities()
+      .then((activities:IActivity[]) => {
+        this.allActivities = activities;
+      })
+      .catch(reason => {
+        this.showError(reason);
+      })
   }
 
   showError(reason):void {
