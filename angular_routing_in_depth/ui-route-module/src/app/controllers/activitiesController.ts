@@ -6,6 +6,7 @@ export class ActivitiesController {
   static $inject = [DataService.className, Notifier.className];
   static className = 'activitiesController';
 
+  message:string = "All registered activies!!!!";
   activities:IActivity[];
   allActivities:IActivity[];
 
@@ -26,8 +27,13 @@ export class ActivitiesController {
 
     this.dataService.getAllActivities()
       .then(activities => {
+<<<<<<< 085267c4d92ade813c02cafbbd9370ab0d24c96f
         this.allActivities = activities;
         this.search();
+=======
+        console.log('retrived activities : ' + activities.length);
+        this.activities = activities;
+>>>>>>> ui-router 기본 동작 완료 확인. 이제 ui-router만의 기능 확인 시작
       })
       .catch(reason => {
         this.notifier.error(reason);
