@@ -93,6 +93,7 @@
 	            url: '/activities',
 	            template: __webpack_require__(48),
 	            controller: controllers.ActivitiesController,
+	            controllerAs: 'vm'
 	        });
 	    }]);
 
@@ -69545,6 +69546,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	var _ = __webpack_require__(1);
 	var services_1 = __webpack_require__(31);
 	var ActivitiesController = (function () {
 	    function ActivitiesController(dataService, notifier) {
@@ -69555,12 +69557,30 @@
 	    ActivitiesController.prototype.initData = function () {
 	        var _this = this;
 	        this.activities = [];
+	        this.classrooms = [];
+	        this.selectedClassroomId = null;
 	        this.dataService.getAllActivities()
 	            .then(function (activities) {
-	            _this.activities = activities;
+	            _this.allActivities = activities;
+	            _this.search();
 	        })
 	            .catch(function (reason) {
 	            _this.notifier.error(reason);
+	        });
+	        this.dataService.getAllClassrooms()
+	            .then(function (classrooms) {
+	            _this.classrooms = classrooms;
+	            _this.selectedClassroomId = null;
+	        })
+	            .catch(function (reason) {
+	            _this.notifier.error(reason);
+	        });
+	    };
+	    ActivitiesController.prototype.search = function () {
+	        var _this = this;
+	        this.activities = _.filter(this.allActivities, function (activity) {
+	            return !_this.selectedClassroomId
+	                || activity.classroom_id == _this.selectedClassroomId;
 	        });
 	    };
 	    ActivitiesController.$inject = [services_1.DataService.className, services_1.Notifier.className];
@@ -69574,7 +69594,7 @@
 /* 48 */
 /***/ function(module, exports) {
 
-	module.exports = "<div>\r\n  <div class=\"panel panel-default\">\r\n    <div class=\"panel-body\">\r\n       Registered Activities\r\n    </div>\r\n    <div class=\"panel-body\">\r\n      \r\n      <table class=\"table table-bordered table-hover\">\r\n        <thead>\r\n          <tr>\r\n            <th>Activity Name</th>\r\n            <th>Classroom</th>\r\n            <th>Date</th>\r\n          </tr>\r\n        </thead>\r\n        <tbody>\r\n          <tr ng-repeat=\"activity in vm.activities\">\r\n            <td>{{activity.name}}</td>\r\n            <td>{{activity.classroom.name}}</td>\r\n            <td>date</td>\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n      \r\n    </div>\r\n  </div>\r\n</div>"
+	module.exports = "<div>\r\n  <div class=\"panel panel-default\">\r\n    <div class=\"panel-heading\">\r\n       <h3 class=\"panel-title\">Registered Activities</h3>\r\n    </div>\r\n    <div class=\"panel-body\">\r\n      <form class=\"form-inline\" role=\"form\">\r\n          <div class=\"form-group\">\r\n            <!--<select name=\"\" class=\"form-control\" required=\"required\"\r\n              ng-init=\"vm.selectedClassroom = vm.classrooms[0]\"\r\n              ng-model=\"vm.selectedClassroom\"\r\n              ng-options=\"classroom as classroom.name for classroom in vm.classrooms\"\r\n              >-->\r\n            <select name=\"\" class=\"form-control\" required=\"required\"\r\n              ng-model=\"vm.selectedClassroomId\"\r\n              >\r\n              <option value=\"{{null}}\">All</option>\r\n              <option \r\n                ng-repeat=\"classroom in vm.classrooms\"\r\n                value=\"{{classroom.id}}\">{{classroom.name}}</option>\r\n            </select>\r\n            \r\n            <button class=\"btn btn-primary\" ng-click=\"vm.search()\">Search</button>\r\n          </div>\r\n      </form>\r\n      <br/>\r\n      <table class=\"table table-bordered table-hover\">\r\n        <thead>\r\n          <tr>\r\n            <th>Activity Name</th>\r\n            <th>Classroom</th>\r\n            <th>Date</th>\r\n          </tr>\r\n        </thead>\r\n        <tbody>\r\n          <tr ng-repeat=\"activity in vm.activities\">\r\n            <td>{{activity.name}}</td>\r\n            <td>{{activity.classroom.name}}</td>\r\n            <td>date</td>\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n      \r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }
 /******/ ]);

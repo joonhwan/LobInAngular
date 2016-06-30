@@ -1,10 +1,29 @@
 <div>
   <div class="panel panel-default">
-    <div class="panel-body">
-       Registered Activities
+    <div class="panel-heading">
+       <h3 class="panel-title">Registered Activities</h3>
     </div>
     <div class="panel-body">
-      
+      <form class="form-inline" role="form">
+          <div class="form-group">
+            <!--<select name="" class="form-control" required="required"
+              ng-init="vm.selectedClassroom = vm.classrooms[0]"
+              ng-model="vm.selectedClassroom"
+              ng-options="classroom as classroom.name for classroom in vm.classrooms"
+              >-->
+            <select name="" class="form-control" required="required"
+              ng-model="vm.selectedClassroomId"
+              >
+              <option value="{{null}}">All</option>
+              <option 
+                ng-repeat="classroom in vm.classrooms"
+                value="{{classroom.id}}">{{classroom.name}}</option>
+            </select>
+            
+            <button class="btn btn-primary" ng-click="vm.search()">Search</button>
+          </div>
+      </form>
+      <br/>
       <table class="table table-bordered table-hover">
         <thead>
           <tr>

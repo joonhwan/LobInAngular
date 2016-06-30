@@ -61,6 +61,7 @@ app.config(['$logProvider', '$stateProvider', '$urlRouterProvider', function(
       url: '/activities',
       template: require('./templates/activities.html'),
       controller:controllers.ActivitiesController,
+      controllerAs: 'vm'
     })
     ;
 }]);

@@ -1,4 +1,5 @@
-import {IActivity} from '../models';
+import * as _ from 'lodash';
+import {IActivity, IClassroom} from '../models';
 import {DataService, Notifier} from '../services';
 
 export class ActivitiesController {
@@ -6,6 +7,10 @@ export class ActivitiesController {
   static className = 'activitiesController';
 
   activities:IActivity[];
+  allActivities:IActivity[];
+
+  classrooms:IClassroom[];
+  selectedClassroomId:number;
 
   constructor(
     private dataService:DataService,
@@ -16,12 +21,31 @@ export class ActivitiesController {
 
   initData():void {
     this.activities = [];
+    this.classrooms = [];
+    this.selectedClassroomId = null;
+
     this.dataService.getAllActivities()
       .then(activities => {
-        this.activities = activities;
+        this.allActivities = activities;
+        this.search();
       })
       .catch(reason => {
         this.notifier.error(reason);
+      });
+    this.dataService.getAllClassrooms()
+      .then(classrooms => {
+        this.classrooms = classrooms;
+        this.selectedClassroomId = null;
       })
+      .catch(reason => {
+        this.notifier.error(reason);
+      });
+  }
+
+  search(): void {
+    this.activities = _.filter(this.allActivities, (activity:IActivity) => {
+      return !this.selectedClassroomId
+          || activity.classroom_id == this.selectedClassroomId;
+    });
   }
 }
