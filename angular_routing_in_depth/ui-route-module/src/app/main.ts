@@ -63,6 +63,12 @@ app.config(['$logProvider', '$stateProvider', '$urlRouterProvider', function(
       controller:controllers.ActivitiesController,
       controllerAs: 'vm'
     })
+    .state('classroomSummary', {
+      url: '/classrooms/{id}',
+      template: require('./templates/classroomSummary.html'),
+      controller:controllers.ClassroomSummaryController,
+      controllerAs: 'vm'
+    })
     ;
 }]);
 

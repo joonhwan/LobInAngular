@@ -4,6 +4,7 @@ import {HomeController} from './homeController';
 import {SchoolsController} from './schoolsController';
 import {ClassroomsController} from './classroomsController';
 import {ActivitiesController} from './activitiesController';
+import {ClassroomSummaryController} from './classroomSummaryController';
 
 let moduleName = 'controllers';
 
@@ -18,5 +19,6 @@ export {
   HomeController, 
   SchoolsController, 
   ClassroomsController, 
+  ClassroomSummaryController,
   ActivitiesController 
 };
