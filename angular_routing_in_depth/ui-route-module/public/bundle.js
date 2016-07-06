@@ -50274,8 +50274,220 @@
 	 * @kind function
 	 *
 	 * @description
+<<<<<<< f7b3b1ad97ebe076d5d3b5abcdcb7ba46e06be30
 	 * Returns an array containing the items from the specified `collection`, ordered by a `comparator`
 	 * function based on the values computed using the `expression` predicate.
+=======
+	 * Translates to {@link ui.router.state.$state#methods_includes $state.includes('fullOrPartialStateName')}.
+	 */
+	$IncludedByStateFilter.$inject = ['$state'];
+	function $IncludedByStateFilter($state) {
+	  var includesFilter = function (state, params, options) {
+	    return $state.includes(state, params, options);
+	  };
+	  includesFilter.$stateful = true;
+	  return  includesFilter;
+	}
+	
+	angular.module('ui.router.state')
+	  .filter('isState', $IsStateFilter)
+	  .filter('includedByState', $IncludedByStateFilter);
+	})(window, window.angular);
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	/// <reference path="../app.d.ts" />
+	var angular = __webpack_require__(26);
+	var homeController_1 = __webpack_require__(30);
+	exports.HomeController = homeController_1.HomeController;
+	var schoolsController_1 = __webpack_require__(36);
+	exports.SchoolsController = schoolsController_1.SchoolsController;
+	var classroomsController_1 = __webpack_require__(37);
+	exports.ClassroomsController = classroomsController_1.ClassroomsController;
+	var activitiesController_1 = __webpack_require__(38);
+	exports.ActivitiesController = activitiesController_1.ActivitiesController;
+	var moduleName = 'controllers';
+	exports.moduleName = moduleName;
+	angular.module(moduleName, [])
+	    .controller(homeController_1.HomeController.className, homeController_1.HomeController)
+	    .controller(schoolsController_1.SchoolsController.className, schoolsController_1.SchoolsController)
+	    .controller(activitiesController_1.ActivitiesController.className, activitiesController_1.ActivitiesController);
+
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var services_1 = __webpack_require__(31);
+	var HomeController = (function () {
+	    // methods
+	    function HomeController($log, dataService, notifier) {
+	        this.$log = $log;
+	        this.dataService = dataService;
+	        this.notifier = notifier;
+	        // property
+	        this.message = "Welcome to School Buddy!";
+	        this.allSchools = [];
+	        this.allClassrooms = [];
+	        this.allActivities = [];
+	        this.refresh();
+	    }
+	    HomeController.prototype.refresh = function () {
+	        var _this = this;
+	        this.$log.info('refreshing home...');
+	        var ds = this.dataService;
+	        ds.getAllSchools()
+	            .then(function (schools) {
+	            _this.allSchools = schools;
+	        })
+	            .catch(function (reason) {
+	            _this.showError(reason);
+	        });
+	        ds.getAllClassrooms()
+	            .then(function (classrooms) {
+	            _this.allClassrooms = classrooms;
+	        })
+	            .catch(function (reason) {
+	            _this.showError(reason);
+	        });
+	        ds.getAllActivities()
+	            .then(function (activities) {
+	            _this.allActivities = activities;
+	        })
+	            .catch(function (reason) {
+	            _this.showError(reason);
+	        });
+	    };
+	    HomeController.prototype.showError = function (reason) {
+	        this.notifier.error(reason);
+	    };
+	    // meta
+	    HomeController.$inject = ['$log', services_1.DataService.className, services_1.Notifier.className];
+	    HomeController.className = 'homeController';
+	    return HomeController;
+	}());
+	exports.HomeController = HomeController;
+
+
+/***/ },
+/* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	/// <reference path="../app.d.ts" />
+	var angular = __webpack_require__(26);
+	var dataService_1 = __webpack_require__(32);
+	exports.DataService = dataService_1.DataService;
+	var notifier_1 = __webpack_require__(33);
+	exports.Notifier = notifier_1.Notifier;
+	console.log('initializing services...');
+	var moduleName = 'services';
+	exports.moduleName = moduleName;
+	angular
+	    .module(moduleName, [])
+	    .service(notifier_1.Notifier.className, notifier_1.Notifier)
+	    .service(dataService_1.DataService.className, dataService_1.DataService);
+
+
+/***/ },
+/* 32 */
+/***/ function(module, exports) {
+
+	"use strict";
+	var DataService = (function () {
+	    function DataService($http, $q, $log, $timeout) {
+	        this.$http = $http;
+	        this.$q = $q;
+	        this.$log = $log;
+	        this.$timeout = $timeout;
+	    }
+	    DataService.prototype.getAllSchools = function () {
+	        var _this = this;
+	        return this.$http.get('/api/schools')
+	            .then(function (response) { return response.data; })
+	            .catch(function (reason) { return _this.handleError('schools', reason); });
+	    };
+	    DataService.prototype.getAllClassrooms = function () {
+	        var _this = this;
+	        return this.$http.get('/api/classrooms')
+	            .then(function (response) { return response.data; })
+	            .catch(function (reason) { return _this.handleError('classroom', reason); });
+	    };
+	    DataService.prototype.getAllActivities = function () {
+	        var _this = this;
+	        return this.$http.get('/api/activities')
+	            .then(function (response) { return response.data; })
+	            .catch(function (reason) { return _this.handleError('activity', reason); });
+	    };
+	    DataService.prototype.handleError = function (hint, reason) {
+	        var errorMessage = 'Error retrieving [' + hint + '] : ' + reason.statusText;
+	        this.$log.error(errorMessage);
+	        return this.$q.reject(errorMessage);
+	    };
+	    DataService.$inject = ['$http', '$q', '$log', '$timeout'];
+	    DataService.className = 'dataService';
+	    return DataService;
+	}());
+	exports.DataService = DataService;
+
+
+/***/ },
+/* 33 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	/// <reference path="../app.d.ts" />
+	var toastr = __webpack_require__(34);
+	var Notifier = (function () {
+	    function Notifier() {
+	        this.options = {
+	            "closeButton": false,
+	            "debug": false,
+	            "newestOnTop": false,
+	            "progressBar": false,
+	            "positionClass": "toast-top-right",
+	            "preventDuplicates": false,
+	            "onclick": null,
+	            "showDuration": 300,
+	            "hideDuration": 1000,
+	            "timeOut": 5000,
+	            "extendedTimeOut": 1000,
+	            "showEasing": "swing",
+	            "hideEasing": "linear",
+	            "showMethod": "fadeIn",
+	            "hideMethod": "fadeOut"
+	        };
+	    }
+	    Notifier.prototype.success = function (message) {
+	        toastr.options = this.options;
+	        toastr.success(message);
+	    };
+	    Notifier.prototype.error = function (message) {
+	        toastr.options = this.options;
+	        toastr.error(message);
+	    };
+	    Notifier.className = 'notifier';
+	    return Notifier;
+	}());
+	exports.Notifier = Notifier;
+
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
+	 * Toastr
+	 * Copyright 2012-2015
+	 * Authors: John Papa, Hans Fjällemark, and Tim Ferrell.
+	 * All Rights Reserved.
+	 * Use, reproduction, distribution, and modification of this code is subject to the terms and
+	 * conditions of the MIT license, available at http://www.opensource.org/licenses/mit-license.php
+>>>>>>> udpate ui-route module
 	 *
 	 * For example, `[{id: 'foo'}, {id: 'bar'}] | orderBy:'id'` would result in
 	 * `[{id: 'bar'}, {id: 'foo'}]`.
@@ -69474,6 +69686,7 @@
 /* 43 */
 /***/ function(module, exports) {
 
+<<<<<<< f7b3b1ad97ebe076d5d3b5abcdcb7ba46e06be30
 	module.exports = "<div>\r\n\r\n  <div class=\"panel panel-default\">\r\n      <div class=\"panel-heading\">\r\n        <h3 class=\"panel-title\">Registered Schools</h3>\r\n      </div>\r\n      <div class=\"panel-body\">\r\n         <table class=\"table table-hover\">\r\n          <thead>\r\n            <tr>\r\n              <th>School Name</th>\r\n              <th>Principal</th>\r\n            </tr>\r\n          </thead>\r\n          <tbody>\r\n            <tr ng-repeat=\"school in vm.schools\">\r\n              <td>{{school.name}}</td>\r\n              <td>{{school.principal}}</td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n  </div>\r\n    \r\n \r\n</div>"
 
 /***/ },
@@ -69534,6 +69747,9 @@
 	}());
 	exports.ClassroomsController = ClassroomsController;
 
+=======
+	module.exports = "<div>\n  <h1>{{vm.message}}</h1>\n  <h3># of schools : {{vm.allSchools.length}} </h3>\n  <h3># of classrooms : {{vm.allClassrooms.length}} </h3>\n  <h3># of acitivities : {{vm.allActivities.length}} </h3>\n</div>\n<div>\n  \n  <button type=\"button\" class=\"btn btn-default\" ng-click=\"vm.refresh()\">\n    Refresh\n  </button>\n  \n</div>"
+>>>>>>> udpate ui-route module
 
 /***/ },
 /* 46 */

@@ -4,7 +4,7 @@ import {ISchool, IClassroom, IActivity} from '../models';
 export class HomeController {
 
   // meta
-  static $inject = [DataService.className, Notifier.className];
+  static $inject = ['$log', DataService.className, Notifier.className];
   static className = 'homeController';
 
   // property
@@ -15,13 +15,16 @@ export class HomeController {
 
   // methods
   constructor(
+    private $log:angular.ILogService,
     private dataService:DataService,
     private notifier:Notifier
   ) {
-    this.initData();
+    this.refresh();
   }
 
-  initData():void {
+  refresh():void {
+    this.$log.info('refreshing home...');
+    
     let ds = this.dataService;
     ds.getAllSchools()
       .then((schools:ISchool[]) => {
