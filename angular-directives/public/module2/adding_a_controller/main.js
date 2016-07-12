@@ -31960,7 +31960,7 @@
 /* 12 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"panel panel-primary\">\r\n  <div class=\"panel-heading\">{{vm.user.name}}</div>\r\n  <div class=\"panel-body\">\r\n    <div ng-show='!!vm.user.address'>\r\n      <h4>Address:</h4>\r\n      {{vm.user.address.street}} <br />\r\n      {{vm.user.address.city}}<br />\r\n      {{vm.user.address.planet}}\r\n    </div> <br /> \r\n    \r\n    <h4>Friends:</h4>\r\n    <ul>\r\n      <li ng-repeat='friend in vm.user.friends'>\r\n        {{friend}}\r\n      </li>\r\n    </ul>\r\n    <div ng-show=\"!!vm.user.rank\">\r\n      Rank: {{vm.user.rank}}\r\n    </div>\r\n    <button ng-show=\"!vm.user.rank\" class=\"btn btn-success\" ng-click=\"vm.knightMe(vm.user)\">Knight Me</button>\r\n  </div>\r\n</div>"
+	module.exports = "<div class=\"panel panel-primary\">\n  <div class=\"panel-heading\">{{vm.user.name}}</div>\n  <div class=\"panel-body\">\n    <div ng-show='!!vm.user.address'>\n      <h4>Address:</h4>\n      {{vm.user.address.street}} <br />\n      {{vm.user.address.city}}<br />\n      {{vm.user.address.planet}}\n    </div> <br /> \n    \n    <h4>Friends:</h4>\n    <ul>\n      <li ng-repeat='friend in vm.user.friends'>\n        {{friend}}\n      </li>\n    </ul>\n    <div ng-show=\"!!vm.user.rank\">\n      Rank: {{vm.user.rank}}\n    </div>\n    <button ng-show=\"!vm.user.rank\" class=\"btn btn-success\" ng-click=\"vm.knightMe(vm.user)\">Knight Me</button>\n  </div>\n</div>"
 
 /***/ }
 /******/ ]);
