@@ -1,11 +1,15 @@
 var webpack = require('webpack');
+var fsLib = require('fs');
+var pathLib = require('path');
+
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var rootDir = __dirname;
 var srcDir = rootDir + '/src';
 var distDir = rootDir + '/public';
 
-module.exports = {
+
+var config = {
   context: rootDir, // a base directory to resolve the 'entry'
   entry: {
     'app' : srcDir + '/app.ts',
@@ -51,6 +55,15 @@ module.exports = {
     extensions: ['', '.js', '.ts']
   },
   plugins: [
+    function () {
+      this.plugin('watch-run', function(watching, callback) {
+        console.log('====== Compile Begin : ' + new Date());
+
+        console.log('>>> checked ');
+
+        callback();
+      })
+    },
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons',
       filename: 'commons.js',
@@ -76,4 +89,40 @@ module.exports = {
       '$': 'jquery'
     })
   ]
+};
+
+var path = pathLib.join(rootDir, 'src');
+function forEachDir(path, callback) {
+  fsLib.readdir(path, function (err, files) {
+    if(err) throw err;
+    files.forEach(function(file) {
+      var fullPath = pathLib.join(path, file);
+      fsLib.stat(fullPath, function(err, stats) {
+        if(stats.isDirectory()) {
+          callback(fullPath);
+        }
+      });
+    });
+  });
+};
+function isFileExist(path) {
+  var foundCount = 0;
+  fs.access(htmlFilePath, fs.constants.F_OK, (err) => {
+    if(!err) {
+      ++foundCount; 
+    }
+  });
+  return foundCount > 0;
 }
+
+forEachDir(path, function(fullPath) {
+  //console.log('> ' + fullPath)
+  forEachDir(fullPath, function (subDirFullPath) {
+    var htmlFilePath = pathLib.join(subDirFullPath, 'index.html');
+    var tsFilePath = pathLib.join(subDirFullPath, 'main.ts');
+    
+  });
+});
+
+
+module.exports = config;
