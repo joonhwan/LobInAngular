@@ -1,4 +1,4 @@
-/// <reference path="../app.d.ts" />
+/// <reference path="../../app.d.ts" />
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as angular from 'angular';
 
@@ -41,7 +41,7 @@ class UserInfoCard implements ng.IDirective {
   }
 
   restrict: string = 'E';
-  template: string = require('./userInfoCard1.html');
+  template: string = require('./userInfoCard.html');
   controller = MainCtrl.className;
   controllerAs = 'vm';
 } 

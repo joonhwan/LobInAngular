@@ -9,8 +9,8 @@ module.exports = {
   context: rootDir, // a base directory to resolve the 'entry'
   entry: {
     'app' : srcDir + '/app.ts',
-    'module2/adding_a_controller': srcDir + '/module2/adding_a_controller.ts',
-    'module2/directive_scope': srcDir + '/module2/directive_scope.ts'
+    'module2/adding_a_controller/main': srcDir + '/module2/adding_a_controller/main.ts',
+    'module2/directive_scope/main': srcDir + '/module2/directive_scope/main.ts'
   },
   output: {
     path: distDir,
@@ -62,14 +62,14 @@ module.exports = {
       inject: 'body',
     }),
     new HtmlWebpackPlugin({
-      template: './src/module2/adding_a_controller.html',
-      filename: '/module2/adding_a_controller.html',
-      chunks: ['commons', 'module2/adding_a_controller']
+      template: './src/module2/adding_a_controller/index.html',
+      filename: '/module2/adding_a_controller/index.html',
+      chunks: ['commons', 'module2/adding_a_controller/main']
     }),
     new HtmlWebpackPlugin({
-      template: './src/module2/directive_scope.html',
-      filename: '/module2/directive_scope.html',
-      chunks: ['commons', 'module2/directive_scope']
+      template: './src/module2/directive_scope/index.html',
+      filename: '/module2/directive_scope/index.html',
+      chunks: ['commons', 'module2/directive_scope/main']
     }),
     new webpack.ProvidePlugin({
       'jQuery': 'jquery',
