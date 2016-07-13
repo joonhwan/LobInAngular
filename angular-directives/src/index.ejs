@@ -5,15 +5,32 @@
   <title>Angular Directive Studies</title>
 </head>
 <body>
-  <% for (var i in htmlWebpackPlugin.options.appData) { %>
-  <%   var category = htmlWebpackPlugin.options.appData[i]; %>
-  <h3><%= category.categoryName %></h3>
-  <ol>
-    <% for (var j in category.apps) { %>
-    <%   var app = category.apps[j]; %>
-    <li><a href="<%= app.htmlOutput %>"><%= app.title %></a></li>
+  
+  
+  <div class="navbar navbar-inverse">
+    <a class="navbar-brand" href="#">Angular Directives - Self followup for pluralsight course</a>
+    <!--<ul class="nav navbar-nav">
+      <li class="active">
+        <a href="#">Home</a>
+      </li>
+      <li>
+        <a href="#">Link</a>
+      </li>
+    </ul>-->
+  </div>
+  
+  <div class="container">
+    
+    <% for (var i in htmlWebpackPlugin.options.appData) { %>
+    <%   var category = htmlWebpackPlugin.options.appData[i]; %>
+    <h3><%= category.categoryName %></h3>
+    <ol>
+      <% for (var j in category.apps) { %>
+      <%   var app = category.apps[j]; %>
+      <li><a href="<%= app.htmlOutput %>"><%= app.title %></a></li>
+      <% } %>
+    </ol>
     <% } %>
-  </ol>
-  <% } %>
+  </div>
 </body>
 </html>

@@ -36,7 +36,7 @@ function generateCategorizedAppData(topDir) {
       var htmlFilePath = pathLib.join(subAppPath, 'index.html');
       var tsFilePath = pathLib.join(subAppPath, 'main.ts');
       if(isThere(htmlFilePath) && isThere(tsFilePath)) {
-        console.log('> ' + subAppPath);
+        // console.log('> ' + subAppPath);
         var tsFileRelDir = pathLib.dirname(pathLib.relative(topDir, tsFilePath));
         var tsFilename = pathLib.basename(tsFilePath, '.ts');
         // console.log('>> tsFileRelDir: ' + tsFileRelDir);
@@ -48,8 +48,8 @@ function generateCategorizedAppData(topDir) {
         var subDirName = pathLib.basename(subAppPath);
         subApps.push({
           title: humanizeString(subDirName),
-          tsOutput: tsFileRelPathWithoutExt,
-          tsInput: tsFilePath,
+          scriptEntryOutput: tsFileRelPathWithoutExt,
+          scriptEntryInput: tsFilePath,
           htmlOutput: htmlFileRelPath,
           htmlInput: htmlFilePath
         });
@@ -65,9 +65,7 @@ function generateCategorizedAppData(topDir) {
 
 var config = {
   context: rootDir, // a base directory to resolve the 'entry'
-  entry: {
-    'app' : srcDir + '/app.ts'
-  },
+  entry: {},
   output: {
     path: distDir,
     filename: '[name].js', // [name] means we are goting to use 'key' value of each entry as the bundle file name
@@ -114,11 +112,11 @@ var config = {
         console.log('>>> checked ');
       })
     },
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'commons',
-      filename: 'commons.js',
-      chunks: ['adding_a_controller', 'directive_scope']
-    }),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'commons',
+    //   filename: 'commons.js',
+    //   chunks: ['adding_a_controller', 'directive_scope']
+    // }),
     // new HtmlWebpackPlugin({
     //   title: 'Listing All Apps',
     //   template: './src/index.ejs',
@@ -141,32 +139,57 @@ var config = {
   ]
 };
 
-var appData = generateCategorizedAppData(srcDir);
-// console.log('---- appData ----');
-// console.log(prettyjson.render(appData));
-// console.log('-----------------');
+(function () {
+  "use strict"
 
-config.plugins.push(new HtmlWebpackPlugin({
-  template: './src/index.ejs',
-  inject: 'body', 
-  appData: appData
-}));
+  var mainChunkName = 'app';
+  var commonChunkName = 'commons'; 
 
-appData.forEach(function(category) {
-  category.apps.forEach(function(app) {
-    // console.log('subApp = %j', subApp);
-    config.entry[app.tsOutput] = app.tsInput;
-    config.plugins.push(new HtmlWebpackPlugin({
-        title: app.title,
-        template: app.htmlInput, //'./src/module2/adding_a_controller/index.html',
-        filename: app.htmlOutput, //'/module2/adding_a_controller/index.html',
-        chunks: ['commons', app.tsOutput] //'module2/adding_a_controller/main']
-      }));
+  console.log('generting categorised apps...')
+  var appData = generateCategorizedAppData(srcDir);
+
+  // configure common script chunk & log
+  var allChunks = [];
+  appData.forEach(function(category) {
+    console.log('Category : ' + category.categoryName);
+    category.apps.forEach(function(app) {
+      console.log('   - ' + app.title + '(' + app.scriptInput + ')');
+      allChunks.push(app.scriptEntryOutput);
+    });
   });
-});
+  
+  config.plugins.push(
+    new webpack.optimize.CommonsChunkPlugin({
+        name: commonChunkName,
+        filename: 'commons.js',
+        chunks: allChunks
+      })
+  );
 
-//console.log('webpack config = %s', prettyjson.render(config));
+  // add top level app
+  config.entry[mainChunkName] = srcDir + '/app.ts';
+  config.plugins.push(new HtmlWebpackPlugin({
+    template: './src/index.ejs',
+    inject: 'body', 
+    appData: appData,
+    chunks: [commonChunkName, mainChunkName]
+  }));
+
+  // add subapps per category
+  appData.forEach(function(category) {
+    category.apps.forEach(function(app) {
+      // entry 추가
+      config.entry[app.scriptEntryOutput] = app.scriptEntryInput;
+
+      // html 추가
+      config.plugins.push(new HtmlWebpackPlugin({
+          title: app.title,
+          template: app.htmlInput,
+          filename: app.htmlOutput,
+          chunks: [commonChunkName, app.scriptEntryOutput]
+        }));
+    });
+  });
+}());
 
 module.exports = config;
-
-//console.log('finished..');

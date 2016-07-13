@@ -29,9 +29,10 @@ class MainCtrl {
 
 class UserInfoCard implements ng.IDirective {
   static className = 'userInfoCard';
-  static $inject = ['$http'];
+  
   static Factory(): ng.IDirectiveFactory {
     const directive = ($http: ng.IHttpService) => new UserInfoCard($http);
+    directive.$inject = ['$http'];
     return directive;
   }
 
