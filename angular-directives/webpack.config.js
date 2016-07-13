@@ -13,9 +13,9 @@ var rootDir = __dirname;
 var srcDir = rootDir + '/src';
 var distDir = rootDir + '/public';
 
-function generateSubApps(topDir) {
+function generateCategorizedAppData(topDir) {
   
-  var subApps = [];
+  var appData = [];
 
   function forEachDirSync(dirPath, callback) {
     var entries = fsLib.readdirSync(dirPath);
@@ -28,14 +28,15 @@ function generateSubApps(topDir) {
     });
   }
 
-  forEachDirSync(topDir, function(dirPath) {
+  forEachDirSync(topDir, function(appCategoryPath) {
     //console.log('fileEachDirSync: ' + dirPath);
-    var dirName = pathLib.basename(dirPath);
-    forEachDirSync(dirPath, function(subDirFullPath) {
-      var htmlFilePath = pathLib.join(subDirFullPath, 'index.html');
-      var tsFilePath = pathLib.join(subDirFullPath, 'main.ts');
+    var dirName = pathLib.basename(appCategoryPath);
+    var subApps = [];
+    forEachDirSync(appCategoryPath, function(subAppPath) {
+      var htmlFilePath = pathLib.join(subAppPath, 'index.html');
+      var tsFilePath = pathLib.join(subAppPath, 'main.ts');
       if(isThere(htmlFilePath) && isThere(tsFilePath)) {
-        console.log('> ' + subDirFullPath);
+        console.log('> ' + subAppPath);
         var tsFileRelDir = pathLib.dirname(pathLib.relative(topDir, tsFilePath));
         var tsFilename = pathLib.basename(tsFilePath, '.ts');
         // console.log('>> tsFileRelDir: ' + tsFileRelDir);
@@ -44,9 +45,8 @@ function generateSubApps(topDir) {
         var htmlFileRelPath = pathLib.relative(topDir, htmlFilePath);
         // console.log('>> filename: ' + htmlFileRelPath);
         // console.log('>> chunks: ' + tsFileRelPathWithoutExt);
-        var subDirName = pathLib.basename(subDirFullPath);
+        var subDirName = pathLib.basename(subAppPath);
         subApps.push({
-          group: humanizeString(dirName),
           title: humanizeString(subDirName),
           tsOutput: tsFileRelPathWithoutExt,
           tsInput: tsFilePath,
@@ -55,8 +55,12 @@ function generateSubApps(topDir) {
         });
       }
     });
+    appData.push( {
+      categoryName: humanizeString(dirName),
+      apps: subApps
+    });
   });
-  return subApps;
+  return appData;
 }
 
 var config = {
@@ -106,10 +110,8 @@ var config = {
     function () {
       this.plugin('watch-run', function(watching, callback) {
         console.log('====== Compile Begin : ' + new Date());
-
-        console.log('>>> checked ');
-
         callback();
+        console.log('>>> checked ');
       })
     },
     new webpack.optimize.CommonsChunkPlugin({
@@ -117,11 +119,11 @@ var config = {
       filename: 'commons.js',
       chunks: ['adding_a_controller', 'directive_scope']
     }),
-    new HtmlWebpackPlugin({
-      title: 'Listing All Apps',
-      template: './src/index.html',
-      inject: 'body',
-    }),
+    // new HtmlWebpackPlugin({
+    //   title: 'Listing All Apps',
+    //   template: './src/index.ejs',
+    //   inject: 'body',
+    // }),
     // new HtmlWebpackPlugin({
     //   template: './src/module2/adding_a_controller/index.html',
     //   filename: '/module2/adding_a_controller/index.html',
@@ -139,22 +141,32 @@ var config = {
   ]
 };
 
-var subApps = generateSubApps(srcDir);
-// console.log('subApps = ' + prettyjson.render(subApps));
+var appData = generateCategorizedAppData(srcDir);
+// console.log('---- appData ----');
+// console.log(prettyjson.render(appData));
+// console.log('-----------------');
 
-subApps.forEach(function(subApp) {
-  // console.log('subApp = %j', subApp);
-  config.entry[subApp.tsOutput] = subApp.tsInput;
-  config.plugins.push(new HtmlWebpackPlugin({
-      title: subApp.title,
-      template: subApp.htmlInput, //'./src/module2/adding_a_controller/index.html',
-      filename: subApp.htmlOutput, //'/module2/adding_a_controller/index.html',
-      chunks: ['commons', subApp.tsOutput] //'module2/adding_a_controller/main']
-    }));
+config.plugins.push(new HtmlWebpackPlugin({
+  template: './src/index.ejs',
+  inject: 'body', 
+  appData: appData
+}));
+
+appData.forEach(function(category) {
+  category.apps.forEach(function(app) {
+    // console.log('subApp = %j', subApp);
+    config.entry[app.tsOutput] = app.tsInput;
+    config.plugins.push(new HtmlWebpackPlugin({
+        title: app.title,
+        template: app.htmlInput, //'./src/module2/adding_a_controller/index.html',
+        filename: app.htmlOutput, //'/module2/adding_a_controller/index.html',
+        chunks: ['commons', app.tsOutput] //'module2/adding_a_controller/main']
+      }));
+  });
 });
 
-console.log('webpack config = %s', prettyjson.render(config));
+//console.log('webpack config = %s', prettyjson.render(config));
 
 module.exports = config;
 
-console.log('finished..');
+//console.log('finished..');

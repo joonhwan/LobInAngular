@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Angular Directive Studies</title>
+</head>
+<body>
+  <% for (var i in htmlWebpackPlugin.options.appData) { %>
+  <%   var category = htmlWebpackPlugin.options.appData[i]; %>
+  <h3><%= category.categoryName %></h3>
+  <ol>
+    <% for (var j in category.apps) { %>
+    <%   var app = category.apps[j]; %>
+    <li><a href="<%= app.htmlOutput %>"><%= app.title %></a></li>
+    <% } %>
+  </ol>
+  <% } %>
+</body>
+</html>
