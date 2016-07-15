@@ -4,9 +4,9 @@ import * as angular from 'angular';
 
 class MainCtrl {
   static className = 'mainCtrl';
-  
+
   message:string = "Hello Joonhwan";
-  
+
   constructor() {
   }
 }
