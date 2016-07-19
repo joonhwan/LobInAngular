@@ -3,7 +3,9 @@ import './style.css';
 import {ProductListComponent} from './products/product-list.component';
 
 var html = require('./app.component.html');
-var css = require('raw!./app.component.css');
+var css = require('!raw!./app.component.css');
+
+console.log(css);
 
 @Component({
   selector: 'my-app',
