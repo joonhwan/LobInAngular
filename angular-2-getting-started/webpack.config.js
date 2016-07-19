@@ -46,6 +46,13 @@ var config = {
     extensions: ['', '.js', '.ts']
   },
   plugins: [
+    function () {
+      this.plugin('watch-run', function(watching, callback) {
+        console.log('====== Compile Begin : ' + new Date());
+        callback();
+        console.log('>>> checked ' + watching);
+      })
+    },
     new webpack.optimize.CommonsChunkPlugin({
       name: ['app', 'vendor', 'polyfills']
     }),
