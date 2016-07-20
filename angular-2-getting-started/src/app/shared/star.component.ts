@@ -1,4 +1,5 @@
-import {Component, ViewChild, OnInit, OnChanges} from '@angular/core';
+import {Component, Input, OnInit, OnChanges} from '@angular/core';
+import {IProduct} from '../products/product';
 
 var html = require('./star.component.html');
 
@@ -7,9 +8,12 @@ var html = require('./star.component.html');
   template: html
 })
 export class StarComponent implements OnInit, OnChanges {
-  @ViewChild('star-rating-edit') starRatingEdit : HTMLElement
+  @Input() product:IProduct;
   ngOnInit():void {
-    var $starRatingEdit = $(this.starRatingEdit) as any;
+    var domId = '#star-rating-edit-' + this.product.id;
+    console.log('domId = ' + domId);
+    
+    var $starRatingEdit = $(domId) as any;
     $starRatingEdit.rating({
       min: 0,
       max: 5,

@@ -3,7 +3,7 @@ import {ProductListComponent} from './products/product-list.component';
 
 var html = require('./app.component.html');
 var css = require('./app.component.css');
-console.log('app.component.css=' + css);
+
 @Component({
   selector: 'my-app',
   template: html,
