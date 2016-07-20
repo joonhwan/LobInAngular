@@ -1,16 +1,13 @@
 import { Component } from '@angular/core';
-import './style.css';
 import {ProductListComponent} from './products/product-list.component';
 
 var html = require('./app.component.html');
-var css = require('!raw!./app.component.css');
-
-console.log(css);
-
+var css = require('./app.component.css');
+console.log('app.component.css=' + css);
 @Component({
   selector: 'my-app',
   template: html,
-  styles: [css],
+  //styles: [css],
   directives: [ProductListComponent]
 })
 export class AppComponent {

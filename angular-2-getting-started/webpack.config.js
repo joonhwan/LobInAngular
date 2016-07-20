@@ -14,13 +14,16 @@ var config = {
   },
   devtool: 'source-map',
   module: {
-    loaders: [ {
-        test: /\.ts$/,
-        exclude: /node_modules/,
-        loader: 'ts'
-      }, {
+    loaders: [{
+      test: /\.ts$/,
+      exclude: /node_modules/,
+      loader: 'ts'
+    }, {
+        //   test: /\.css$/,
+        //   loader: 'style!css'
+        // }, {
         test: /\.css$/,
-        loader: 'style!css'
+        loader: 'css-to-string!css?minimize'
       }, {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
         loader: "url?limit=10000&mimetype=application/font-woff"
@@ -37,17 +40,25 @@ var config = {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         loader: "url?limit=10000&mimetype=image/svg+xml"
       }, {
-        test: /\.html$/, 
-        loader: 'raw'
+        test: /\.html$/,
+        loader: 'raw!html-minify'
       }
     ]
+  },
+  'html-minify-loader': {
+    empty: true,        // KEEP empty attributes
+    cdata: true,        // KEEP CDATA from scripts
+    comments: true,     // KEEP comments
+    dom: {                            // options of !(htmlparser2)[https://github.com/fb55/htmlparser2]
+      lowerCaseAttributeNames: false,      // do not call .toLowerCase for each attribute name (Angular2 use camelCase attributes)
+    }
   },
   resolve: {
     extensions: ['', '.js', '.ts']
   },
   plugins: [
     function () {
-      this.plugin('watch-run', function(watching, callback) {
+      this.plugin('watch-run', function (watching, callback) {
         console.log('====== Compile Begin : ' + new Date());
         callback();
         console.log('>>> checked ' + watching);
