@@ -43,8 +43,9 @@
             <td>{{product.name}}</td>
             <td>{{product.code | uppercase}}</td>
             <td>{{product.releaseDate}}</td>
-            <td>{{product.price | currency:'KRW':true:'1.2-2'}}</td>
-            <td>{{product.rating}}</td>
+            <td>{{product.price | currency:'USD':true:'1.2-2'}}</td>
+            <!--<td>{{product.rating}}</td>-->
+            <td><apm-star [rating]='product.rating'></apm-star></td>
           </tr>
         </tbody>
       </table>

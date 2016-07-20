@@ -1,13 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {IProduct} from './product';
 import {ProductFilterPipe} from './product-filter.pipe';
+import {StarComponent} from '../shared/star.component';
 
 var css = require('./product-list.component.css');
 @Component({
   selector: 'apm-product-list',
   template: require('./product-list.component.html'),
   styles: [css],
-  pipes: [ProductFilterPipe]
+  pipes: [ProductFilterPipe],
+  directives: [StarComponent]
 })
 export class ProductListComponent implements OnInit {
   products: IProduct[];

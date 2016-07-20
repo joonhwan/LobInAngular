@@ -42,6 +42,9 @@ var config = {
       }, {
         test: /\.html$/,
         loader: 'raw!html-minify'
+      }, {
+        test: /\.(png|jpg|gif)$/,
+        loader: "file-loader?name=img/img-[name]-[hash:6].[ext]"
       }
     ]
   },
