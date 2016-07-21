@@ -45,13 +45,14 @@
             <td>{{product.releaseDate}}</td>
             <td>{{product.price | currency:'USD':true:'1.2-2'}}</td>
             <!--<td>{{product.rating}}</td>-->
+            <!--(ratingChanged)='setProductRating(product, $event)'-->
             <td>
               <apm-star 
                 [rating]='product.rating'
-                (ratingChanged)='setProductRating(product, $event)'
+                (ratingChanged)='product.rating = $event'
               >
               </apm-star>
-              {{product.rating}}
+              <input type="text" [(ngModel)]='product.rating'>
             </td>
           </tr>
         </tbody>

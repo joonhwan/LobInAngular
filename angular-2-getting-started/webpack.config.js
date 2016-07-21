@@ -83,8 +83,8 @@ var config = {
     new webpack.ProvidePlugin({
       'jQuery': 'jquery',
       '$': 'jquery'
-    }),
-    new WriteFilePlugin()
+    })
+    // new WriteFilePlugin()
   ]
 }
 module.exports = config;

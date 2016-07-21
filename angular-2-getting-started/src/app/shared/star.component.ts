@@ -14,6 +14,11 @@ import 'bootstrap-star-rating/js/star-rating';
 var html = require('./star.component.html');
 var css = require('bootstrap-star-rating/css/star-rating.css');
 
+export interface StarComponentConfig 
+{
+  
+}
+
 @Component({
   selector:'apm-star',
   template: html,
@@ -50,9 +55,13 @@ export class StarComponent implements OnInit, OnChanges {
         this.ratingChanged.emit(this.rating);
       })
       ;
+    this.$starRatingEdit = $starRatingEdit;
   }
 
   ngOnChanges():void {
-    console.log('changed! ');
+    if(this.$starRatingEdit) {
+      this.$starRatingEdit.rating('update', this.rating);
+    }
+    // console.log('starComponent.ngOnChanges : ' + this.rating);
   }
 }
