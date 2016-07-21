@@ -49,6 +49,11 @@ export class ProductListComponent implements OnInit {
     this.showImage = !this.showImage;
   }
 
+  setProductRating(product, rating) {
+    console.log('setProductRating = '+ rating);
+    product.rating = rating;
+  }
+
   ngOnInit(): any {
     console.log('in the ngOnInit()!!!!');
   }

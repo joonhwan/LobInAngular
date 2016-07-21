@@ -1,16 +1,24 @@
 var webpack = require('webpack');
+var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var WriteFilePlugin = require('write-file-webpack-plugin');
+
+var srcDir = path.join(__dirname, './src');
+var outDir = path.join(__dirname, './public');
 
 var config = {
   entry: {
-    app: './src/app/main.ts',
-    polyfills: './src/app/polyfills',
-    vendor: './src/app/vendor.ts'
+    app: path.join(srcDir, './app/main.ts'),
+    polyfills: path.join(srcDir, './app/polyfills.ts'),
+    vendor: path.join(srcDir, './app/vendor.ts')
   },
   output: {
-    path: './public',
+    path: outDir,
     filename: './[name].js',
     publicPath: '/'
+  },
+  devServer: {
+    outputPath: outDir
   },
   devtool: 'source-map',
   module: {
@@ -64,19 +72,19 @@ var config = {
       this.plugin('watch-run', function (watching, callback) {
         console.log('====== Compile Begin : ' + new Date());
         callback();
-        console.log('>>> checked ' + watching);
       })
     },
     new webpack.optimize.CommonsChunkPlugin({
       name: ['app', 'vendor', 'polyfills']
     }),
     new HtmlWebpackPlugin({
-      template: './src/index.html'
+      template: path.join(srcDir, './index.html')
     }),
     new webpack.ProvidePlugin({
       'jQuery': 'jquery',
       '$': 'jquery'
-    })
+    }),
+    new WriteFilePlugin()
   ]
 }
 module.exports = config;
