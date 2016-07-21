@@ -18,7 +18,8 @@ var config = {
     publicPath: '/'
   },
   devServer: {
-    outputPath: outDir
+    outputPath: outDir,
+    inline: true
   },
   devtool: 'source-map',
   module: {
@@ -49,7 +50,7 @@ var config = {
         loader: "url?limit=10000&mimetype=image/svg+xml"
       }, {
         test: /\.html$/,
-        loader: 'raw!html-minify'
+        loader: 'html-loader'
       }, {
         test: /\.(png|jpg|gif)$/,
         loader: "file-loader?name=img/img-[name]-[hash:6].[ext]"
@@ -63,6 +64,14 @@ var config = {
     dom: {                            // options of !(htmlparser2)[https://github.com/fb55/htmlparser2]
       lowerCaseAttributeNames: false,      // do not call .toLowerCase for each attribute name (Angular2 use camelCase attributes)
     }
+  },
+  // angular 2 compatible html-loader configuration
+  'htmlLoader': {
+    minimize: true,
+    removeAttributeQuotes: false,
+    caseSensitive: true,
+    customAttrSurround: [ [/#/, /(?:)/], [/\*/, /(?:)/], [/\[?\(?/, /(?:)/] ],
+    customAttrAssign: [ /\)?\]?=/ ] 
   },
   resolve: {
     extensions: ['', '.js', '.ts']

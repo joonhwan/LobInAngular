@@ -1,4 +1,14 @@
-<div class="container">  
-  <h3>{{appName}}</h3>
-  <apm-product-list></apm-product-list>
+<div class="container-fluid">  
+  <div class="navbar navbar-default">
+    <a class="navbar-brand" href="#">{{appName}}</a>
+    <ul class="nav navbar-nav">
+      <li [ngClass]="{active:isActive}">
+        <a routerLink='welcome'>Welcome</a>
+      </li>
+      <li [ngClass]="{active:isActive}">
+        <a routerLink='products'>Product List</a>
+      </li>
+    </ul>
+  </div>
+  <router-outlet></router-outlet>
 </div>

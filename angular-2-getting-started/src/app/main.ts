@@ -1,7 +1,11 @@
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import { AppComponent } from './app.component';
+import { appRouterProviders } from './app.routes';
+
 import '!style!css?minimize!./style.css';
 
-console.log('main');
-bootstrap(AppComponent, []);
-console.log('after');
+bootstrap(AppComponent, [
+  appRouterProviders
+])
+.catch(err => console.error(err))
+;

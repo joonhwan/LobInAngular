@@ -42,13 +42,13 @@ function runWebpackDevServer(port) {
   new WebpackDevServer(webpack(config), {
       publicPath:         config.output.publicPath,
       hot:                true, // added line
+      inline:             true, // added line!
       historyApiFallback: true,
       stats:              { colors: true }
   }).listen(port, 'localhost', function (err, result) {
       if (err) {
           console.log(err);
       }
-
       console.log('webpack-dev-server is runnin @ localhost:' + port);
   });
 }

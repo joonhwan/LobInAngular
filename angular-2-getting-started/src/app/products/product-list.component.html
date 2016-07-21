@@ -38,9 +38,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor='let product of products | productFilter:listFilter'>
+          <tr
+           *ngFor='let product of products | productFilter:listFilter'
+          >
             <td><img *ngIf='showImage' [src]="product.imageUrl" [title]="product.name | uppercase" [ngStyle]='imageStyle'></td>
-            <td>{{product.name}}</td>
+            <td (click)='showDetail(product)'>{{product.name}}</td>
             <td>{{product.code | uppercase}}</td>
             <td>{{product.releaseDate}}</td>
             <td>{{product.price | currency:'USD':true:'1.2-2'}}</td>
@@ -52,7 +54,7 @@
                 (ratingChanged)='product.rating = $event'
               >
               </apm-star>
-              <input type="text" [(ngModel)]='product.rating'>
+              <!--<input type="text" [(ngModel)]='product.rating'>-->
             </td>
           </tr>
         </tbody>

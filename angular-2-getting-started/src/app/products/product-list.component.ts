@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {IProduct} from './product';
 import {ProductService} from './product.service';
 import {ProductFilterPipe} from './product-filter.pipe';
@@ -8,7 +9,7 @@ let html = require('./product-list.component.html');
 let css = require('./product-list.component.css');
 
 @Component({
-  selector: 'apm-product-list',
+  // selector: 'apm-product-list',
   template: html,
   styles: [css],
   pipes: [ProductFilterPipe],
@@ -16,6 +17,7 @@ let css = require('./product-list.component.css');
 })
 export class ProductListComponent implements OnInit {
 
+  pageTitle:string = "Product List";
   products: IProduct[] = [];
   showImage:boolean;
   imageStyle = {
@@ -25,7 +27,9 @@ export class ProductListComponent implements OnInit {
   listFilter: string = '';
   errorMessage: any;
 
-  constructor(private productService:ProductService) {
+  constructor(
+    private productService:ProductService,
+    private router:Router) {
     this.showImage = false;
     //this.products = this.productService.getProducts();
   }
@@ -37,6 +41,10 @@ export class ProductListComponent implements OnInit {
   setProductRating(product, rating) {
     // console.log('setProductRating = '+ rating);
     product.rating = rating;
+  }
+
+  showDetail(product) {
+    this.router.navigate(['/products', product.id]);
   }
 
   ngOnInit(): any {
