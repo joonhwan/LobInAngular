@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HTTP_PROVIDERS } from '@angular/http';
 import {ProductListComponent} from './products/product-list.component';
 import {ProductService} from './products/product.service';
 
@@ -10,7 +11,7 @@ var css = require('./app.component.css');
   template: html,
   //styles: [css],
   directives: [ProductListComponent],
-  providers: [ProductService]
+  providers: [ProductService, HTTP_PROVIDERS]
 })
 export class AppComponent {
   appName: string = "ACME Product Management"

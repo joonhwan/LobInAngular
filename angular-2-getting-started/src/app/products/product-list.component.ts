@@ -16,13 +16,14 @@ let css = require('./product-list.component.css');
 })
 export class ProductListComponent implements OnInit {
 
-  products: IProduct[];
+  products: IProduct[] = [];
   showImage:boolean;
   imageStyle = {
     'width' : '50px',
     'margin' : '2px'
   };
   listFilter: string = '';
+  errorMessage: any;
 
   constructor(private productService:ProductService) {
     this.showImage = false;
@@ -39,6 +40,10 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit(): any {
-    this.products = this.productService.getProducts();
+    this.productService.getProducts()
+            .subscribe(
+              products => this.products = products, 
+              error => this.errorMessage = error as any
+            );
   }
 } 
