@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom';
 import { ForumHeader } from './forumHeader';
 import { ForumQuestion } from './forumQuestion';
 import { ForumAnswers } from './forumAnswers';
+import { ForumAddAnswerBox } from './forumAddAnswerBox';
 
 export const Forum = React.createClass({
 
@@ -40,7 +41,11 @@ export const Forum = React.createClass({
         <ForumHeader answers={this.state.allAnswers} />
         <div className="container-fluid">
           <ForumQuestion />
+          <hr />
           <ForumAnswers answers={this.state.allAnswers} />
+          <hr />
+          <h4>Add an answer</h4>
+          <ForumAddAnswerBox />
         </div>
       </div>
     );
