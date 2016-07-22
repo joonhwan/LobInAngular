@@ -1,5 +1,8 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import { ForumHeader } from './forumHeader';
+import { ForumQuestion } from './forumQuestion';
+import { ForumAnswers } from './forumAnswers';
 
 export const Forum = React.createClass({
 
@@ -27,11 +30,19 @@ export const Forum = React.createClass({
 
   render() {
 
-    return React.createElement(
-      'div',
-       null,
-       React.createElement(ForumHeader, { answers: this.state.allAnswers })
-       );
-
+    // return React.createElement(
+    //   'div',
+    //    null,
+    //    React.createElement(ForumHeader, { answers: this.state.allAnswers })
+    //    );
+    return (
+      <div>
+        <ForumHeader answers={this.state.allAnswers} />
+        <div className="container-fluid">
+          <ForumQuestion />
+          <ForumAnswers answers={this.state.allAnswers} />
+        </div>
+      </div>
+    );
   }
 });
