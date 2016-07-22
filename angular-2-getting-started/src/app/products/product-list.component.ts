@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 import {Router} from '@angular/router';
 import {IProduct} from './product';
 import {ProductService} from './product.service';
@@ -13,7 +14,7 @@ let css = require('./product-list.component.css');
   template: html,
   styles: [css],
   pipes: [ProductFilterPipe],
-  directives: [StarComponent],
+  directives: [StarComponent, ROUTER_DIRECTIVES],
 })
 export class ProductListComponent implements OnInit {
 

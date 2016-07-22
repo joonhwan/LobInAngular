@@ -22,6 +22,14 @@ export class ProductService {
       ;
   }
 
+  getProductById(id: number): Observable<IProduct> {
+    return this._http.get(this._productUrl + '/' + id)
+      .map((response:Response) => response.json() as IProduct)
+      .do(data => console.log(`Product data by Id={id} = {data}`))
+      .catch(this.handleError)
+      ;
+  }
+
   private handleError(error:Response) {
     console.error(error);
     return Observable.throw(error.json().error || 'Server Error');

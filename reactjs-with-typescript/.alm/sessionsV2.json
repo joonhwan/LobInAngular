@@ -1,0 +1,29 @@
+{
+  "sessions": [
+    {
+      "id": "c0a65869-dc16-4d00-a73b-026d1c6f8b53",
+      "tabLayout": {
+        "type": "stack",
+        "width": 100,
+        "height": 100,
+        "tabs": [
+          {
+            "id": "9cd52987-50a5-4298-8b9a-7c9b5e0f66ce",
+            "relativeUrl": "file://./src/app.tsx",
+            "additionalData": null
+          },
+          {
+            "id": "1c5631a7-037b-4d11-8151-c2fcb38f3842",
+            "relativeUrl": "file://./tsconfig.json",
+            "additionalData": null
+          }
+        ],
+        "subItems": [],
+        "activeItemIndex": 0
+      },
+      "lastUsed": 1469155103803,
+      "selectedTabId": "1c5631a7-037b-4d11-8151-c2fcb38f3842"
+    }
+  ],
+  "relativePathToTsconfig": "./tsconfig.json"
+}

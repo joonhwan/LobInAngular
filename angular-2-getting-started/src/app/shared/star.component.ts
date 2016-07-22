@@ -14,9 +14,10 @@ import 'bootstrap-star-rating/js/star-rating';
 var html = require('./star.component.html');
 var css = require('bootstrap-star-rating/css/star-rating.css');
 
-export interface StarComponentConfig 
-{
-  
+export interface StarComponentConfig {
+  min?: number;
+  max?: number;
+  step?: number;
 }
 
 @Component({

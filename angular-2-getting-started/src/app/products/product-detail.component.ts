@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router';
 import { IProduct } from './product';
+import { ProductService } from './product.service';
+import { Subscription } from 'rxjs';
 
 let html = require('./product-detail.component.html');
 
@@ -12,18 +14,27 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   pageTitle:string = "Product Detail";
   product:IProduct;
+  
+  private _sub: Subscription;
 
-  constructor(private route:ActivatedRoute) {
+  constructor(
+    private _route:ActivatedRoute,
+    private _productService:ProductService) {
 
   }
 
   ngOnInit() {
-    let id = this.route.params['id'];
-    this.pageTitle = "Product Detail : " + id;
+    this._route.params.subscribe(param => {
+      let id = param['id'] as number;
+      if(id) {
+        this._sub = this._productService.getProductById(id)
+          .subscribe(product => this.product = product);
+      }
+    })
   }
 
   ngOnDestroy() {
-
+    this._sub.unsubscribe();
   }
 
 }
