@@ -1,0 +1,1 @@
+When working with the 'After/React' folder, you will need NodeJS and npm and need to run 'npm install' to install needed packages before running.
