@@ -6,11 +6,14 @@
   "scripts": {
     "postinstall": "typings install",
     "build": "webpack",
-    "start": "node server"
+    "json-server": "json-server db.json",
+    "webpack-dev-server": "webpack-dev-server --inline --hot --history-api-fallback",
+    "start": "concurrent \"npm run json-server\" \"npm run webpack-dev-server\""
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "concurrently": "^2.2.0",
     "css-loader": "^0.23.1",
     "css-to-string-loader": "^0.1.1",
     "file-loader": "^0.9.0",
