@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "nodemon -x \"babel-node --presets react,es2015 server.js\" -w public",
+    "start": "babel-node --presets react,es2015 server.js",
     "start-wds": "webpack-dev-server --inline --hot",
     "watch": "webpack -w"
   },

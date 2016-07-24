@@ -2,6 +2,6 @@
 // var ReactDOM = require('react-dom');
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Halo from './components/hello';
+import Links from './components/links';
 
-ReactDOM.render(<Halo />, document.getElementById("react"));
+ReactDOM.render(<Links />, document.getElementById("react"));
