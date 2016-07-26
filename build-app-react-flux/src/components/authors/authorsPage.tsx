@@ -1,15 +1,6 @@
 import * as React from 'react';
 import {Author, AuthorApi} from '../../api/authorApi';
-
-function createAuthorRow(author:Author)
-{
-  return (
-    <tr key={author.id}>
-      <td>{author.id}</td>
-      <td>{author.firstName} {author.lastName}</td>
-    </tr>
-  );
-}
+import {AuthorList} from './authorList';
 
 export interface IAuthorsProps {
 }
@@ -18,7 +9,7 @@ export interface IAuthorsState {
   authors:Author[];
 }
 
-export class Authors extends React.Component<IAuthorsProps, IAuthorsState> {
+export class AuthorsPage extends React.Component<IAuthorsProps, IAuthorsState> {
 
   constructor(props: IAuthorsProps) {
     super(props);
@@ -29,7 +20,7 @@ export class Authors extends React.Component<IAuthorsProps, IAuthorsState> {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({ 
       authors: AuthorApi.getAllAuthors()
     });
@@ -39,17 +30,7 @@ export class Authors extends React.Component<IAuthorsProps, IAuthorsState> {
     return(
       <div>
         <h2>Authors</h2>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.authors.map(createAuthorRow, this)}
-          </tbody>
-        </table>
+        <AuthorList authors={this.state.authors}/>
       </div>
     );
   }
