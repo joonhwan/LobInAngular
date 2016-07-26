@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "react": "registry:npm/react#15.0.1+20160601175240",
+    "react-dom": "registry:npm/react-dom#15.0.1+20160705210405"
+  },
+  "globalDependencies": {
+    "jquery": "registry:dt/jquery#1.10.0+20160704162008",
+    "lodash": "registry:dt/lodash#3.10.0+20160720001309",
+    "node": "registry:dt/node#6.0.0+20160720070758"
+  }
+}
