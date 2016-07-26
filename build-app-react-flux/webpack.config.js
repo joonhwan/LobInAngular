@@ -3,7 +3,7 @@ var path = require('path');
 
 module.exports = {
   entry: {
-    'app':'./src/app.tsx',
+    'app':'./src/main.tsx',
   },
   output: {
     path: './public',

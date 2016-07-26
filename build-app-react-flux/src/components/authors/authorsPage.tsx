@@ -1,18 +1,59 @@
 import * as React from 'react';
+import * as ReactRouter from 'react-router';
 import {Author, AuthorApi} from '../../api/authorApi';
 import {AuthorList} from './authorList';
 
 export interface IAuthorsProps {
+  router: ReactRouter.RouterOnContext
 }
 
 export interface IAuthorsState {
-  authors:Author[];
+  authors: Author[];
 }
 
-export class AuthorsPage extends React.Component<IAuthorsProps, IAuthorsState> {
+let AuthorsPageClassic = React.createClass<IAuthorsProps, IAuthorsState>({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
 
-  constructor(props: IAuthorsProps) {
-    super(props);
+  getInitialState() {
+    return {
+      authors: []
+    };
+  },
+  componentWillMount() {
+    this.context.router.setRouteLeaveHook(
+      this.props.route,
+      this.routerWillLeave
+    )
+  },
+  componentDidMount() {
+    this.setState({
+      authors: AuthorApi.getAllAuthors()
+    });
+  },
+  render() {
+    return (
+      <div>
+        <h2>Authors</h2>
+        <AuthorList authors={this.state.authors}/>
+      </div>
+    );
+  },
+
+  routerWillLeave() {
+      return 'You have unsaved information, are you sure you want to leave this page?'
+  },
+});
+
+
+class AuthorsPageNewStyle extends React.Component<IAuthorsProps, IAuthorsState> {
+
+  contextTypes: {
+    router: any
+  }; 
+  constructor(props: IAuthorsProps, context?:any) {
+    super(props, context);
 
     // set initial state
     this.state = {
@@ -21,13 +62,21 @@ export class AuthorsPage extends React.Component<IAuthorsProps, IAuthorsState> {
   }
 
   componentDidMount() {
-    this.setState({ 
+    this.setState({
       authors: AuthorApi.getAllAuthors()
     });
   }
 
+  componentWillMount() {
+    this.props.router.setRouteLeaveHook(this.props.router, this.routerWillLeave);
+  }
+
+  routerWillLeave() {
+    return 'You have unsaved information, are you sure you want to leave this page?';
+  }
+
   render() {
-    return(
+    return (
       <div>
         <h2>Authors</h2>
         <AuthorList authors={this.state.authors}/>
@@ -35,3 +84,7 @@ export class AuthorsPage extends React.Component<IAuthorsProps, IAuthorsState> {
     );
   }
 }
+
+export {
+AuthorsPageClassic as AuthorsPage
+};

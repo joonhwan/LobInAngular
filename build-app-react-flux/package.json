@@ -5,7 +5,7 @@
   "scripts": {
     "postinstall": "typings install",
     "watch": "webpack --watch",
-    "start": "webpack-dev-server --inline --hot"
+    "start": "webpack-dev-server --inline --hot --history-api-fallback"
   },
   "author": "",
   "license": "ISC",
@@ -28,6 +28,7 @@
     "jquery": "^3.1.0",
     "lodash": "^4.14.0",
     "react": "^15.2.1",
-    "react-dom": "^15.2.1"
+    "react-dom": "^15.2.1",
+    "react-router": "^2.6.0"
   }
 }
