@@ -6,11 +6,13 @@ import {
   hashHistory, browserHistory 
 } from 'react-router';
 
-import {App}          from './app';
-import {HomePage}     from './homePage';
-import {AboutPage}    from './about/aboutPage';
-import {AuthorsPage}  from './authors/authorsPage';
-import {NotFoundPage} from './notFoundPage';
+import {App}               from './app';
+import {HomePage}          from './homePage';
+import {AboutPage}         from './about/aboutPage';
+import {AuthorsPage}       from './authors/authorsPage';
+import {ManageAuthorPage } from './authors/manageAuthorPage'
+import {NotFoundPage}      from './notFoundPage';
+
 
 let redirectMap = {
   "about-us" : "about",
@@ -40,6 +42,7 @@ export const routes = (
       <IndexRoute component={HomePage} />
       <Route path="about" component={AboutPage} onEnter={onEnterAbout} onLeave={onLeaveAbout}/>
       <Route path="authors" component={AuthorsPage} />
+      <Route path="author/add" component={ManageAuthorPage} />
       {redirects}
       <Route path="*" component={NotFoundPage} />
     </Route>

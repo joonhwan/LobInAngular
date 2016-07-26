@@ -3,6 +3,8 @@ import * as ReactRouter from 'react-router';
 import {Author, AuthorApi} from '../../api/authorApi';
 import {AuthorList} from './authorList';
 
+let Link = ReactRouter.Link;
+
 export interface IAuthorsProps {
   router: ReactRouter.RouterOnContext
 }
@@ -36,13 +38,14 @@ let AuthorsPageClassic = React.createClass<IAuthorsProps, IAuthorsState>({
     return (
       <div>
         <h2>Authors</h2>
+        <Link to='author/add' className="btn btn-primary">Add Author</Link>
         <AuthorList authors={this.state.authors}/>
       </div>
     );
   },
 
   routerWillLeave() {
-      return 'You have unsaved information, are you sure you want to leave this page?'
+      return null;// return 'You have unsaved information, are you sure you want to leave this page?'
   },
 });
 
