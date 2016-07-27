@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Author} from '../../api/authorApi';
+import {Author, AuthorApi} from '../../api/authorApi';
 import {AuthorForm} from './authorForm';
 
 interface Props {
@@ -25,14 +25,22 @@ export class ManageAuthorPage extends React.Component<Props, States> {
     return (
       <div>
         <h2>Manage Author Page</h2>
-        <AuthorForm author={this.state.author} onChange={author => this.onChange(author)} />
+        <AuthorForm 
+          author={this.state.author} 
+          onChange={author => this.updateAuthor(author)} 
+          onSaveClicked={ () => this.saveAuthor() }/>
       </div>
     )
   }
-  onChange(author:Author) {
-    console.log('onChange : ' + JSON.stringify(author));
+  updateAuthor(author:Author) {
+    //console.log('onChange : ' + JSON.stringify(author));
     this.setState({
       author: author
     });
   }
+  saveAuthor() {
+    console.log('saving author : ' + JSON.stringify(this.state.author));
+    AuthorApi.saveAuthor(this.state.author);
+  }
+  
 }

@@ -1,67 +1,114 @@
 import * as React from 'react';
 import {Author} from '../../api/authorApi';
 import {clone} from '../common/utils';
-
+import {TextInput} from '../common/textInput';
+import {withRouter} from '../common/withRouter';
 
 interface Props {
-  author:Author;
-  onChange: (author:Author) => void;
+  author: Author;
+  onChange(author: Author): void;
+  onSaveClicked();
 }
 
 interface State {
-  author:Author;
+  isDirty:boolean;
+  errors: {
+    firstName: string[],
+    lastName: string[]
+  }
 }
 
-export class AuthorForm extends React.Component<Props, State> {
-  author:Author;
+class AuthorFormNoConfirm extends React.Component<Props, State> {
+  author: Author;
 
-  constructor(props:Props) {
+  constructor(props: Props) {
     super(props);
     this.author = props.author;
     this.state = {
-      author:props.author
+      isDirty: false,
+      errors: {
+        firstName: [],
+        lastName: []
+      }
     };
   }
-  
+
   render() {
     return (
       <div>
-        <form action="" method="POST" role="form">
-          <div className="form-group">
-            <label htmlFor="firstName">First Name</label>
-            <input type="text" className="form-control" 
-              name="firstName" placeholder="First Name" 
-              value={this.props.author.firstName}
-              onChange={e => this.onFirstNameChanged(e)} />
-          </div>
+        <form>
+          <TextInput
+            name="firstName" label="First Name"
+            text={this.props.author.firstName}
+            errors={this.state.errors.firstName}
+            onTextChange={text => this.updateFirstName(text) } />
           <br />
-          <div className="form-group">
-            <label htmlFor="lastName">Last Name</label>
-            <input type="text" className="form-control" 
-              name="lastName" placeholder="Last Name"
-              value={this.props.author.lastName}
-              onChange={e => this.onLastNameChanged(e)} />
-          </div>
+          <TextInput
+            name="lastName" label="Last Name"
+            text={this.props.author.lastName}
+            errors={this.state.errors.lastName}
+            onTextChange={text => this.updateLastName(text) } />
           <br />
-          <button type="submit" className="btn btn-primary">Save</button>
+          <button className="btn btn-primary"
+            onClick={e => this.handleSaveClick(e) }>
+            Save
+          </button>
         </form>
       </div>
     );
   }
 
-  onFirstNameChanged(e) {
-    let updated = clone(this.state);
-    updated.author.firstName = e.target.value;
+  updateFirstName(text: string) {
+    let author = clone(this.props.author);
+    author.firstName = text;
     // console.log('onFirstNameChanged : ' + JSON.stringify(updated));
-    this.setState(updated);
-    this.props.onChange(updated.author);
-  }
-  onLastNameChanged(e) {
+    let errors = this.validateText(text);
     let updated = clone(this.state);
-    updated.author.lastName = e.target.value;
-    // console.log('onLastNameChanged : ' + JSON.stringify(updated));
+    updated.isDirty = true;
+    updated.errors.firstName = errors;
     this.setState(updated);
-    this.props.onChange(updated.author);
+    this.props.onChange(author);
   }
-  
+  updateLastName(text) {
+    let author = clone(this.props.author);
+    author.lastName = text;
+    // console.log('onLastNameChanged : ' + JSON.stringify(updated));
+    let errors = this.validateText(text);
+    let updated = clone(this.state);
+    updated.isDirty = true;
+    updated.errors.lastName = errors;
+    this.setState(updated);
+    this.props.onChange(author);
+  }
+  handleSaveClick(e: React.MouseEvent) {
+    e.preventDefault();
+    this.props.onSaveClicked();
+  }
+
+  validateText(text: string): string[] {
+    let errors: string[] = [];
+    if (!text) {
+      errors.push('Empty');
+    } else {
+      console.log('validate : text.length=' + text.length);
+      if (text.length < 3) {
+        errors.push('Too short');
+      }
+      if (text.indexOf(' ') >= 0) {
+        errors.push('Contained space');
+      }
+    }
+    return errors;
+  }
 }
+
+let AuthorFormConfirm = withRouter(AuthorFormNoConfirm, (self, nextLocation) => {
+  if(self.state.isDirty) {
+    return "Unsaved. Confirm?";
+  }
+  return null;
+});
+
+export {
+  AuthorFormConfirm as AuthorForm
+};

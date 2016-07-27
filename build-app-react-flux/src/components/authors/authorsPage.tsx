@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as ReactRouter from 'react-router';
-import { routerShape, locationShape } from 'react-router/lib/PropTypes';
-
 import {Author, AuthorApi} from '../../api/authorApi';
+import { routerShape } from 'react-router/lib/PropTypes';
+import {withRouter} from '../common/withRouter'
 import {AuthorList} from './authorList';
 
 let Link = ReactRouter.Link;
@@ -127,38 +127,31 @@ class AuthorsPagePlain extends React.Component<{}, IAuthorsState> {
   }
 }
 
-function withRouter<P, S>(
-  InnerComponent: new(props:P, context?)=>React.Component<P, S>, 
-  routeLeaveHook:ReactRouter.RouteHook
-  ) {
+// interface RouteOwner {
+//   route:any;
+// }
 
-  return class extends React.Component<P & {route:any}, S> {
-    static contextTypes: React.ValidationMap<any> = {
-      router: routerShape
-    }
-    context: { router:ReactRouter.RouterOnContext }
-    constructor(props:P & {route:any}, context?) {
-      super(props, context);
-    }
+// abstract class RouteHookableComponent<P, S> extends React.Component<P & RouteOwner,S> {
+//   static contextTypes: React.ValidationMap<any> = {
+//     router: routerShape
+//   }
+//   context: { router:ReactRouter.RouterOnContext }
+//   constructor(props:P & RouteOwner, context?:any) {
+//     super(props, context);
+//   }
+//   abstract routeLeaveHook(nextLocation):any;
+// }
 
-    componentWillMount() {
-      this.context.router.setRouteLeaveHook(this.props.route, routeLeaveHook);
-    }
 
-    render() {
-      return (
-        <InnerComponent {...this.props} />
-      )
-    }
-  }
-}
 
-let AuthorsPageHocRouter = withRouter(AuthorsPagePlain, () => {
+let AuthorsPageHocRouter = withRouter(AuthorsPagePlain, (self) => {
+  //console.log('self state = ' + JSON.stringify(self.state.authors));
   return "hoc. confirm?";
 });
 
 export {
 //AuthorsPageClassic as AuthorsPage
 //AuthorsPageWithRouter as AuthorsPage
-AuthorsPageHocRouter as AuthorsPage
+//AuthorsPageHocRouter as AuthorsPage
+AuthorsPagePlain as AuthorsPage
 };
