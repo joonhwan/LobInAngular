@@ -1,12 +1,14 @@
 import * as React from 'react';
 import * as ReactRouter from 'react-router';
+import { routerShape, locationShape } from 'react-router/lib/PropTypes';
+
 import {Author, AuthorApi} from '../../api/authorApi';
 import {AuthorList} from './authorList';
 
 let Link = ReactRouter.Link;
 
 export interface IAuthorsProps {
-  router: ReactRouter.RouterOnContext
+  route:any
 }
 
 export interface IAuthorsState {
@@ -45,16 +47,23 @@ let AuthorsPageClassic = React.createClass<IAuthorsProps, IAuthorsState>({
   },
 
   routerWillLeave() {
-      return null;// return 'You have unsaved information, are you sure you want to leave this page?'
+      return 'You have unsaved information, are you sure you want to leave this page?'
   },
 });
 
+interface AuthorsPageContext
+{
+  router: ReactRouter.RouterOnContext;
+}
 
-class AuthorsPageNewStyle extends React.Component<IAuthorsProps, IAuthorsState> {
 
-  contextTypes: {
-    router: any
+class AuthorsPageWithRouter extends React.Component<IAuthorsProps, IAuthorsState> {
+
+  static contextTypes: React.ValidationMap<any> = {
+    router: routerShape
   }; 
+  context: AuthorsPageContext;
+
   constructor(props: IAuthorsProps, context?:any) {
     super(props, context);
 
@@ -71,23 +80,85 @@ class AuthorsPageNewStyle extends React.Component<IAuthorsProps, IAuthorsState> 
   }
 
   componentWillMount() {
-    this.props.router.setRouteLeaveHook(this.props.router, this.routerWillLeave);
+    this.context.router.setRouteLeaveHook(this.props.route, this.routerWillLeave);
   }
 
-  routerWillLeave() {
-    return 'You have unsaved information, are you sure you want to leave this page?';
+  routerWillLeave:ReactRouter.RouteHook = (location) => {
+    
+    return '(v2) You have unsaved information, are you sure you want to leave this page?';
   }
 
   render() {
     return (
       <div>
-        <h2>Authors</h2>
+        <h2>Authors(NewStyle)</h2>
         <AuthorList authors={this.state.authors}/>
       </div>
     );
   }
 }
 
+
+class AuthorsPagePlain extends React.Component<{}, IAuthorsState> {
+
+  constructor(props: {}, context?:any) {
+    super(props, context);
+
+    // set initial state
+    this.state = {
+      authors: []
+    };
+  }
+
+  componentDidMount() {
+    this.setState({
+      authors: AuthorApi.getAllAuthors()
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <h2>Authors(NewStyle)</h2>
+        <Link to='author/add' className="btn btn-primary">Add Author</Link>
+        <AuthorList authors={this.state.authors}/>
+      </div>
+    );
+  }
+}
+
+function withRouter<P, S>(
+  InnerComponent: new(props:P, context?)=>React.Component<P, S>, 
+  routeLeaveHook:ReactRouter.RouteHook
+  ) {
+
+  return class extends React.Component<P & {route:any}, S> {
+    static contextTypes: React.ValidationMap<any> = {
+      router: routerShape
+    }
+    context: { router:ReactRouter.RouterOnContext }
+    constructor(props:P & {route:any}, context?) {
+      super(props, context);
+    }
+
+    componentWillMount() {
+      this.context.router.setRouteLeaveHook(this.props.route, routeLeaveHook);
+    }
+
+    render() {
+      return (
+        <InnerComponent {...this.props} />
+      )
+    }
+  }
+}
+
+let AuthorsPageHocRouter = withRouter(AuthorsPagePlain, () => {
+  return "hoc. confirm?";
+});
+
 export {
-AuthorsPageClassic as AuthorsPage
+//AuthorsPageClassic as AuthorsPage
+//AuthorsPageWithRouter as AuthorsPage
+AuthorsPageHocRouter as AuthorsPage
 };

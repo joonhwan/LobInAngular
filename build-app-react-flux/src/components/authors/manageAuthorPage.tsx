@@ -25,12 +25,14 @@ export class ManageAuthorPage extends React.Component<Props, States> {
     return (
       <div>
         <h2>Manage Author Page</h2>
-        <AuthorForm author={this.state.author} onChange={this.setAuthor} />
+        <AuthorForm author={this.state.author} onChange={author => this.onChange(author)} />
       </div>
     )
   }
-  setAuthor(e) {
-    var eventType = typeof e;
-    console.log(`setAuthor(${e})`)
+  onChange(author:Author) {
+    console.log('onChange : ' + JSON.stringify(author));
+    this.setState({
+      author: author
+    });
   }
 }
