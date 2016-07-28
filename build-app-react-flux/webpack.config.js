@@ -27,6 +27,10 @@ module.exports = {
   },
   plugins: [
     function() {
+      this.plugin('watch-run', function (watching, callback) {
+        console.log('====== Compile Begin : ' + new Date());
+        callback();
+      });
     },
     new HtmlWebpackPlugin({
       template: './src/index.html',

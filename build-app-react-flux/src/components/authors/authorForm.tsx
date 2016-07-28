@@ -1,24 +1,28 @@
 import * as React from 'react';
+import * as S from 'string';
+import * as _ from 'lodash';
 import {Author} from '../../api/authorApi';
 import {clone} from '../common/utils';
 import {TextInput} from '../common/textInput';
-import {withRouter} from '../common/withRouter';
+import {WithRouter, IHaveRouterOnContext} from '../common/withRouter';
 
 interface Props {
   author: Author;
   onChange(author: Author): void;
   onSaveClicked();
+  router?:ReactRouter.RouterOnContext;
+  route?:any;
 }
 
 interface State {
-  isDirty:boolean;
+  isDirty: boolean;
   errors: {
     firstName: string[],
     lastName: string[]
   }
 }
 
-class AuthorFormNoConfirm extends React.Component<Props, State> {
+class _AuthorForm extends React.Component<Props, State> {
   author: Author;
 
   constructor(props: Props) {
@@ -29,14 +33,18 @@ class AuthorFormNoConfirm extends React.Component<Props, State> {
       errors: {
         firstName: [],
         lastName: []
-      }
+      },
     };
   }
 
   render() {
+    let buttonClassName = "btn btn-primary";
+    if(!this.canSave()) {
+      buttonClassName += " disabled";
+    }
     return (
       <div>
-        <form>
+        <form onSubmit={e => this.handleSaveClick(e)}>
           <TextInput
             name="firstName" label="First Name"
             text={this.props.author.firstName}
@@ -49,8 +57,7 @@ class AuthorFormNoConfirm extends React.Component<Props, State> {
             errors={this.state.errors.lastName}
             onTextChange={text => this.updateLastName(text) } />
           <br />
-          <button className="btn btn-primary"
-            onClick={e => this.handleSaveClick(e) }>
+          <button type="submit" className={buttonClassName}>
             Save
           </button>
         </form>
@@ -69,6 +76,7 @@ class AuthorFormNoConfirm extends React.Component<Props, State> {
     this.setState(updated);
     this.props.onChange(author);
   }
+  
   updateLastName(text) {
     let author = clone(this.props.author);
     author.lastName = text;
@@ -80,12 +88,28 @@ class AuthorFormNoConfirm extends React.Component<Props, State> {
     this.setState(updated);
     this.props.onChange(author);
   }
-  handleSaveClick(e: React.MouseEvent) {
-    e.preventDefault();
-    this.props.onSaveClicked();
+
+  canSave() {
+    if(!this.state.isDirty) {
+      return false;
+    }
+    let author = this.props.author;
+    if(S(author.firstName).isEmpty() || 
+       S(author.lastName).isEmpty()) {
+      return false;
+    }
+    let e = this.state.errors;
+    return _.isEmpty(e.firstName) && _.isEmpty(e.lastName);
   }
 
-  validateText(text: string): string[] {
+  handleSaveClick(e: React.FormEvent) {
+    e.preventDefault();
+    if(this.canSave()) {
+      this.props.onSaveClicked();
+    }
+  }
+
+  private validateText(text: string): string[] {
     let errors: string[] = [];
     if (!text) {
       errors.push('Empty');
@@ -102,13 +126,4 @@ class AuthorFormNoConfirm extends React.Component<Props, State> {
   }
 }
 
-let AuthorFormConfirm = withRouter(AuthorFormNoConfirm, (self, nextLocation) => {
-  if(self.state.isDirty) {
-    return "Unsaved. Confirm?";
-  }
-  return null;
-});
-
-export {
-  AuthorFormConfirm as AuthorForm
-};
+export let AuthorForm = _AuthorForm;
