@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as ReactRouter from 'react-router';
 import {Author, AuthorApi} from '../../api/authorApi';
-import { routerShape } from 'react-router/lib/PropTypes';
-import {withRouter} from '../common/withRouter'
+import {routerShape} from 'react-router/lib/PropTypes';
+import {RouterableFrom} from '../common/withRouter'
 import {AuthorList} from './authorList';
 
 let Link = ReactRouter.Link;
@@ -144,7 +144,8 @@ class AuthorsPagePlain extends React.Component<{}, IAuthorsState> {
 
 
 
-let AuthorsPageHocRouter = withRouter(AuthorsPagePlain, (self) => {
+let AuthorsPageHocRouter = RouterableFrom(AuthorsPagePlain
+, (nextLocation) => {
   //console.log('self state = ' + JSON.stringify(self.state.authors));
   return "hoc. confirm?";
 });

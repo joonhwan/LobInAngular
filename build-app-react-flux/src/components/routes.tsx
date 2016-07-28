@@ -25,11 +25,11 @@ for(var key in redirectMap) {
 }
 
 function onEnterAbout(location, replaceWith) {
-  console.log(`onEnterAbount(${location}, ${replaceWith})`);
+  //console.log(`onEnterAbount(${location}, ${replaceWith})`);
 }
 
 function onLeaveAbout() {
-  console.log("onLeaveAbout().");
+  //console.log("onLeaveAbout().");
 }
 
 // DefaultRoute 는 IndexRoute 로 바뀜.
@@ -37,7 +37,7 @@ function onLeaveAbout() {
 // NotFoundRoute는 제거됨.(see: http://bit.ly/2a7PW7n)
 // (Index)Route, Redirect, Route path="*" 의 순서가 중요한듯?
 export const routes = (
-  <Router history={browserHistory}>
+  <Router history={hashHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={HomePage} />
       <Route path="about" component={AboutPage} onEnter={onEnterAbout} onLeave={onLeaveAbout}/>

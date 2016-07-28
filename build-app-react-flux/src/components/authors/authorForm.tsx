@@ -2,16 +2,16 @@ import * as React from 'react';
 import {Author} from '../../api/authorApi';
 import {clone} from '../common/utils';
 import {TextInput} from '../common/textInput';
-import {withRouter} from '../common/withRouter';
+import {RouterableFrom, IHaveRouterOnContext} from '../common/withRouter';
 
-interface Props {
+interface Props extends IHaveRouterOnContext {
   author: Author;
   onChange(author: Author): void;
   onSaveClicked();
 }
 
 interface State {
-  isDirty:boolean;
+  isDirty: boolean;
   errors: {
     firstName: string[],
     lastName: string[]
@@ -29,7 +29,7 @@ class AuthorFormNoConfirm extends React.Component<Props, State> {
       errors: {
         firstName: [],
         lastName: []
-      }
+      },
     };
   }
 
@@ -56,6 +56,11 @@ class AuthorFormNoConfirm extends React.Component<Props, State> {
         </form>
       </div>
     );
+  }
+
+  componentDidMount() {
+    let route = this.props.route;
+    this.props.router.setRouteLeaveHook(route, (nextLocation) => this.routerWillLeave(nextLocation));
   }
 
   updateFirstName(text: string) {
@@ -85,7 +90,7 @@ class AuthorFormNoConfirm extends React.Component<Props, State> {
     this.props.onSaveClicked();
   }
 
-  validateText(text: string): string[] {
+  private validateText(text: string): string[] {
     let errors: string[] = [];
     if (!text) {
       errors.push('Empty');
@@ -100,15 +105,16 @@ class AuthorFormNoConfirm extends React.Component<Props, State> {
     }
     return errors;
   }
+  private routerWillLeave(nextLocation) {
+    return "Really Leave?";
+  }
 }
 
-let AuthorFormConfirm = withRouter(AuthorFormNoConfirm, (self, nextLocation) => {
-  if(self.state.isDirty) {
-    return "Unsaved. Confirm?";
-  }
-  return null;
+let AuthorFormConfirm = RouterableFrom(AuthorFormNoConfirm
+, (nextLocation) => {
+  return "Confirm?"
 });
 
 export {
-  AuthorFormConfirm as AuthorForm
+AuthorFormConfirm as AuthorForm
 };

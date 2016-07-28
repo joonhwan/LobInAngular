@@ -28,7 +28,8 @@ export class ManageAuthorPage extends React.Component<Props, States> {
         <AuthorForm 
           author={this.state.author} 
           onChange={author => this.updateAuthor(author)} 
-          onSaveClicked={ () => this.saveAuthor() }/>
+          onSaveClicked={ () => this.saveAuthor() } 
+          route={null}/>
       </div>
     )
   }
