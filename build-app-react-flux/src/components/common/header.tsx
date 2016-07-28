@@ -1,28 +1,62 @@
 import * as React from 'react';
 import {Link} from 'react-router';
+import {Navbar, Nav, NavItem} from 'react-bootstrap'; 
 
 let logoUrl = require('src/images/ps-logo-with-icon-horiz.png');
+
+// class NavLink extends React.Component<ReactRouter.LinkProps, {}> {
+//   render() {
+//     let props = this.props;
+//     return (
+//       <div>
+//         <Link {...props} />
+//       </div>
+//     );
+//   }
+// }
+let NavLink = React.createClass<ReactRouter.LinkProps, {}>({
+  render() {
+    return (
+      <li role="presentation">
+        <Link {...this.props} activeClassName="active"/>
+      </li>
+    )
+  }
+});
+
+const plainHtmlNavbar =(
+   <div className="navbar navbar-default">
+    <a className="navbar-brand" href="#">
+      <img src={logoUrl} alt="Pluralsight Logo" height='30' />
+    </a>
+    <ul className="nav nav-pills">
+      <NavLink to="/">Home</NavLink>
+      <NavLink to="/authors">Authors</NavLink>
+      <NavLink to="/about">About</NavLink>
+    </ul>
+  </div>
+);
+
+// const reactBs = (
+//   <Navbar>
+//     <Navbar.Header>
+//       <Navbar.Brand>
+//         <Link to="/"><img src={logoUrl} alt="Pluralsight Logo" height='30' /></Link>
+//       </Navbar.Brand>
+//     </Navbar.Header>
+//     <Nav bsStyle="pills">
+//       <NavItem eventKey={1}><Link to="/">Home</Link></NavItem>
+//       <NavItem eventKey={2}><Link to="/authors">Authors</Link></NavItem>
+//       <NavItem eventKey={3}><Link to="/about">About</Link></NavItem>
+//     </Nav>
+//   </Navbar>
+// );
 
 export class Header extends React.Component<{}, {}> {
   render() {
     return (
       <div>
-        <div className="navbar navbar-default">
-          <a className="navbar-brand" href="#">
-            <img src={logoUrl} alt="Pluralsight Logo" height='30' />
-          </a>
-          <ul className="nav navbar-nav">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/authors">Authors</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-          </ul>
-        </div>
+        {plainHtmlNavbar}
         <ul>
           <li>
             왜 react-router의 hashHistory 에서는 url에?_k=yfarup 값이 붙는가?: <a href="https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md#what-is-that-_kckuvup-junk-in-the-url">여기</a>에서 확인.

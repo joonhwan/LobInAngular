@@ -6,8 +6,11 @@
     "lodash": "registry:dt/lodash#3.10.0+20160720001309",
     "node": "registry:dt/node#6.0.0+20160720070758",
     "react": "registry:dt/react#0.14.0+20160720060442",
+    "react-bootstrap": "registry:dt/react-bootstrap#0.0.0+20160713061231",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
     "react-router": "registry:dt/react-router#2.0.0+20160621215300",
-    "react-router/history": "registry:dt/react-router/history#2.0.0+20160608102730"
+    "react-router/history": "registry:dt/react-router/history#2.0.0+20160608102730",
+    "string": "registry:dt/string#0.0.0+20160316155526",
+    "toastr": "registry:dt/toastr#2.1.1+20160510010435"
   }
 }

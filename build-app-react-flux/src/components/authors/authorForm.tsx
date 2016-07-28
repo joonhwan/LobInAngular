@@ -1,4 +1,6 @@
 import * as React from 'react';
+import * as S from 'string';
+import * as _ from 'lodash';
 import {Author} from '../../api/authorApi';
 import {clone} from '../common/utils';
 import {TextInput} from '../common/textInput';
@@ -36,9 +38,13 @@ class _AuthorForm extends React.Component<Props, State> {
   }
 
   render() {
+    let buttonClassName = "btn btn-primary";
+    if(!this.canSave()) {
+      buttonClassName += " disabled";
+    }
     return (
       <div>
-        <form>
+        <form onSubmit={e => this.handleSaveClick(e)}>
           <TextInput
             name="firstName" label="First Name"
             text={this.props.author.firstName}
@@ -51,8 +57,7 @@ class _AuthorForm extends React.Component<Props, State> {
             errors={this.state.errors.lastName}
             onTextChange={text => this.updateLastName(text) } />
           <br />
-          <button className="btn btn-primary"
-            onClick={e => this.handleSaveClick(e) }>
+          <button type="submit" className={buttonClassName}>
             Save
           </button>
         </form>
@@ -71,6 +76,7 @@ class _AuthorForm extends React.Component<Props, State> {
     this.setState(updated);
     this.props.onChange(author);
   }
+  
   updateLastName(text) {
     let author = clone(this.props.author);
     author.lastName = text;
@@ -82,9 +88,25 @@ class _AuthorForm extends React.Component<Props, State> {
     this.setState(updated);
     this.props.onChange(author);
   }
-  handleSaveClick(e: React.MouseEvent) {
+
+  canSave() {
+    if(!this.state.isDirty) {
+      return false;
+    }
+    let author = this.props.author;
+    if(S(author.firstName).isEmpty() || 
+       S(author.lastName).isEmpty()) {
+      return false;
+    }
+    let e = this.state.errors;
+    return _.isEmpty(e.firstName) && _.isEmpty(e.lastName);
+  }
+
+  handleSaveClick(e: React.FormEvent) {
     e.preventDefault();
-    this.props.onSaveClicked();
+    if(this.canSave()) {
+      this.props.onSaveClicked();
+    }
   }
 
   private validateText(text: string): string[] {
