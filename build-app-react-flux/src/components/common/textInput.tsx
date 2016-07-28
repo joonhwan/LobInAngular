@@ -30,14 +30,14 @@ export class TextInput extends React.Component<TextInputProps, {}> {
     return (
       <div className={className}>
         <label htmlFor={name}>{this.props.label}</label>
-        {errorMessages}
         <input type="text" className="form-control"
           name={this.props.name} placeholder={this.props.placeHolder}
           value={this.props.text}
           onChange={e => {
             let text = "" + (e.target as any).value;
             this.props.onTextChange(text) 
-          }} /> 
+          }} />
+        {errorMessages}
       </div>
     );
   }

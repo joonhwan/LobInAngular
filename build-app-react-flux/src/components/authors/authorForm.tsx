@@ -2,12 +2,14 @@ import * as React from 'react';
 import {Author} from '../../api/authorApi';
 import {clone} from '../common/utils';
 import {TextInput} from '../common/textInput';
-import {RouterableFrom, IHaveRouterOnContext} from '../common/withRouter';
+import {WithRouter, IHaveRouterOnContext} from '../common/withRouter';
 
-interface Props extends IHaveRouterOnContext {
+interface Props {
   author: Author;
   onChange(author: Author): void;
   onSaveClicked();
+  router?:ReactRouter.RouterOnContext;
+  route?:any;
 }
 
 interface State {
@@ -18,7 +20,7 @@ interface State {
   }
 }
 
-class AuthorFormNoConfirm extends React.Component<Props, State> {
+class _AuthorForm extends React.Component<Props, State> {
   author: Author;
 
   constructor(props: Props) {
@@ -56,11 +58,6 @@ class AuthorFormNoConfirm extends React.Component<Props, State> {
         </form>
       </div>
     );
-  }
-
-  componentDidMount() {
-    let route = this.props.route;
-    this.props.router.setRouteLeaveHook(route, (nextLocation) => this.routerWillLeave(nextLocation));
   }
 
   updateFirstName(text: string) {
@@ -105,16 +102,6 @@ class AuthorFormNoConfirm extends React.Component<Props, State> {
     }
     return errors;
   }
-  private routerWillLeave(nextLocation) {
-    return "Really Leave?";
-  }
 }
 
-let AuthorFormConfirm = RouterableFrom(AuthorFormNoConfirm
-, (nextLocation) => {
-  return "Confirm?"
-});
-
-export {
-AuthorFormConfirm as AuthorForm
-};
+export let AuthorForm = _AuthorForm;

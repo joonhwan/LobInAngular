@@ -1,5 +1,7 @@
 import * as React from 'react';
+import {Link} from 'react-router'
 import {Author} from '../../api/authorApi';
+
 
 export interface AuthorListProps {
   authors: Author[];
@@ -39,10 +41,11 @@ export class AuthorList extends React.Component<AuthorListProps, {}> {
   }
 
   private createAuthorRow(author: Author) {
+    let link = "authors/" + author.id;
     return (
       <tr key={author.id}>
-        <td><a href={"/#authors/"+author.id}>{author.id}</a></td>
-        <td><a href={"/#authors/"+author.id}>{author.firstName} {author.lastName}</a></td>
+        <td><Link to={link}>{author.id}</Link></td>
+        <td><Link to={link}>{author.firstName} {author.lastName}</Link></td>
       </tr>
     );
   }

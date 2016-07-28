@@ -8,49 +8,20 @@ export interface IHaveRouterOnContext {
   route?:any;
 }
 
-interface WithRouterFunc {
-  (component:any):any;
-}
-let withRouter = (ReactRouter as any).withRouter as WithRouterFunc;
+let __withRouter = ((ReactRouter as any).withRouter) as (inner:any)=>any;
 
-function RouterableFrom1<P extends IHaveRouterOnContext, S>(
+function RouterableJsWrapper<P extends IHaveRouterOnContext, S>(
   InnerComponent: new(props:P, context?)=>React.Component<P, S>
   ) {
-    return withRouter(InnerComponent) as new(props:P, context?)=>React.Component<P, S>
-  // return class extends React.Component<P, S> {
-  //   static contextTypes: React.ValidationMap<any> = {
-  //     router: routerShape
-  //   }
-  //   context: { 
-  //     router:ReactRouter.RouterOnContext 
-  //   }
-    
-  //   constructor(props:P, context?) {
-  //     super(props, context);
-  //   }
-
-  //   componentDidMount() {
-      
-  //   }
-
-  //   render() {
-  //     console.log('withRouterHOC : this.props' + JSON.stringify(this.props));
-  //     return (
-  //       <InnerComponent 
-  //         ref="innerComponent" {...this.props}
-  //         router={this.context.router} route={this.props.route}
-  //         />
-  //     )
-  //   }
-  // }
+    console.log("hooking js withRouter...");
+    return __withRouter(InnerComponent) as new(props:P, context?)=>React.Component<P, S>;
 }
 
-function RouterableFrom2<P, S>(
-  InnerComponent: new(props:P, context?)=>React.Component<P, S>, 
-  routeLeaveHook:ReactRouter.RouteHook
+function RouterableTsWay<P extends IHaveRouterOnContext, S>(
+  InnerComponent: new(props:P, context?)=>React.Component<P, S>
   ) {
 
-  return class extends React.Component<P & {route:any}, S> {
+  return class WithRoutered extends React.Component<P & {route:any}, S> {
     static contextTypes: React.ValidationMap<any> = {
       router: routerShape
     }
@@ -59,19 +30,23 @@ function RouterableFrom2<P, S>(
       super(props, context);
     }
 
-    componentDidMount() {
-      this.context.router.setRouteLeaveHook(this.props.route, routeLeaveHook);
+    componentWillMount() {
+      console.log('WithRouter willMount() : this.props=' + JSON.stringify(this.props));
+      // console.log("WithRoutered setRouteLeaveHook()");
+      // this.context.router.setRouteLeaveHKook(this.props.route, routeLeaveHook);
     }
 
     render() {
+      // console.log('WithRoutered render(). props=' + JSON.stringify(this.props));
+      // console.log('WithRoutered render(). context=' + JSON.stringify(this.context));
       return (
-        <InnerComponent ref="innerComponent" {...this.props} />
+        <InnerComponent {...this.props} router={this.context.router} />
       )
     }
   }
 }
 
 export {
-  //RouterableFrom1 as RouterableFrom
-  RouterableFrom2 as RouterableFrom
+  //RouterableJsWrapper as WithRouter
+  RouterableTsWay as WithRouter
 }
