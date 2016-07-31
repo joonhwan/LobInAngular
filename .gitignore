@@ -43,3 +43,4 @@ public
 .node_repl_history
 
 .DS_Store
+.awcache
