@@ -43,7 +43,7 @@ class _AuthorsPage extends React.Component<IHaveRouterOnContext, IAuthorsState> 
     return (
       <div>
         <h2>Authors(NewStyle)</h2>
-        <Link to='authoradd' className="btn btn-primary">Add Author</Link>
+        <Link to='author/add' className="btn btn-primary">Add Author</Link>
         <AuthorList authors={this.state.authors}/>
       </div>
     );

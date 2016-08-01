@@ -6,6 +6,8 @@ import { mixin } from './utils';
 export interface IHaveRouterOnContext {
   router?:ReactRouter.RouterOnContext;
   route?:any;
+  params?:any;
+  location?:Location
 }
 
 let __withRouter = ((ReactRouter as any).withRouter) as (inner:any)=>any;

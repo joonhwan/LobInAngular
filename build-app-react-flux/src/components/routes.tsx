@@ -42,7 +42,8 @@ export const routes = (
       <IndexRoute component={HomePage} />
       <Route path="about" component={AboutPage} onEnter={onEnterAbout} onLeave={onLeaveAbout}/>
       <Route path="authors" component={AuthorsPage} />
-      <Route path="authoradd" component={ManageAuthorPage} />
+      <Route path="author/add" component={ManageAuthorPage} />
+      <Route path="author/edit/:id" component={ManageAuthorPage} />
       {redirects}
       <Route path="*" component={NotFoundPage} />
     </Route>

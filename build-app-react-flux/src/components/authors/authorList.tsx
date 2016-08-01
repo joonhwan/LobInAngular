@@ -41,7 +41,7 @@ export class AuthorList extends React.Component<AuthorListProps, {}> {
   }
 
   private createAuthorRow(author: Author) {
-    let link = "authors/" + author.id;
+    let link = "author/edit/" + author.id;
     return (
       <tr key={author.id}>
         <td><Link to={link}>{author.id}</Link></td>

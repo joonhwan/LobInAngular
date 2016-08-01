@@ -17,6 +17,12 @@ interface States {
 export class _ManageAuthorPage extends React.Component<Props, States> {
   constructor(props: Props) {
     super(props);
+    //console.log("AuthorForm constructor() props=" + JSON.stringify(this.props));
+    let initialAuthor = {
+      id: '',
+      firstName: '',
+      lastName: '',
+    };
     this.state = {
       author: props.author || {
         id: '',
@@ -28,7 +34,17 @@ export class _ManageAuthorPage extends React.Component<Props, States> {
   }
 
   componentDidMount() {
-    console.log("AuthorForm willMount() props=" + JSON.stringify(this.props));
+    // console.log("AuthorForm willMount() props=" + JSON.stringify(this.props));
+    if(this.props.route.path=="author/edit/:id") {
+      let id = this.props.params.id;
+      if(id) {
+        this.setState({
+          author: AuthorApi.getAuthorById(id),
+          isDirty: true
+      });
+      }
+    }
+
     let route = this.props.route;
     this.props.router.setRouteLeaveHook(route, (nextLocation) => this.routerWillLeave(nextLocation));
   }
@@ -41,7 +57,7 @@ export class _ManageAuthorPage extends React.Component<Props, States> {
           author={this.state.author}
           onChange={author => this.updateAuthor(author) }
           onSaveClicked={ () => this.saveAuthor() }
-          route={null}/>
+          />
       </div>
     )
   }
