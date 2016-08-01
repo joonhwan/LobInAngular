@@ -1,6 +1,8 @@
 import * as React from 'react';
 import * as ReactRouter from 'react-router';
-import {Author, AuthorApi} from '../../api/authorApi';
+import {Author} from '../../api/authorApi';
+import {AuthorActions} from '../../actions/authorActions';
+import {AuthorStore} from '../../stores/authorStore';
 import {routerShape} from 'react-router/lib/PropTypes';
 import {IHaveRouterOnContext, WithRouter} from '../common/withRouter'
 import {AuthorList} from './authorList';
@@ -22,8 +24,9 @@ class _AuthorsPage extends React.Component<IHaveRouterOnContext, IAuthorsState> 
 
     // set initial state
     this.state = {
-      authors: []
+      authors: AuthorStore.getAllAuthors()
     };
+    AuthorStore.addChangeListener(() => { this.updateAuthorsFromStore() });
   }
 
   componentWillMount() {
@@ -33,10 +36,12 @@ class _AuthorsPage extends React.Component<IHaveRouterOnContext, IAuthorsState> 
     }
   }
 
-  componentDidMount() {
-    this.setState({
-      authors: AuthorApi.getAllAuthors()
-    });
+  // componentDidMount() {
+  //   this.setState({
+  //     authors: AuthorStore.getAllAuthors()
+  //   });
+  // }
+  componentWillUnmount() {
   }
 
   render() {
@@ -51,6 +56,12 @@ class _AuthorsPage extends React.Component<IHaveRouterOnContext, IAuthorsState> 
 
   private routeLeaveHook(nl) {
     return "Confirm Request in InnerComponent!";
+  }
+
+  private updateAuthorsFromStore() {
+    this.setState({
+      authors: AuthorStore.getAllAuthors()
+    });
   }
 }
 

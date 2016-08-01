@@ -19,7 +19,7 @@ class AuthorApiClass {
 		return _clone(author);
 	}
 
-	saveAuthor(author: Author) {
+	saveAuthor(author: Author):Author {
 		//pretend an ajax call to web api is made here
 		console.log('Pretend this just saved the author to the DB via AJAX call...');
 

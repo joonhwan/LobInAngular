@@ -1,6 +1,8 @@
 import * as React from 'react';
-import {Author, AuthorApi} from '../../api/authorApi';
+import {Author} from '../../api/authorApi';
 import {AuthorForm} from './authorForm';
+import {AuthorActions} from '../../actions/authorActions';
+import {AuthorStore} from '../../stores/authorStore';
 import {WithRouter, IHaveRouterOnContext} from '../common/withRouter';
 import 'toastr/build/toastr.min.css'
 import * as toastr from 'toastr';
@@ -33,13 +35,18 @@ export class _ManageAuthorPage extends React.Component<Props, States> {
     };
   }
 
-  componentDidMount() {
+  wasEditing() {
+    return this.props.route.path=="author/edit/:id";
+  }
+
+  componentWillMount() {
     // console.log("AuthorForm willMount() props=" + JSON.stringify(this.props));
-    if(this.props.route.path=="author/edit/:id") {
+    if(this.wasEditing()) {
       let id = this.props.params.id;
       if(id) {
         this.setState({
-          author: AuthorApi.getAuthorById(id),
+          //author: AuthorApi.getAuthorById(id),
+          author: AuthorStore.getAuthorById(id),
           isDirty: true
       });
       }
@@ -71,7 +78,14 @@ export class _ManageAuthorPage extends React.Component<Props, States> {
   saveAuthor() {
     console.log('saving author : ' + JSON.stringify(this.state.author));
     let author = this.state.author;
-    AuthorApi.saveAuthor(author);
+
+    //AuthorApi.saveAuthor(author);
+    if(this.wasEditing()) {
+      AuthorActions.updateAuthor(author);
+    } else {
+      AuthorActions.createAuthor(author);
+    }
+
     console.log('redirecting...');
     this.setState({
       author: author,
