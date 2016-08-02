@@ -10,6 +10,7 @@ import {App}               from './app';
 import {HomePage}          from './homePage';
 import {AboutPage}         from './about/aboutPage';
 import {AuthorsPage}       from './authors/authorsPage';
+import {CoursesPage}       from './courses/coursesPage';
 import {ManageAuthorPage } from './authors/manageAuthorPage'
 import {NotFoundPage}      from './notFoundPage';
 
@@ -44,6 +45,7 @@ export const routes = (
       <Route path="authors" component={AuthorsPage} />
       <Route path="author/add" component={ManageAuthorPage} />
       <Route path="author/edit/:id" component={ManageAuthorPage} />
+      <Route path="courses" component={CoursesPage} />
       {redirects}
       <Route path="*" component={NotFoundPage} />
     </Route>

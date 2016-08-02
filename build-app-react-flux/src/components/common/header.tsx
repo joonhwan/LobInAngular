@@ -32,6 +32,7 @@ const plainHtmlNavbar =(
     <ul className="nav nav-pills">
       <NavLink to="/">Home</NavLink>
       <NavLink to="/authors">Authors</NavLink>
+      <NavLink to="/courses">Courses</NavLink>
       <NavLink to="/about">About</NavLink>
     </ul>
   </div>

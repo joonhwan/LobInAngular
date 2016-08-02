@@ -40,7 +40,7 @@ export class CourseApiClass {
     }
     return courseToUpdate;
   }
-  deleteCourse(id:string):Course {
+  deleteCourseById(id:string):Course {
     let found = _.find(this.courses, course => course.id==id);
     if(found) {
     _ .remove(this.courses, found);
@@ -51,3 +51,5 @@ export class CourseApiClass {
     return course.title.replace(' ','-');
   }
 }
+
+export let CourseApi = new CourseApiClass();

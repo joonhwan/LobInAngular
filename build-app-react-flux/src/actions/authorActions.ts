@@ -1,5 +1,16 @@
-import {Dispatcher, ActionType} from '../dispatchers/appDispatcher';
+import {Dispatcher} from '../dispatchers/appDispatcher';
 import {Author, AuthorApi} from '../api/authorApi';
+
+export type AuthorActionId
+ = "CreateAuthor"
+ | "UpdateAuthor"
+ | "DeleteAuthor"
+;
+
+export interface AuthorAction {
+  actionType:AuthorActionId;
+  author:Author
+}
 
 export class AuthorActions {
   static createAuthor(author: Author) {
@@ -7,7 +18,7 @@ export class AuthorActions {
 
     // 이봐 dispatcher. 관심있어 하는 store등에게 author를 생성하라는 요청이 들어왔다고 알려주겠나~.
     Dispatcher.dispatch({
-      actionType: "CREATE_AUTHOR",
+      actionType: "CreateAuthor",
       author: newAuthor
     });
   }
@@ -15,9 +26,9 @@ export class AuthorActions {
   static updateAuthor(author:Author) {
     let updatedAuthor = AuthorApi.saveAuthor(author);
 
-    // 이봐 dispatcher. 관심있어 하는 store등에게 author를 생성하라는 요청이 들어왔다고 알려주겠나~.
+    // 이봐 dispatcher. 관심있어 하는 store등에게 author를 갱신하라는 요청이 들어왔다고 알려주겠나~.
     Dispatcher.dispatch({
-      actionType: "UPDATE_AUTHOR",
+      actionType: "UpdateAuthor",
       author: updatedAuthor
     });
   }
@@ -27,7 +38,7 @@ export class AuthorActions {
     let deletedAuthor = AuthorApi.deleteAuthorById(id)
 
     Dispatcher.dispatch({
-      actionType: "DELETE_AUTHOR",
+      actionType: "DeleteAuthor",
       author:deletedAuthor,
     });
   }

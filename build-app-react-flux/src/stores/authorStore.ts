@@ -1,4 +1,5 @@
-import {Dispatcher, ActionType} from '../dispatchers/appDispatcher';
+import {Dispatcher} from '../dispatchers/appDispatcher';
+import {AuthorActionId, AuthorAction} from '../actions/authorActions';
 import {Author, AuthorApi} from '../api/authorApi';
 import {EventEmitter} from 'events';
 
@@ -21,15 +22,17 @@ class AuthorStoreClass {
       this.emitChange();
     }, 2000);
 
-    Dispatcher.register(payload => {
+    Dispatcher.register(action => {
+      let payload = action as AuthorAction;
+      
       switch (payload.actionType) {
-        case 'CREATE_AUTHOR':
+        case "CreateAuthor":
           this.createAuthor(payload.author);
           break;
-        case 'UPDATE_AUTHOR':
+        case "UpdateAuthor":
           this.updateAuthor(payload.author);
           break;
-        case 'DELETE_AUTHOR':
+        case "DeleteAuthor":
           this.deleteAuthor(payload.author);
           break;
      }

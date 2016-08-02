@@ -1,11 +1,6 @@
 import {Dispatcher as DispatcherClass} from 'flux';
-import {Author} from '../api/authorApi';
+import {AuthorAction} from '../actions/authorActions';
+import {CourseAction} from '../actions/courseActions';
 
-export type ActionType = "CREATE_AUTHOR" | "UPDATE_AUTHOR" | "DELETE_AUTHOR"; 
-
-export interface AuthorPayload {
-  actionType:ActionType;
-  author:Author
-}
-
-export let Dispatcher = new DispatcherClass<AuthorPayload>();
+export let Dispatcher
+  = new DispatcherClass<AuthorAction | CourseAction>();
