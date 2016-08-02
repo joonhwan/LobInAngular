@@ -32,7 +32,7 @@ class CourseStoreClass {
           this.deleteCourseById(p.id);
           break;
       }
-    })
+    });
   }
 
   // from action

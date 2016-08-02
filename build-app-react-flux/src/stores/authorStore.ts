@@ -58,7 +58,7 @@ class AuthorStoreClass {
     return this._authors;
   }
   getAuthorById(id:string) {
-    return this._authors.find(author => author.id==id);
+    return _.find(this._authors, author => author.id==id);
   }
   addChangeListener(callback: Function) {
     this._impl.addListener(AuthorStoreClass.EventType, callback);
