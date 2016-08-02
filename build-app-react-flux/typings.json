@@ -3,7 +3,6 @@
     "flux": "registry:npm/flux#2.1.1+20160601175240"
   },
   "globalDependencies": {
-    "core-js": "registry:dt/core-js#0.0.0+20160602141332",
     "jquery": "registry:dt/jquery#1.10.0+20160704162008",
     "lodash": "registry:dt/lodash#3.10.0+20160720001309",
     "node": "registry:dt/node#6.0.0+20160720070758",

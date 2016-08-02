@@ -1,5 +1,3 @@
-import 'core-js';
-
 export function clone<T extends {}>(obj:T):T {
   return Object.assign({}, obj) as T;
 }

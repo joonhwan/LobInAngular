@@ -29,6 +29,9 @@ class AuthorStoreClass {
         case 'UPDATE_AUTHOR':
           this.updateAuthor(payload.author);
           break;
+        case 'DELETE_AUTHOR':
+          this.deleteAuthor(payload.author);
+          break;
      }
     });
   }
@@ -43,6 +46,10 @@ class AuthorStoreClass {
       found.lastName = author.lastName;
       this.emitChange();
     }
+  }
+  deleteAuthor(author:Author) {
+    _.remove(this._authors, authorElement => authorElement.id == author.id);
+    this.emitChange();
   }
   getAllAuthors():Author[] {
     return this._authors;

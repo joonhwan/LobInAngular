@@ -2,9 +2,10 @@ import * as React from 'react';
 import * as S from 'string';
 import * as _ from 'lodash';
 import {Author} from '../../api/authorApi';
-import {clone} from '../common/utils';
 import {TextInput} from '../common/textInput';
 import {WithRouter, IHaveRouterOnContext} from '../common/withRouter';
+
+let clone = _.clone;
 
 interface Props {
   author: Author;

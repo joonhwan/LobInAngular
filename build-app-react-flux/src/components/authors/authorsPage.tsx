@@ -18,6 +18,7 @@ export interface IAuthorsState {
 }
 
 class _AuthorsPage extends React.Component<IHaveRouterOnContext, IAuthorsState> {
+  private _changeCallback:any;
 
   constructor(props:any, context?:any) {
     super(props, context);
@@ -26,7 +27,9 @@ class _AuthorsPage extends React.Component<IHaveRouterOnContext, IAuthorsState> 
     this.state = {
       authors: AuthorStore.getAllAuthors()
     };
-    AuthorStore.addChangeListener(() => { this.updateAuthorsFromStore() });
+    
+    this._changeCallback = () => { this.onChange() };
+    AuthorStore.addChangeListener(this._changeCallback);
   }
 
   componentWillMount() {
@@ -42,6 +45,8 @@ class _AuthorsPage extends React.Component<IHaveRouterOnContext, IAuthorsState> 
   //   });
   // }
   componentWillUnmount() {
+    console.log('removed authorstore callback')
+    AuthorStore.removeChangeListener(this._changeCallback);
   }
 
   render() {
@@ -58,7 +63,7 @@ class _AuthorsPage extends React.Component<IHaveRouterOnContext, IAuthorsState> 
     return "Confirm Request in InnerComponent!";
   }
 
-  private updateAuthorsFromStore() {
+  private onChange() {
     this.setState({
       authors: AuthorStore.getAllAuthors()
     });

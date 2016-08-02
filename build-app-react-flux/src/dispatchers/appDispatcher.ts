@@ -1,7 +1,7 @@
 import {Dispatcher as DispatcherClass} from 'flux';
 import {Author} from '../api/authorApi';
 
-export type ActionType = "CREATE_AUTHOR" | "UPDATE_AUTHOR"; 
+export type ActionType = "CREATE_AUTHOR" | "UPDATE_AUTHOR" | "DELETE_AUTHOR"; 
 
 export interface AuthorPayload {
   actionType:ActionType;

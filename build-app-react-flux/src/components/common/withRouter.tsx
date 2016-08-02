@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as ReactRouter from 'react-router';
 import { routerShape } from 'react-router/lib/PropTypes';
-import { mixin } from './utils';
 
 export interface IHaveRouterOnContext {
   router?:ReactRouter.RouterOnContext;

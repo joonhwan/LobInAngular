@@ -21,5 +21,15 @@ export class AuthorActions {
       author: updatedAuthor
     });
   }
+
+  static deleteAuthorById(id:string) {
+    
+    let deletedAuthor = AuthorApi.deleteAuthorById(id)
+
+    Dispatcher.dispatch({
+      actionType: "DELETE_AUTHOR",
+      author:deletedAuthor,
+    });
+  }
 }
 
