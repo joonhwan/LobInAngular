@@ -1,0 +1,12 @@
+<html ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <title>Manually creating widget</title>
+</head>
+<body ng-controller="MainCtrl as vm">
+  <div font-scale="vm.size">
+    {{vm.message}}
+  </div>
+  <input ng-model="vm.size">
+</body>
+</html>
