@@ -1,17 +1,31 @@
 import 'jquery';
 import 'jqwidgets-framework/jqwidgets/styles/jqx.base.css';
 import 'angular';
-// import 'jqwidgets-framework/jqwidgets/jqx-all';
 
-$('#test').html("Hello");
-console.log($('#test'));
+//jQuery = $;
+window['jQuery'] = $;
+
+//require('jqwidgets-framework/jqwidgets/jqx-all');
+import 'jqwidgets-framework/jqwidgets/jqx-all';
 
 // import 'jqwidgets-framework/jqwidgets/jqxcore';
 // import 'jqwidgets-framework/jqwidgets/jqxangular';
 // import 'jqwidgets-framework/jqwidgets/jqxbuttons';
 
-//declare function require(path): any;
-//require('jqwidgets-framework/jqwidgets/jqx-all')
+// declare function require(path): any;
+// require('jquery');
+
+$('#test').html("Hello");
+console.log($('#test'));
+
+console.log($);
+//console.log(window);
+
+$(document).ready(() => {
+  console.log($);
+  //console.log(window);
+});
+//require('jqwidgets-framework/jqwidgets/jqxcore-pretty');
 
 class MainCtrl {
   message:string = "Hello World";
@@ -20,9 +34,9 @@ class MainCtrl {
 console.log('running..');
 
 angular
-  .module('app', [])
+  .module('app', ['jqwidgets'])
   .component('appView', {
-    template: '<h3>Message: {{vm.message}}</h3><jqx-button></jqx-button>',
+    template: '<h3>Message: {{vm.message}}</h3><jqx-button>Oh Yeah!</jqx-button>',
     controller: MainCtrl,
     controllerAs: 'vm'
   })
