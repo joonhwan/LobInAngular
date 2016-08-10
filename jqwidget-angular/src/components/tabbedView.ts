@@ -12,25 +12,6 @@ class TabbedViewController implements ng.IComponentController {
         items:
         [
           {
-            type: 'autoHideGroup',
-            alignment: 'left',
-            width: 80,
-            unpinnedWidth: 200,
-            items:
-            [
-              {
-                type: 'layoutPanel',
-                title: 'Toolbox',
-                contentContainer: 'ToolboxPanel'
-              },
-              {
-                type: 'layoutPanel',
-                title: 'Help',
-                contentContainer: 'HelpPanel'
-              }
-            ]
-          },
-          {
             type: 'layoutGroup',
             orientation: 'vertical',
             width: 500,
@@ -74,38 +55,35 @@ class TabbedViewController implements ng.IComponentController {
                 ]
               }
             ]
-          },
-          {
-            type: 'tabbedGroup',
-            width: 220,
-            minWidth: 200,
-            items:
-            [
-              {
-                type: 'layoutPanel',
-                title: 'Solution Explorer',
-                contentContainer: 'SolutionExplorerPanel'
-              },
-              {
-                type: 'layoutPanel',
-                title: 'Properties',
-                contentContainer: 'PropertiesPanel'
-              }
-            ]
           }
         ]
       }
     ];
 
     this.settings = {
-      width:800,
-      height:600,
-      layout:layout
+      width: 800,
+      height: 600,
+      layout: layout
     };
   }
   $onInit() {
     console.log('tabbed-view onInit() is called.');
     $('#jqxLayout')['jqxLayout'](this.settings);
+
+    function fill() {
+      var offset = $('#jqxLayout').offset();
+      var w = $(window).width();
+      var h = $(window).height();
+      console.log('sizing ' + w + ' x ' + h);
+      let tabDiv = $('#jqxLayout') as any;
+      tabDiv
+        .jqxLayout({ width: w, height: h })
+        .jqxLayout('render');
+    }
+    $(window).resize(function () {
+      fill();
+    });
+    fill();
   }
 }
 
