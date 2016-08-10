@@ -2,7 +2,7 @@ import * as angular from 'angular';
 import * as _ from 'lodash';
 declare function require(path): any;
 
-class GridUpdateTestViewController implements ng.IComponentController {
+class ComboBoxTestController implements ng.IComponentController {
   public data: any[];
   public selectedValue:any;
   public firstNames: string[] = ["Nancy", "Andrew", "Janet", "Margaret", "Steven", "Michael", "Robert", "Laura", "Anne"];
@@ -17,8 +17,7 @@ class GridUpdateTestViewController implements ng.IComponentController {
       row["value"] = names[1];
       this.data.push(row);
     });
-    console.log(this.data);
-
+    
     let thisData = this.data;
     this.comboBoxSettings = {
       source: this.data,
@@ -62,9 +61,9 @@ class GridUpdateTestViewController implements ng.IComponentController {
   }
 }
 
-class GridUpdateTestViewComponent implements ng.IComponentOptions {
-  template = require('./gridUpdateTestView.html');
-  controller = GridUpdateTestViewController;
+class ComboBoxTestComponent implements ng.IComponentOptions {
+  template = require('./comboBoxTest.html');
+  controller = ComboBoxTestController;
   controllerAs = 'vm';
 
   constructor() {
@@ -72,4 +71,4 @@ class GridUpdateTestViewComponent implements ng.IComponentOptions {
   }
 }
 
-export let gridUpdateTestView = new GridUpdateTestViewComponent();
+export let comboBoxTest = new ComboBoxTestComponent();

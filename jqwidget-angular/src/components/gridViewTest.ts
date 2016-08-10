@@ -1,6 +1,6 @@
 declare function require(path): any;
 
-class GridViewController implements ng.IComponentController {
+class GridViewTestController implements ng.IComponentController {
   message: string = "Hello World";
   settings: any;
 
@@ -40,13 +40,13 @@ class GridViewController implements ng.IComponentController {
   }
 }
 
-class GridViewComponent implements ng.IComponentOptions {
-  template = require('./gridView.component.html');
-  controller = GridViewController;
+class GridViewTestComponent implements ng.IComponentOptions {
+  template = require('./gridViewTest.html');
+  controller = GridViewTestController;
   controllerAs = 'vm';
   constructor() {
     console.log('grid-view component is created.');
   }
 }
 
-export let gridView = new GridViewComponent();
+export let gridViewTest = new GridViewTestComponent();

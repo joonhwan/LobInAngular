@@ -1,14 +1,13 @@
 import './vendor';
-import {gridView} from './gridView.component';
-import {gridUpdateTestView} from './gridUpdateTestView';
+import {gridViewTest, comboBoxTest} from './components';
 
 console.log('running..');
 
 let app = angular.module('app', ['jqwidgets'])
 
 app
-  .component('gridView', gridView)
-  .component('gridUpdateTestView', gridUpdateTestView)
+  .component('gridViewTest', gridViewTest)
+  .component('comboBoxTest', comboBoxTest)
   ;
 
 $(document).ready(() => {
