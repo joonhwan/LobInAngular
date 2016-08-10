@@ -35,5 +35,8 @@ import 'jqwidgets-framework/jqwidgets/jqxgrid.grouping';
 import 'jqwidgets-framework/jqwidgets/jqxgrid.sort';
 import 'jqwidgets-framework/jqwidgets/jqxcombobox';
 import 'jqwidgets-framework/jqwidgets/jqxlistbox';
+import 'jqwidgets-framework/jqwidgets/jqxribbon';
+import 'jqwidgets-framework/jqwidgets/jqxlayout';
+
 
 console.log('vendor module initialized.');
