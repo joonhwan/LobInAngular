@@ -1,0 +1,9 @@
+<div style="margin:20px">
+  <h3>Grid Update Test View</h3>
+  <jqx-combo-box ng-model="vm.selectedValue" jqx-ng-model jqx-settings="vm.comboBoxSettings"></jqx-combo-box>
+  <br />
+  <br /> Selected: {{vm.selectedValue.label + " " + vm.selectedValue.value}}
+  <br />
+  <jqx-button ng-click="vm.click()">Set Width and Height</jqx-button>
+  <jqx-button ng-click="vm.apply()">Call Method</jqx-button>
+</div>

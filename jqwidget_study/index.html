@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JQWidgets Test</title>
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+  <link rel="stylesheet" type="text/css" href="node_modules/jqwidgets-framework/jqwidgets/styles/jqx.base.css">
+  <link href="css/style.css" rel="stylesheet">
+  <script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
+  <!--<script type="text/javascript" src="/node_modules/jqwidgets-framework/jqwidgets/jqx-all.js"></script>-->
+  <script src="/node_modules/jqwidgets-framework/jqwidgets/jqxcore.js"></script>
+  <script src="/node_modules/jqwidgets-framework/jqwidgets/jqxribbon.js"></script>
+  <script src="/node_modules/jqwidgets-framework/jqwidgets/jqxlayout.js"></script>
+</head>
+
+<body>
+  <div id="jqxLayout">
+    <!--autoHideGroup-->
+    <div data-container="ToolboxPanel">
+      List of tools
+    </div>
+    <div data-container="HelpPanel">
+      Help topics
+    </div>
+    <!--documentGroup-->
+    <div data-container="Document1Panel">
+      Document 1 content
+    </div>
+    <div data-container="Document2Panel">
+      Document 2 content
+    </div>
+    <!--bottom tabbedGroup-->
+    <div data-container="ErrorListPanel">
+      List of errors
+    </div>
+    <div data-container="OutputPanel">
+      Output</div>
+    <!--right tabbedGroup-->
+    <div data-container="SolutionExplorerPanel">
+      Solution structure
+    </div>
+    <div data-container="PropertiesPanel">
+      List of properties
+    </div>
+  </div>
+  <script type="text/javascript" src="src/app.js"></script>
+</body>
+
+</html>

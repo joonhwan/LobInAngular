@@ -1,0 +1,15 @@
+{
+  "name": "jqwidget_study",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^1.11.1",
+    "jqwidgets-framework": "^4.1.2"
+  }
+}
