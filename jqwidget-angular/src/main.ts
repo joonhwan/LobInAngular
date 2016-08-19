@@ -1,3 +1,4 @@
+import './style.css';
 import './vendor';
 import {gridViewTest, comboBoxTest, tabbedView} from './components';
 

@@ -3,7 +3,10 @@ declare function require(path): any;
 
 class TabbedViewController implements ng.IComponentController {
   public settings: any;
+  public initialWidth: number;
+
   constructor() {
+    this.initialWidth = 900;
     // the 'layout' JSON array defines the internal structure of the layout
     let layout = [
       {
@@ -14,13 +17,13 @@ class TabbedViewController implements ng.IComponentController {
           {
             type: 'layoutGroup',
             orientation: 'vertical',
-            width: 500,
+            width: "100%",
             items:
             [
               {
                 type: 'documentGroup',
-                height: 400,
-                minHeight: 200,
+                height: '80%',
+                //minHeight: 200,
                 items:
                 [
                   {
@@ -37,8 +40,8 @@ class TabbedViewController implements ng.IComponentController {
               },
               {
                 type: 'tabbedGroup',
-                height: 200,
-                pinnedHeight: 30,
+                height: '20%',
+                //pinnedHeight: 30,
                 items:
                 [
                   {
@@ -61,13 +64,15 @@ class TabbedViewController implements ng.IComponentController {
     ];
 
     this.settings = {
-      width: 800,
-      height: 600,
+      width: "100%",
+      height: "100%",
       layout: layout
     };
   }
   $onInit() {
-    console.log('tabbed-view onInit() is called.');
+    
+    console.log('tabbed-view onInit() is called');
+    console.log(this.settings.layout);
     $('#jqxLayout')['jqxLayout'](this.settings);
 
     function fill() {
