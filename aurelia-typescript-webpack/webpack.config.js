@@ -57,7 +57,7 @@ const coreBundles = {
 
 const baseConfig = {
   entry: {
-    'app': [/* this is filled by the aurelia-webpack-plugin */],
+    'app': coreBundles.aurelia.concat(['./src/main']),
     'aurelia-bootstrap': coreBundles.bootstrap,
     'aurelia': coreBundles.aurelia.filter(pkg => coreBundles.bootstrap.indexOf(pkg) === -1)
   },
